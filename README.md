@@ -14,3 +14,6 @@ Caso não dê certo, use:
 Inicializar Aplicação:
 
     make server
+
+bash:
+	sudo docker exec -it monitoria-api sh
