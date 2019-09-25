@@ -1,0 +1,8 @@
+version: '3'
+services: 
+  monitoria-app:
+    build: .
+    command: npm start
+    ports:
+      - "3000:3000"
+    container_name: monitoria-app
