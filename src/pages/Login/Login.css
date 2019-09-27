@@ -1,0 +1,57 @@
+.Container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.Content {
+    background-color: #267cc1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 90%;
+    width: 80%;
+}
+
+.Panel-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    width: 40%;
+}
+
+.Title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#Title-part1 {
+    color: #ffffff;
+}
+
+#Title-part2 {
+    margin-left: 8px;
+    color: #5e1dad;
+}
+
+#DescApp {
+    width: 60%;
+    align-self: center;
+    color: #ffd700;
+    font-size: 100%;
+}
+
+.Classroom-img {
+    height: 45%;
+    margin: 20px;
+    position: relative;
+}
+
+.Panel-login {
+    height: 100%;
+    width: 60%;
+    background-color: white;
+}
