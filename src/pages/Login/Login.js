@@ -1,6 +1,8 @@
 import React from 'react';
 
+
 import './Login.css';
+import LoginInput from '../../components/LoginInput/LoginInput';
 
 import logo from '../../assets/logo_full.png';
 import classroomImg from '../../assets/classroom.svg';
@@ -33,14 +35,24 @@ const Login = () => {
                     </div>
 
                     <div className="Content-userLogin">
-                        <input className="UserLogin-input" type="text" value="E-mail" />
-                        <input className="UserLogin-input" type="text" value="Senha" />
+                        <LoginInput
+                            icon="mail"
+                            className="UserLogin-input"
+                            value="E-mail"
+                        />
+                        <LoginInput
+                            icon="lock"
+                            className="UserLogin-input"
+                            value="Senha"
+                        />
                     </div>
+
 
                     <div className="Content-userButtons">
                         <button className="UserButton">Entrar</button>
                         <button className="UserButton">Criar Conta</button>
                     </div>
+                    
 
                     <div className="Content-professorButton">
                         <button className="ProfessorButton">

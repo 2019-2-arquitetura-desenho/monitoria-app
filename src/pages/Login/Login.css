@@ -88,16 +88,6 @@
     margin-top: 50px;
 }
 
-.UserLogin-input {
-    width: 350px;
-    height: 35px;
-    margin-top: 20px;
-    color: #267cc1;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #267cc1;
-}
-
 .Content-userButtons {
     display: flex;
     flex-direction: row;
