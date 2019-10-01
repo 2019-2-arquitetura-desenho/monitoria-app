@@ -1,28 +1,28 @@
 import React from 'react';
-import {FaEnvelope, FaUnlockAlt} from 'react-icons/fa';
+import { FaEnvelope, FaUnlockAlt } from 'react-icons/fa';
 
 import './LoginInput.css';
 
 const LoginInput = (props) => {
-    const value = props.value?props.value:'';
-    const icon_text = props.icon?props.icon:'';
+    const value = props.value ? props.value : '';
+    const icon_text = props.icon ? props.icon : '';
 
-    function render_icon(){
-        if (icon_text == 'lock')
+    function render_icon() {
+        if (icon_text === 'lock')
             return (
                 <FaUnlockAlt
                     size='25px'
                     color='#267cc1'
                 />
-                );
-        else if (icon_text == 'mail')
+            );
+        else if (icon_text === 'mail')
             return (
                 <FaEnvelope
                     size='25px'
                     color='#267cc1'
                 />
             );
-        
+
     }
 
     return (

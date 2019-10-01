@@ -9,53 +9,51 @@ import classroomImg from '../../assets/classroom.svg';
 
 const Login = () => {
     return (
-        <div className="Container" >
-            <div className="Content">
-                <div className="Panel-left">
-                    <div className="Title">
-                        <h1 id="Title-part1">Monitoria</h1>
-                        <h1 id="Title-part2">FGA</h1>
+        <div className="container" >
+            <div className="content">
+                <div className="presentationPanel">
+                    <div className="title">
+                        <h1 id="titlePart1">Monitoria</h1>
+                        <h1 id="titlePart2">FGA</h1>
                     </div>
-                    <div className="DescApp">
+                    <div className="descApp">
                         <text>Descrição detalhada do app e
                             apresentação de funcionalidades, é
                             nesse texto
                         </text>
                     </div>
-                    <div className="Content-img">
-                        <img className="Classroom-img"
+                    <div className="contentImg">
+                        <img className="classroomImg"
                             src={classroomImg}
                         />
                     </div>
                 </div>
 
-                <div className="Panel-login">
-                    <div className="Content-logo">
-                        <img id="Logo" src={logo} />
+                <div className="loginPanel">
+                    <div className="logoContent">
+                        <img id="logo" src={logo} />
                     </div>
 
-                    <div className="Content-userLogin">
+                    <div className="userLoginContent">
                         <LoginInput
                             icon="mail"
-                            className="UserLogin-input"
                             value="E-mail"
                         />
                         <LoginInput
                             icon="lock"
-                            className="UserLogin-input"
                             value="Senha"
                         />
                     </div>
 
 
-                    <div className="Content-userButtons">
-                        <button className="UserButton">Entrar</button>
-                        <button className="UserButton">Criar Conta</button>
+                    <div className="userButtonsGroup">
+                        <button className="userButton">Entrar</button>
+                        <button className="userButton">Criar Conta</button>
                     </div>
-                    
 
-                    <div className="Content-professorButton">
-                        <button className="ProfessorButton">
+
+                    <div className="professorButtonGroup">
+                        <button className="professorButton">
                             Entrar Como Professor
                         </button>
                     </div>
