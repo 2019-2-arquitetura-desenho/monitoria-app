@@ -1,9 +1,9 @@
 import React from 'react';
 
 
-import './Login.css';
-import LoginInput from '../../components/LoginInput/LoginInput';
-import LoginButton from '../../components/LoginButton/LoginButton';
+import './login.css';
+import LoginInput from '../../components/LoginInput/loginInput';
+import LoginButton from '../../components/LoginButton/loginButton';
 
 import logo from '../../assets/logo_full.png';
 import classroomImg from '../../assets/classroom.svg';

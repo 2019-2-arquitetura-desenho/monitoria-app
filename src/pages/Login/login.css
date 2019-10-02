@@ -4,6 +4,7 @@
     align-items: center;
     height: 100vh;
     min-height: 500px;
+    background-color: #42a0ed;
 }
 
 .content {

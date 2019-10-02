@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './LoginButton.css';
+import './loginButton.css';
 
 const LoginButton = (props) => {
     const value = props.value ? props.value : ''

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaEnvelope, FaUnlockAlt } from 'react-icons/fa';
 
-import './LoginInput.css';
+import './loginInput.css';
 
 const LoginInput = (props) => {
     const value = props.value ? props.value : '';
