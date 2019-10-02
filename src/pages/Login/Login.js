@@ -3,6 +3,7 @@ import React from 'react';
 
 import './Login.css';
 import LoginInput from '../../components/LoginInput/LoginInput';
+import LoginButton from '../../components/LoginButton/LoginButton';
 
 import logo from '../../assets/logo_full.png';
 import classroomImg from '../../assets/classroom.svg';
@@ -46,15 +47,19 @@ const Login = () => {
 
 
                     <div className="userButtonsGroup">
-                        <button className="userButton">Entrar</button>
-                        <button className="userButton">Criar Conta</button>
+                        <LoginButton
+                            value="Entrar"
+                        />
+                        <LoginButton
+                            value="Criar Conta"
+                        />
                     </div>
 
 
                     <div className="professorButtonGroup">
-                        <button className="professorButton">
-                            Entrar Como Professor
-                        </button>
+                        <LoginButton
+                            value="Entrar Como Professor"
+                        />
                     </div>
                 </div>
             </div>

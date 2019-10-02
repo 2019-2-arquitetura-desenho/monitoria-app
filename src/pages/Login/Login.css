@@ -116,28 +116,11 @@
         height: 50px;
     }
 
-        .userButton {
-            width: 40%;
-            background: #267cc1;
-            border-style: solid;
-            border-width: 1px;
-            color: #fff;
-        }
-
     .professorButtonGroup {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
         width: 30%;
-        background-color: black;
         height: 50px;
         margin: 10px;
     }
-
-        .professorButton {
-            width: 100%;
-            background: #267cc1;
-            border-style: solid;
-            border-width: 1px;
-            color: #fff;
-        }
