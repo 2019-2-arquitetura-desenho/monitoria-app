@@ -30,7 +30,7 @@ const LoginInput = (props) => {
             <div className='icon'>
                 {render_icon()}
             </div>
-            <tex className="input-text">{value}</tex>
+            <tex className="input-text">{value}:</tex>
             <input className="input-inside" type="text" />
         </div>
     );

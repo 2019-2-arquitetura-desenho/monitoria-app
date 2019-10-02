@@ -18,8 +18,7 @@ const Login = () => {
                     </div>
                     <div className="descApp">
                         <text>Descrição detalhada do app e
-                            apresentação de funcionalidades, é
-                            nesse texto
+                            apresentação de funcionalidades
                         </text>
                     </div>
                     <div className="contentImg">
