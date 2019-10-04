@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Reporte um Bug
+about: Template para abertura de issues relacionadas a bugs.
 title: Bug - Título do Bug
 labels: bug
 assignees: ''
@@ -8,10 +8,21 @@ assignees: ''
 ---
 
 ## Descrição
-...
+<!-- Sobre o quê se trata o bug? -->
 
-## Comportamento Atual
-...
+## Passos Para Reproduzir o _Bug_
+1 - ...
+2 - ...
 
-## Comportamento esperado
-...
+<!-- Imagem ou GIF disponível? -->
+
+## Comportamento Esperado
+* Comportamento 1...;
+* Compartamento 2...
+
+## Mais Informações
+<!-- Há alguma issue relacionada? -->
+
+|  Browser	| OS 	|
+|------------------	|------------	|
+|           -           |       -       |
