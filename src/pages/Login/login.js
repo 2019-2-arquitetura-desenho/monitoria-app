@@ -23,7 +23,7 @@ const Login = () => {
                         </text>
                     </div>
                     <div className="contentImg">
-                        <img className="classroomImg"
+                        <img alt="classroomImg" className="classroomImg"
                             src={classroomImg}
                         />
                     </div>
@@ -31,7 +31,7 @@ const Login = () => {
 
                 <div className="loginPanel">
                     <div className="logoContent">
-                        <img id="logo" src={logo} />
+                        <img alt="logo" id="logo" src={logo} />
                     </div>
 
                     <div className="userLoginContent">
@@ -42,6 +42,7 @@ const Login = () => {
                         <LoginInput
                             icon="lock"
                             value="Senha"
+                            password="true"
                         />
                     </div>
 
@@ -52,13 +53,6 @@ const Login = () => {
                         />
                         <LoginButton
                             value="Criar Conta"
-                        />
-                    </div>
-
-
-                    <div className="professorButtonGroup">
-                        <LoginButton
-                            value="Entrar Como Professor"
                         />
                     </div>
                 </div>
