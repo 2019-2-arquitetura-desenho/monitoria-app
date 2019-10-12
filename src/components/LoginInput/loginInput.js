@@ -6,7 +6,9 @@ import './loginInput.css';
 const LoginInput = (props) => {
     const value = props.value ? props.value : "";
     const iconText = props.icon ? props.icon : "";
-    const typeField = props.password?"password":"text";
+    const typeField = props.password ? "password" : "text";
+
+    const functionChange = props.inputValue;
 
     function render_icon() {
         if (iconText === "lock")
@@ -32,7 +34,7 @@ const LoginInput = (props) => {
                 {render_icon()}
             </div>
             <tex className="input-name">{value}:</tex>
-            <input className="input-text" type={typeField} />
+            <input className="input-text" type={typeField} onChange={functionChange} />
         </div>
     );
 }
