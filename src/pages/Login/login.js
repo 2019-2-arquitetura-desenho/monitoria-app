@@ -23,7 +23,30 @@ class Login extends Component {
 
     submit(e) {
         e.preventDefault();
-        console.log('Submited');
+        let dataToSend = {
+            userData: {
+                email: this.state.email,
+                password: this.state.password
+            }
+        };
+        console.log(dataToSend)
+        let url = 'http://localhost:3001/auth/login'
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify(dataToSend),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(response => response.json())
+            .then(responseJson => {
+                console.log(responseJson);
+                if (responseJson.success) {
+                    localStorage.setItem('MONITORIAAPP_TOKEN', responseJson.token);
+                }
+            }).catch(err => {
+                console.log('-------');
+                console.log(err);
+            })
     }
 
     emailChange(e) {
