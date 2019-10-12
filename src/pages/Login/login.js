@@ -88,7 +88,7 @@ class Login extends Component {
                             <img alt="logo" id="logo" src={logo} />
                         </div>
 
-                        <form onSubmit={this.submit}>
+                        <form onSubmit={this.submit} className="formLogin">
                             <div className="userLoginContent">
                                 <LoginInput
                                     icon="mail"
