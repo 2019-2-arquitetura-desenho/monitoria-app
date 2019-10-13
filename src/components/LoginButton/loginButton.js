@@ -4,8 +4,11 @@ import './loginButton.css';
 
 const LoginButton = (props) => {
     const value = props.value ? props.value : ''
+    const actionButton = props.onClick ? props.onClick : ''
     return (
-        <button className="buttonStyle">{value}</button>
+        <button className="buttonStyle" onClick={actionButton}>
+            {value}
+        </button>
     );
 }
 

@@ -8,10 +8,13 @@ import LoginButton from '../../components/LoginButton/loginButton';
 import logo from '../../assets/logo_full.png';
 import classroomImg from '../../assets/classroom.svg';
 
+import { withRouter } from 'react-router-dom';
+
 class Login extends Component {
     constructor() {
         super();
-        this.submit = this.submit.bind(this);
+        this.submitLogin = this.submitLogin.bind(this);
+        this.submitSignUp = this.submitSignUp.bind(this);
         this.emailChange = this.emailChange.bind(this);
         this.passwordChange = this.passwordChange.bind(this);
 
@@ -21,7 +24,11 @@ class Login extends Component {
         }
     }
 
-    submit(e) {
+    nextPath(path) {
+        this.props.history.push(path);
+    }
+
+    submitLogin(e) {
         e.preventDefault();
         let dataToSend = {
             userData: {
@@ -42,11 +49,16 @@ class Login extends Component {
                 console.log(responseJson);
                 if (responseJson.success) {
                     localStorage.setItem('MONITORIAAPP_TOKEN', responseJson.token);
+                    this.nextPath('/home');
                 }
             }).catch(err => {
                 console.log('-------');
                 console.log(err);
             })
+    }
+
+    submitSignUp(e) {
+
     }
 
     emailChange(e) {
@@ -88,7 +100,7 @@ class Login extends Component {
                             <img alt="logo" id="logo" src={logo} />
                         </div>
 
-                        <form onSubmit={this.submit} className="formLogin">
+                        <form className="formLogin">
                             <div className="userLoginContent">
                                 <LoginInput
                                     icon="mail"
@@ -103,17 +115,19 @@ class Login extends Component {
                                 />
                             </div>
 
-
-
                             <div className="userButtonsGroup">
                                 <LoginButton
                                     value="Entrar"
+                                    onClick={this.submitLogin}
                                 />
                                 <LoginButton
                                     value="Criar Conta"
+                                    onClick={this.submitSignUp}
                                 />
                             </div>
+
                         </form>
+
 
                     </div>
                 </div>
@@ -122,4 +136,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default withRouter(Login);
