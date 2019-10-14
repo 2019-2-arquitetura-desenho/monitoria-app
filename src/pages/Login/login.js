@@ -10,6 +10,8 @@ import classroomImg from '../../assets/classroom.svg';
 
 import { withRouter } from 'react-router-dom';
 
+const host_api = process.env.REACT_APP_URL_API;
+
 class Login extends Component {
     constructor() {
         super();
@@ -37,7 +39,7 @@ class Login extends Component {
             }
         };
         console.log(dataToSend)
-        let url = 'http://localhost:3001/auth/login'
+        let url = host_api + '/auth/login'
         fetch(url, {
             method: "POST",
             body: JSON.stringify(dataToSend),

@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import * as serviceWorker from './serviceWorker';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import App from './pages/app';
 import Login from './pages/Login/login';
 import Register from './pages/Register/register';
 import Home from './pages/Home/home';
 
-import * as serviceWorker from './serviceWorker';
+import './index.css';
+
+require('dotenv').config();
 
 
 export class Routes extends React.Component {
