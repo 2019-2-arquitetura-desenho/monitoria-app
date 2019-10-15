@@ -31,15 +31,14 @@ class Login extends Component {
     }
 
     submitLogin(e) {
+        if (!this.state.email || !this.state.password)
+            return;
         e.preventDefault();
         let dataToSend = {
-            userData: {
-                email: this.state.email,
-                password: this.state.password
-            }
+            email: this.state.email,
+            password: this.state.password
         };
-        console.log(dataToSend)
-        let url = host_api + '/auth/login'
+        let url = host_api + '/login/'
         fetch(url, {
             method: "POST",
             body: JSON.stringify(dataToSend),
@@ -48,8 +47,8 @@ class Login extends Component {
             }
         }).then(response => response.json())
             .then(responseJson => {
-                console.log(responseJson);
-                if (responseJson.success) {
+                if (responseJson.token) {
+                    console.log(responseJson);
                     localStorage.setItem('MONITORIAAPP_TOKEN', responseJson.token);
                     this.nextPath('/home');
                 }
@@ -60,7 +59,7 @@ class Login extends Component {
     }
 
     submitSignUp(e) {
-
+        e.preventDefault();
     }
 
     emailChange(e) {
@@ -102,19 +101,21 @@ class Login extends Component {
                             <img alt="logo" id="logo" src={logo} />
                         </div>
 
-                        <form className="formLogin">
+                        <form className="formLogin" onSubmit={this.submitLogin}>
                             <div className="userLoginContent">
                                 <LoginInput
                                     icon="mail"
                                     value="E-mail"
+                                    type="email"
                                     inputValue={this.emailChange}
                                 />
                                 <LoginInput
                                     icon="lock"
                                     value="Senha"
-                                    password="true"
+                                    type="password"
                                     inputValue={this.passwordChange}
                                 />
+
                             </div>
 
                             <div className="userButtonsGroup">
@@ -127,7 +128,6 @@ class Login extends Component {
                                     onClick={this.submitSignUp}
                                 />
                             </div>
-
                         </form>
 
 

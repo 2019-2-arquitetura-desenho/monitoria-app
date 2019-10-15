@@ -6,7 +6,7 @@ import './loginInput.css';
 const LoginInput = (props) => {
     const value = props.value ? props.value : "";
     const iconText = props.icon ? props.icon : "";
-    const typeField = props.password ? "password" : "text";
+    const typeField = props.type ? props.type : "text";
 
     const functionChange = props.inputValue;
 
@@ -34,7 +34,7 @@ const LoginInput = (props) => {
                 {render_icon()}
             </div>
             <tex className="input-name">{value}:</tex>
-            <input className="input-text" type={typeField} onChange={functionChange} />
+            <input className="input-text" type={typeField} onChange={functionChange} required />
         </div>
     );
 }
