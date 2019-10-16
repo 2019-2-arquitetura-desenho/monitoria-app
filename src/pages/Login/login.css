@@ -1,0 +1,129 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    min-height: 500px;
+    background-color: #42a0ed;
+}
+
+.content {
+    background-color: #267cc1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 90%;
+    width: 80%;
+}
+
+/* Presentation Panel */
+
+.presentationPanel {
+    display: none;
+}
+
+    @media (min-width: 720px) {
+        .presentationPanel {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 100%;
+            width: 40%;
+        }
+    }
+
+    .title {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    #titlePart1 {
+        color: #ffffff;
+    }
+
+    #titlePart2 {
+        margin-left: 8px;
+        color: #5e1dad;
+    }
+
+    .descApp {
+        width: 60%;
+        align-self: center;
+        color: #ffd700;
+        font-size: 100%;
+    }
+
+    .contentImg {
+        display: flex;
+        width: 100%;
+        height: 50%;
+        justify-content: center;
+        position: static;
+        margin-top: 20px;
+    }
+
+    .classroomImg {
+        height: 100%;
+    }
+
+/* Login Panel */
+
+.loginPanel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+}
+
+    @media (min-width: 720px) {
+        .loginPanel {
+            width: 60%;
+        }
+    }
+
+    .logoContent {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        margin-top: 20px;
+        position: relative;
+    }
+
+        #logo {
+            width: 35%;
+            position: relative;
+        }
+
+    .formLogin {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 100%;
+        height: 60%;
+        margin: 0;
+        padding: 0;
+    }
+
+        .userLoginContent {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        .userButtonsGroup {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            margin-top: 10px;
+            margin-left: 20px;
+            margin-right: 20px; 
+            align-self: center;
+            width: 350px;
+            height: 50px;
+        }

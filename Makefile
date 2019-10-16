@@ -21,4 +21,4 @@ server:
 	sudo docker-compose up --build
 
 bash:
-	sudo docker exec -it monitoria-api sh
+	sudo docker exec -it monitoria-app sh
