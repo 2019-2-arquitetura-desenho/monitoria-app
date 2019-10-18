@@ -65,10 +65,10 @@ class Login extends Component {
           this.nextPath('/home');
         }
         else if (responseJson.email) {
-          this.togglePopup(responseJson.email, "error")
+          this.togglePopup("Insira um formato de email válido", "error")
         }
         else if (responseJson.non_field_errors) {
-          this.togglePopup(responseJson.non_field_errors, "error")
+          this.togglePopup("Email ou senha inválidos", "error")
         }
       }).catch(err => {
         console.log('-------');
