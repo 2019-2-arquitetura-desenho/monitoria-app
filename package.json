@@ -37,5 +37,18 @@
   },
   "devDependencies": {
     "dotenv": "^8.1.0"
-  }
+  },
+  "description": "Repositório destinado ao FRONT da aplicação \"A Monitoria\".",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2019-2-arquitetura-desenho/monitoria-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/2019-2-arquitetura-desenho/monitoria-app/issues"
+  },
+  "homepage": "https://github.com/2019-2-arquitetura-desenho/monitoria-app#readme"
 }
