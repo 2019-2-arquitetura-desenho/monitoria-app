@@ -14,7 +14,8 @@ import './index.css';
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 const store = createStoreWithMiddleware(
     reducers,
-    windown.__REDUX_DECTOOLS_EXTENSION__ && window.__REDUX_DECTOOLS_EXTENSION__()
-)
+    // Para utilizar o ReduxDevTools - AmbDev
+    window.__REDUX_DECTOOLS_EXTENSION__ && window.__REDUX_DECTOOLS_EXTENSION__()
+);
 
 ReactDOM.render(<Root store={store}/>, document.getElementById('root'));
