@@ -1,55 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Menu from './containers/NavgationMenu/navigationMenu';
-import PageShell from './components/PageShell/pageShell';
-import App from './pages/app';
-import Login from './pages/Login/login';
-import Register from './pages/Register/register';
-import Home from './pages/Home/home';
-import PersonalInfos from './pages/PersonalInfos/personalInfos';
-import SearchMonitoring from './pages/SearchMonitoring/searchMonitoring';
-import Results from './pages/Results/results';
-
+import Root from './skins/root';
 
 import './index.css';
 
+
 require('dotenv').config();
 
-export class Routes extends React.Component {
-
-    pathNotInBlackList() {
-        const path = window.location.pathname;
-        return path !== '/' && path !== '/login'
-            && path !== '/register'
-    }
-
-    render() {
-        return (
-            <div>
-                <BrowserRouter>
-                    {this.pathNotInBlackList() &&
-                        <div>
-                            <Menu />
-                        </div>
-                    }
-                    <Switch>
-                        <Route exact path="/" component={App} />
-                        <Route path="/login" component={Login} />
-                        <Route path="/register" component={PageShell(Register)} />
-                        <Route path="/home" component={PageShell(Home)} />
-                        <Route path="/personal-infos" component={PageShell(PersonalInfos)} />
-                        <Route path="/search-monitoring" component={PageShell(SearchMonitoring)} />
-                        <Route path="/results" component={PageShell(Results)} />
-
-                    </Switch>
-                </BrowserRouter>
-            </div>
-        );
-    }
-}
-
-ReactDOM.render(
-    <Routes />
-    , document.getElementById('root'));
+ReactDOM.render(<Root />, document.getElementById('root'));
