@@ -4,9 +4,9 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import PrivateRoute from './privateRoute';
-import Login from './containers/Login/login';
-import Register from './containers/Register/register';
-import Home from './containers/Home/home';
+import Home from './containers/home';
+import Login from './containers/login';
+import Register from './containers/register';
 
 
 const Root = ({ store }) => (
