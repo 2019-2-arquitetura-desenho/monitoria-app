@@ -1,11 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore, applyMiddleware } from 'redux';
+import reduxThunk from 'redux-thunk';
 
+import reducers from './store/reducers';
 import Root from './skins/root';
 
 import './index.css';
 
 
-require('dotenv').config();
+// require('dotenv').config();
 
-ReactDOM.render(<Root />, document.getElementById('root'));
+const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
+const store = createStoreWithMiddleware(reducers)
+
+ReactDOM.render(<Root store={store}/>, document.getElementById('root'));
