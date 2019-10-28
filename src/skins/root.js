@@ -4,13 +4,17 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import PrivateRoute from './privateRoute';
+import Login from './containers/Login/login';
+import Register from './containers/Register/register';
+import Home from './containers/Home/home';
 
 
 const Root = ({ store }) => (
     <Provider store={ store }>
         <Router>
-            <Route></Route>
-            <PrivateRoute></PrivateRoute>
+            <Route exact path="login" component={ Login } />
+            <Route exact path="/cadastro" component={ Register } />
+            <PrivateRoute exact path="/" component={ Home } />
         </Router>
     </Provider>
 )
