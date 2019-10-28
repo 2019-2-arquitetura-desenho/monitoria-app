@@ -4,8 +4,9 @@ import {
     createMuiTheme,
     MuiThemeProvider,
     CssBaseline, 
-    Container,
     Typography,
+    Grid,
+    Box
 } from '@material-ui/core';
 
 
@@ -14,10 +15,17 @@ class Register extends React.Component {
         return (
             <MuiThemeProvider theme={ theme }>
                 <CssBaseline />
-                <Container maxWidth="false" style={ styles.container }>
-                    <Typography component="div" style={ styles.content }>
+                <Grid container style={ styles.screenBackground }>
+                    <Typography component="div" style={ styles.screenContent }>
+                        <Grid container spacing={1}>
+                            <Grid item xs={12}>
+                                <Typography variant="h2" style={ styles.mainTitle }>
+                                    Criar Conta
+                                </Typography>
+                            </Grid>
+                        </Grid>
                     </Typography>
-                </Container>
+                </Grid>
             </MuiThemeProvider>
         );
     }
@@ -32,19 +40,26 @@ const theme = createMuiTheme({
 })
 
 const styles = {
-    container: {
-        display: "flex",
+    screenBackground: {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
         // minHeight: "500px"
     },
-    content: {
+    screenContent: {
         height: "85%",
-        width: "95%",
+        width: "92%",
         display: "flex", 
         backgroundColor: "#ffffff"
     },
+    mainTitle: {
+        marginTop: "3%",
+        marginBottom: "3%",
+        textAlign: "center",
+        color: "#267cc1",
+        fontWeight: "bold",
+        // fontFamily: "fontFamily"
+    }
 }
 
 export default Register;
