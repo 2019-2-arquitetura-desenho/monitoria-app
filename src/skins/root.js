@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-
+import PrivateRoute from './privateRoute';
 
 
 const Root = ({ store }) => (
     <Provider store={ store }>
         <Router>
             <Route></Route>
+            <PrivateRoute></PrivateRoute>
         </Router>
     </Provider>
 )
