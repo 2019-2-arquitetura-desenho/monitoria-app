@@ -12,6 +12,9 @@ import './index.css';
 // require('dotenv').config();
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
-const store = createStoreWithMiddleware(reducers)
+const store = createStoreWithMiddleware(
+    reducers,
+    windown.__REDUX_DECTOOLS_EXTENSION__ && window.__REDUX_DECTOOLS_EXTENSION__()
+    )
 
 ReactDOM.render(<Root store={store}/>, document.getElementById('root'));
