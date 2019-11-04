@@ -1,6 +1,11 @@
 import React from 'react';
 
-import { InputAdornment, IconButton,  withStyles, TextField } from '@material-ui/core'; 
+import { 
+    InputAdornment,
+    IconButton,
+    withStyles,
+    TextField
+} from '@material-ui/core'; 
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import EmailIcon from '@material-ui/icons/Email';
@@ -12,8 +17,8 @@ import Visibility from '@material-ui/icons/Visibility';
 class InputText extends React.Component {
     render() {
         const {
-            id, type, label, value, onChange,
-            valueVisibility, onClickShow, onMouseDown
+            id, type, label, value, onChange, valueVisibility,
+            onClickShow, onMouseDown, error
         } = this.props;
         
         let inputProps = ""
@@ -22,7 +27,9 @@ class InputText extends React.Component {
             inputProps = {
                 startAdornment: (
                     <InputAdornment position="start">
-                        <AccountCircleIcon style={ styles.iconTextField } />
+                        <AccountCircleIcon 
+                            style={ styles.iconTextField }
+                        />
                     </InputAdornment>
                 )
             }
@@ -30,7 +37,9 @@ class InputText extends React.Component {
             inputProps = {
                 startAdornment: (
                     <InputAdornment position="start">
-                        <EmailIcon style={ styles.iconTextField } />
+                        <EmailIcon
+                            style={ styles.iconTextField }
+                        />
                     </InputAdornment>
                 )
             }
@@ -38,7 +47,9 @@ class InputText extends React.Component {
             inputProps = {
                 startAdornment: (
                     <InputAdornment position="start">
-                        <LockIcon style={ styles.iconTextField } />
+                        <LockIcon
+                            style={ styles.iconTextField }
+                        />
                     </InputAdornment>
                 ), 
                 endAdornment: (
@@ -49,7 +60,9 @@ class InputText extends React.Component {
                             onClick={ onClickShow }
                             onMouseDown={ onMouseDown }
                         >
-                            { valueVisibility ? <VisibilityOff /> : <Visibility /> }
+                            { valueVisibility ? 
+                                <VisibilityOff /> : <Visibility />
+                            }
                         </IconButton>
                     </InputAdornment>
                 )
@@ -69,7 +82,9 @@ class InputText extends React.Component {
                             onClick={ onClickShow }
                             onMouseDown={ onMouseDown }
                         >
-                            { valueVisibility ? <VisibilityOff /> : <Visibility /> }
+                            { valueVisibility ? 
+                                <VisibilityOff /> : <Visibility />
+                            }
                         </IconButton>
                     </InputAdornment>
                 )
@@ -86,6 +101,8 @@ class InputText extends React.Component {
                 value={ value }
                 onChange={ onChange }
                 InputProps={ inputProps }
+                error={ error ? true : false }
+                helperText={ error }
             />
         );
     }
