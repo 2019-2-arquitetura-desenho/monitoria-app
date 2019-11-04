@@ -10,6 +10,7 @@ import {
 
 import MainTitle from './components/MainTitle/mainTitle';
 import InputText from './components/InputText/inputText';
+import FileSubmit from './components/FileSubmit/fileSubmit';
 
 
 class Register extends React.Component {
@@ -23,7 +24,11 @@ class Register extends React.Component {
             password: '',
             showPassword: false,
             confirmPassword: '',
-            showConfirmPassword: false
+            showConfirmPassword: false,
+
+            isUploadDialogOpen: false,
+            isFileSubmit: false,
+            fileSubmit: [],
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -31,6 +36,12 @@ class Register extends React.Component {
         this.handleMouseDownPassword = this.handleMouseDownPassword.bind(this);
         this.handleClickShowConfirmPassword = this.handleClickShowConfirmPassword.bind(this);
         this.handleMouseDownConfirmPassword = this.handleMouseDownConfirmPassword.bind(this);
+        this.handleClickOpenUploadDialog = this.handleClickOpenUploadDialog.bind(this);
+        this.handleCloseUploadDialog = this.handleCloseUploadDialog.bind(this);
+        this.onUpdateFileUploadDialog = this.onUpdateFileDialog.bind(this);
+        this.handleCancelUploadDialog = this.handleCancelUploadDialog.bind(this);
+        this.handleConfirmUploadDialog = this.handleConfirmUploadDialog.bind(this);
+        this.onUpdateFileUploadScreen = this.onUpdateFileUploadScreen.bind(this);
     }
 
     handleChange(event) {
@@ -53,8 +64,43 @@ class Register extends React.Component {
         event.preventDefault();
     }
 
+    handleClickOpenUploadDialog() {
+        this.setState({ isUploadDialogOpen: true });
+    }
+
+    handleCloseUploadDialog() {
+        this.setState({ isUploadDialogOpen: false });
+    }
+
+    onUpdateFileDialog(fileItems) {
+        this.setState({ fileSubmit: fileItems.map(fileItem => fileItem.file) })
+    }
+
+    handleCancelUploadDialog() {
+        this.setState({ isUploadDialogOpen: false })
+    }
+
+    handleConfirmUploadDialog() {
+        if (this.state.fileSubmit === undefined){
+            this.setState({ isUploadDialogOpen: false });
+        } else if (this.state.fileSubmit === 0){
+            this.setState({ isUploadDialogOpen: false })
+        } else {
+            this.setState({ isUploadDialogOpen: false, isFileSubmit: true });
+        }
+    }
+
+    onUpdateFileUploadScreen(fileItems) {
+        if (this.state.fileSubmit.length !== fileItems.map(fileItem => fileItem.file).length){
+            this.setState({ fileSubmit: fileItems.map(fileItem => fileItem.file) })
+        }
+    }
+
     render() {
-        const { name, email, password, showPassword, confirmPassword, showConfirmPassword} = this.state;
+        const { 
+            name, email, password, showPassword, confirmPassword, showConfirmPassword,
+            fileSubmit, isFileSubmit, isUploadDialogOpen
+        } = this.state;
 
         return (
             <MuiThemeProvider theme={ theme }>
@@ -98,6 +144,17 @@ class Register extends React.Component {
                                     onMouseDown={ this.handleMouseDownConfirmPassword }
                                     valueVisibility={ showConfirmPassword }
                                 />
+                                <FileSubmit 
+                                    isFileSubmit={ isFileSubmit }
+                                    fileSubmit={ fileSubmit }
+                                    onButtonUploadClick={ this.handleClickOpenUploadDialog }
+                                    isUploadDialogOpen={ isUploadDialogOpen }
+                                    onCloseUploadDialog={ this.handleCloseUploadDialog }
+                                    onUpdateFileUploadDialog={ this.onUpdateFileUploadDialog }
+                                    onClickCancelUploadDialog={ this.handleCancelUploadDialog }
+                                    onClickConfirmUploadDialog={ this.handleConfirmUploadDialog }
+                                    onUpdateFileUploadScreen={ this.onUpdateFileUploadScreen }    
+                                />
                             </Grid>
                         </Grid>
                     </Typography>
@@ -110,7 +167,14 @@ class Register extends React.Component {
 const theme = createMuiTheme({
     palette: {
         background: {
-            default: "#42a0ed",
+            default: "#42a0ed"
+        },
+        primary: {
+            main: "#42a0ed",
+            contrastText: "white"
+        }, 
+        secondary: {
+            main: "#267cc1"
         }
     }
 })
@@ -123,8 +187,9 @@ const styles = {
         // minHeight: "500px"
     },
     screenContent: {
-        height: "85%",
         width: "92%",
+        marginTop: "3%",
+        marginBottom: "3%",
         backgroundColor: "#ffffff"
     }
 }
