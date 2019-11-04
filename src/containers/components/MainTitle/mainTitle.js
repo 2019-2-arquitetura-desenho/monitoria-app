@@ -3,7 +3,7 @@ import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 
 
-class MainTitle extends React.Component{
+class MainTitle extends React.Component {
     render() {
         return (
             <Grid item xs={12}>

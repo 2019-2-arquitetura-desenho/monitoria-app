@@ -9,7 +9,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Visibility from '@material-ui/icons/Visibility';
 
 
-class InputText extends React.Component{
+class InputText extends React.Component {
     render() {
         const {
             id, type, label, value, onChange,
