@@ -11,6 +11,7 @@ import {
 import MainTitle from './components/MainTitle/mainTitle';
 import InputText from './components/InputText/inputText';
 import FileSubmit from './components/FileSubmit/fileSubmit';
+import SubmitButton from './components/SubmitButton/submitButton';
 
 
 class Register extends React.Component {
@@ -18,6 +19,8 @@ class Register extends React.Component {
         super(props);
 
         this.state = {
+            loading: false,
+
             name: '',
             email: '',
 
@@ -29,6 +32,8 @@ class Register extends React.Component {
             isUploadDialogOpen: false,
             isFileSubmit: false,
             fileSubmit: [],
+
+            inputErrors: {},
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -42,6 +47,7 @@ class Register extends React.Component {
         this.handleCancelUploadDialog = this.handleCancelUploadDialog.bind(this);
         this.handleConfirmUploadDialog = this.handleConfirmUploadDialog.bind(this);
         this.onUpdateFileUploadScreen = this.onUpdateFileUploadScreen.bind(this);
+        this.onPressSubmit = this.onPressSubmit.bind(this);
     }
 
     handleChange(event) {
@@ -96,10 +102,69 @@ class Register extends React.Component {
         }
     }
 
+    onPressSubmit() {
+        var inputErrors = {}
+
+        let f_errorName = false
+        let f_errorEmail = false
+        let f_errorPassword = false
+        let f_errorConfirmPassword = false
+        
+        let name = this.state.name
+        let email = this.state.email
+        let password = this.state.password
+        let confirmPassword = this.state.confirmPassword
+
+        if(!name){
+            inputErrors['name'] = "Digite o nome";
+            f_errorName = true;
+        }
+
+        if (!email){
+            inputErrors['email'] = "Digite o email";
+            f_errorEmail = true;
+          } else if (!email.includes("@") || !email.includes(".com")) {
+            inputErrors['email'] = "Digite um e-mail válido";
+            f_errorEmail = true;
+          }
+      
+          if (!password){
+            inputErrors['password'] = "Digite uma senha";
+            f_errorPassword = true;
+          } else {
+            if (password.length < 8){
+              inputErrors['password'] = "Use 8 caracteres ou mais para a sua senha";
+              f_errorPassword = true;
+            } else if (password.length > 16){
+              inputErrors['password'] = "Use 16 caracteres ou menos para a sua senha";
+              f_errorPassword = true;
+            }
+          }
+
+          if(!f_errorPassword){
+            if(!confirmPassword){
+              inputErrors['confirmPassword'] = "Confirme sua senha";
+              f_errorConfirmPassword = true;
+            } else if (password !== confirmPassword){
+              inputErrors['confirmPassword'] = "As senhas não coincidem";
+              f_errorConfirmPassword = true;
+            }
+          }
+
+          this.setState({ inputErrors: inputErrors })
+   
+        if (!f_errorName && !f_errorEmail && !f_errorPassword && !f_errorConfirmPassword){
+            // enviar requisição de registro
+      
+            this.setState({ loading: true });
+          }
+    }
+
+
     render() {
         const { 
             name, email, password, showPassword, confirmPassword, showConfirmPassword,
-            fileSubmit, isFileSubmit, isUploadDialogOpen
+            fileSubmit, isFileSubmit, isUploadDialogOpen, inputErrors
         } = this.state;
 
         return (
@@ -116,6 +181,7 @@ class Register extends React.Component {
                                     label="Nome*"
                                     value={ name }
                                     onChange={ this.handleChange }
+                                    error={ inputErrors.name }
                                 />
                                 <InputText
                                     id="email"
@@ -123,6 +189,7 @@ class Register extends React.Component {
                                     label="Email*"
                                     value={ email }
                                     onChange={ this.handleChange }
+                                    error={ inputErrors.email }
                                 />
                                 <InputText
                                     id="password"
@@ -133,6 +200,7 @@ class Register extends React.Component {
                                     onClickShow={ this.handleClickShowPassword }
                                     onMouseDown={ this.handleMouseDownPassword }
                                     valueVisibility={ showPassword }
+                                    error={ inputErrors.password }
                                 />
                                 <InputText
                                     id="confirmPassword"
@@ -143,6 +211,7 @@ class Register extends React.Component {
                                     onClickShow={ this.handleClickShowConfirmPassword }
                                     onMouseDown={ this.handleMouseDownConfirmPassword }
                                     valueVisibility={ showConfirmPassword }
+                                    error={ inputErrors.confirmPassword }
                                 />
                                 <FileSubmit 
                                     isFileSubmit={ isFileSubmit }
@@ -154,6 +223,10 @@ class Register extends React.Component {
                                     onClickCancelUploadDialog={ this.handleCancelUploadDialog }
                                     onClickConfirmUploadDialog={ this.handleConfirmUploadDialog }
                                     onUpdateFileUploadScreen={ this.onUpdateFileUploadScreen }    
+                                />
+                                <SubmitButton 
+                                    titleButton="Criar Conta"
+                                    onClickSubmitButton={ this.onPressSubmit }
                                 />
                             </Grid>
                         </Grid>
