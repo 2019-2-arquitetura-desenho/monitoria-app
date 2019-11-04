@@ -23,8 +23,9 @@ class FileSubmit extends React.Component {
     render() {
         const { 
             isFileSubmit, fileSubmit, onButtonUploadClick, isUploadDialogOpen,
-            onCloseUploadDialog, onUpdateFileUploadDialog, onClickCancelUploadDialog,
-            onClickConfirmUploadDialog, onUpdateFileUploadScreen
+            onCloseUploadDialog, onUpdateFileUploadDialog, 
+            onClickCancelUploadDialog, onClickConfirmUploadDialog,
+            onUpdateFileUploadScreen
         } = this.props
 
         if (!isFileSubmit || fileSubmit.length===0){
