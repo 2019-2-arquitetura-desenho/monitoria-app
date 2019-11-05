@@ -7,6 +7,7 @@ import {
     MuiThemeProvider,
     CssBaseline, 
     Grid,
+    CircularProgress,
     Typography,
     Box
 } from '@material-ui/core';
@@ -59,20 +60,31 @@ class Register extends React.Component {
 
     componentDidUpdate() {
         if (this.props.requisitionError !== undefined && this.state.loading===true){
+            this.props.restartRegister();
 
             if (this.props.requisitionError === "Error: Network Error"){
-                this.props.restartRegister();
-
                 console.log("Erro de Rede");
+                
                 this.setState({
                     mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
                     loading: false
                 });
+            } else {
+                console.log("Erro relacionado aos campos de entrada de texto do formulário de cadastro");
+                
+                let inputErrors = {}
+                if (this.props.requisitionError.data.name){
+                    inputErrors['name'] = this.props.requisitionError.data.name
+                }
+                if (this.props.requisitionError.data.email){
+                    inputErrors['email'] = this.props.requisitionError.data.email
+                }
+
+                this.setState({
+                    inputErrors: inputErrors,
+                    loading: false
+                })
             }
-            // else {
-            //     console.log(this.props.requisitionError.data.email);
-            //     this.setState({loading: false});     
-            // }
         }
     }
 
@@ -181,7 +193,9 @@ class Register extends React.Component {
 
         if (!f_errorName && !f_errorEmail && !f_errorPassword && !f_errorConfirmPassword){
             this.setState({ loading: true, mainError: "" });
-            this.props.register(name, email, password, this.state.fileSubmit);
+
+            clearTimeout();
+            setTimeout( function(){ this.props.register(name, email, password, this.state.fileSubmit) }.bind(this), 1000);
         }
     }
 
@@ -192,12 +206,18 @@ class Register extends React.Component {
         } = this.state;
     
         if(loading){
-            return <h1>Loading</h1>
+            return (
+                <Grid item xs={12} sm={6}>
+                    <div style={ styles.progress }>
+                        <CircularProgress color="secondary" />
+                    </div>
+                </Grid>
+            );
         } else {
             return (
                 <Grid item xs={12} sm={6}>
                     <MainError 
-                        error={mainError}   
+                        error={ mainError }   
                     />
                     <InputText
                         id="name"
@@ -253,7 +273,7 @@ class Register extends React.Component {
                         onClickSubmitButton={ this.onPressSubmit }
                     />
                 </Grid>
-            )
+            );
         }
     }
 
@@ -337,6 +357,11 @@ const styles = {
         marginBottom: "16%",
         fontWeight: "bold",
         // fontFamily: 'fontFamily'
+    }, 
+    progress: {
+        display: "flex",
+        marginTop: "25%",
+        marginLeft: "50%",
     }
 }
 
