@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { 
+import {
     InputAdornment,
     IconButton,
     withStyles,
@@ -51,7 +51,7 @@ class InputText extends React.Component {
                             style={ styles.iconTextField }
                         />
                     </InputAdornment>
-                ), 
+                ),
                 endAdornment: (
                     <InputAdornment position="end">
                         <IconButton
@@ -60,7 +60,7 @@ class InputText extends React.Component {
                             onClick={ onClickShow }
                             onMouseDown={ onMouseDown }
                         >
-                            { valueVisibility ? 
+                            { valueVisibility ?
                                 <VisibilityOff /> : <Visibility />
                             }
                         </IconButton>
@@ -82,7 +82,7 @@ class InputText extends React.Component {
                             onClick={ onClickShow }
                             onMouseDown={ onMouseDown }
                         >
-                            { valueVisibility ? 
+                            { valueVisibility ?
                                 <VisibilityOff /> : <Visibility />
                             }
                         </IconButton>

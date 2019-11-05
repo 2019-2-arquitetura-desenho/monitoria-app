@@ -19,8 +19,8 @@ export function register(name, email, password, document){
                 console.log('Error: ERR_CONNECTION_REFUSED');
                 dispatch({ type: 'REGISTER_ERROR', payload: 'Error: Network Error' });
             } else {
-                console.log('Error', error.response)
-                dispatch({ type: "REGISTER_ERROR", payload: error.response })
+                console.log('Error', error.response);
+                dispatch({ type: "REGISTER_ERROR", payload: error.response });
             }
         });
     }
@@ -28,6 +28,7 @@ export function register(name, email, password, document){
 
 export function restartRegister(){
     return function(dispatch){
-        dispatch({ type: "RESTART_REGISTER" })
+        console.log('Reiniciando cadastro.');
+        dispatch({ type: "RESTART_REGISTER" });
     }
 }

@@ -5,20 +5,20 @@ import { Button } from '@material-ui/core';
 
 class SubmitButton extends React.Component {
     render(){
-        const { 
+        const {
             onClickSubmitButton, titleButton
         } = this.props
 
         return (
             <Button
                 variant="contained"
-                    color="secondary"
-                    size="large"
-                    style={ styles.submitButton }
-                    onClick={ onClickSubmitButton }
-                >
-                    { titleButton }
-                </Button>
+                color="secondary"
+                size="large"
+                style={ styles.submitButton }
+                onClick={ onClickSubmitButton }
+            >
+                { titleButton }
+            </Button>
             )
         }
     }

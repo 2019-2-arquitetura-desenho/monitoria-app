@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
     Typography
-} from '@material-ui/core' 
+} from '@material-ui/core'
 
 
 class errorText extends React.Component {
