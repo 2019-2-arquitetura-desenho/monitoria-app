@@ -1,15 +1,9 @@
 import React from 'react';
 import { FilePond, registerPlugin } from 'react-filepond';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 
-import { 
-    Button,
-    Dialog,
-    DialogContent, 
-    DialogTitle, 
-    DialogContentText,
-    DialogActions
-} from '@material-ui/core';
+import { Button, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions } from '@material-ui/core';
 
 import FileUploadIcon from '@material-ui/icons/CloudUpload';
 
@@ -17,15 +11,13 @@ import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 
 
-registerPlugin(FilePondPluginImagePreview);
+registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
 
 class FileSubmit extends React.Component {
     render() {
-        const { 
-            isFileSubmit, fileSubmit, onButtonUploadClick, isUploadDialogOpen,
-            onCloseUploadDialog, onUpdateFileUploadDialog, 
-            onClickCancelUploadDialog, onClickConfirmUploadDialog,
-            onUpdateFileUploadScreen
+        const {
+            isFileSubmit, fileSubmit, onButtonUploadClick, isUploadDialogOpen, onCloseUploadDialog, onUpdateFileUploadDialog, 
+            onClickCancelUploadDialog, onClickConfirmUploadDialog, onUpdateFileUploadScreen
         } = this.props
 
         if (!isFileSubmit || fileSubmit.length===0){
@@ -39,7 +31,7 @@ class FileSubmit extends React.Component {
                         onClick={ onButtonUploadClick }
                         startIcon={ <FileUploadIcon /> }
                     >
-                        Enviar Documento
+                        Enviar Histórico Escolar
                     </Button>
                     <Dialog
                         fullWidth={ true }
@@ -53,26 +45,18 @@ class FileSubmit extends React.Component {
                             Enviar Documento
                         </DialogTitle>
                         <DialogContent>
+                            <DialogContentText id="max-width-dialog-description">
+                                Envie-nos, em <b>formato PDF</b>, o seu histórico escolar universitário.
+                            </DialogContentText>
                             <FilePond 
                                 files={ fileSubmit }
                                 onupdatefiles={ onUpdateFileUploadDialog }
+                                labelIdle='Arraste e Solte seu arquivo ou <span class="filepond--label-action">Escolha</span>'
+                                acceptedFileTypes={['application/pdf']}
                             />
-                            <DialogContentText id="max-width-dialog-description">
-                                **Explicações
-                            </DialogContentText>
                             <DialogActions>
-                                <Button 
-                                    onClick={ onClickCancelUploadDialog }
-                                    color="primary"
-                                >
-                                    Cancelar
-                                </Button>
-                                <Button
-                                    onClick={ onClickConfirmUploadDialog }
-                                    color="secondary"
-                                >
-                                    Confirmar
-                                </Button>
+                                <Button onClick={ onClickCancelUploadDialog } color="primary">Cancelar</Button>
+                                <Button onClick={ onClickConfirmUploadDialog } color="secondary">Confirmar</Button>
                             </DialogActions>
                         </DialogContent>
                     </Dialog>

@@ -5,14 +5,14 @@ import { register, restartRegister } from '../store/actions';
 import {
     createMuiTheme,
     MuiThemeProvider,
-    CssBaseline, 
+    CssBaseline,
     Grid,
     CircularProgress,
     Typography,
     Box
 } from '@material-ui/core';
 
-import doubtIcon from './assets/doubtIcon.svg'
+import doubtIcon from './assets/doubtIcon.svg';
 
 import MainTitle from './components/MainTitle/mainTitle';
 import InputText from './components/InputText/inputText';
@@ -64,14 +64,14 @@ class Register extends React.Component {
 
             if (this.props.requisitionError === "Error: Network Error"){
                 console.log("Erro de Rede");
-                
+
                 this.setState({
                     mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
                     loading: false
                 });
             } else {
                 console.log("Erro relacionado aos campos de entrada de texto do formulário de cadastro");
-                
+
                 let inputErrors = {}
                 if (this.props.requisitionError.data.name){
                     inputErrors['name'] = this.props.requisitionError.data.name
@@ -195,7 +195,12 @@ class Register extends React.Component {
             this.setState({ loading: true, mainError: "" });
 
             clearTimeout();
-            setTimeout( function(){ this.props.register(name, email, password, this.state.fileSubmit) }.bind(this), 1000);
+            setTimeout(
+                function(){
+                    this.props.register(name, email, password, this.state.fileSubmit)
+                }.bind(this),
+                1000
+            );
         }
     }
 
@@ -204,7 +209,7 @@ class Register extends React.Component {
             mainError, name, email, password, showPassword, confirmPassword, showConfirmPassword,
             fileSubmit, isFileSubmit, isUploadDialogOpen, inputErrors, loading
         } = this.state;
-    
+
         if(loading){
             return (
                 <Grid item xs={12} sm={6}>
@@ -216,9 +221,7 @@ class Register extends React.Component {
         } else {
             return (
                 <Grid item xs={12} sm={6}>
-                    <MainError 
-                        error={ mainError }   
-                    />
+                    <MainError error={ mainError } />
                     <InputText
                         id="name"
                         type="text"
@@ -268,10 +271,7 @@ class Register extends React.Component {
                         onClickConfirmUploadDialog={ this.handleConfirmUploadDialog }
                         onUpdateFileUploadScreen={ this.onUpdateFileUploadScreen }    
                     />
-                    <SubmitButton 
-                        titleButton="Criar Conta"
-                        onClickSubmitButton={ this.onPressSubmit }
-                    />
+                    <SubmitButton titleButton="Criar Conta" onClickSubmitButton={ this.onPressSubmit } />
                 </Grid>
             );
         }
@@ -297,7 +297,8 @@ class Register extends React.Component {
                                 </Box>
                                 <Typography variant="h5">
                                     <Box style={styles.boxText}>
-                                        Para validarmos sua conta, comparamos as informações presentes no documento enviado com as presentes no sistema da UnB.
+                                        Para validarmos sua conta, comparamos as informações presentes no 
+                                        documento enviado com as presentes no sistema da UnB.
                                     </Box>
                                 </Typography>
                             </Grid>
@@ -357,7 +358,7 @@ const styles = {
         marginBottom: "16%",
         fontWeight: "bold",
         // fontFamily: 'fontFamily'
-    }, 
+    },
     progress: {
         display: "flex",
         marginTop: "25%",
