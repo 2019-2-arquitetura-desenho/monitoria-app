@@ -100,7 +100,7 @@ const styles = {
     },
     filePondScreen: {
         width: "86%",
-        marginTop: "2%",
+        marginTop: "3%",
         marginRight: "8%",
         marginLeft: "8%"
     }

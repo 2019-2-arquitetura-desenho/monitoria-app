@@ -29,7 +29,7 @@ const styles = {
         marginTop: "7%",
         marginLeft: "8%",
         marginRight: "8%",
-        marginBottom: "7%",
+        marginBottom: "4%",
         fontWeight: "bold"
       }
 }
