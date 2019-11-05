@@ -7,8 +7,11 @@ import {
     MuiThemeProvider,
     CssBaseline, 
     Grid,
-    Typography
+    Typography,
+    Box
 } from '@material-ui/core';
+
+import doubtIcon from './assets/doubtIcon.svg'
 
 import MainTitle from './components/MainTitle/mainTitle';
 import InputText from './components/InputText/inputText';
@@ -263,6 +266,21 @@ class Register extends React.Component {
                         <Grid container spacing={1}>
                             <MainTitle title="Criar Conta" />
                             { this.registerForm() }
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="h4">
+                                    <Box style={styles.boxSubTitle}>
+                                        Por que nós precisamos da suas informações?
+                                    </Box>
+                                </Typography>
+                                <Box textAlign="center">
+                                    <img src={ doubtIcon } width="20%" height="20%" />
+                                </Box>
+                                <Typography variant="h5">
+                                    <Box style={styles.boxText}>
+                                        Para validarmos sua conta, comparamos as informações presentes no documento enviado com as presentes no sistema da UnB.
+                                    </Box>
+                                </Typography>
+                            </Grid>
                         </Grid>
                     </Typography>
                 </Grid>
@@ -298,6 +316,27 @@ const styles = {
         marginTop: "3%",
         marginBottom: "3%",
         backgroundColor: "#ffffff"
+    },
+    boxSubTitle: {
+        textAlign: "center",
+        fontSize: "95%",
+        color: "#267cc1",
+        marginTop: "8%",
+        marginLeft: "8%",
+        marginRight: "8%",
+        marginBottom: "4%",
+        fontWeight: "bold",
+        // fontFamily: 'fontFamily'
+    },
+    boxText: {
+        textAlign: "center",
+        color: "#267cc1",
+        marginTop: "4%",
+        marginLeft: "12%",
+        marginRight: "12%",
+        marginBottom: "16%",
+        fontWeight: "bold",
+        // fontFamily: 'fontFamily'
     }
 }
 
