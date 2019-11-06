@@ -1,21 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
-import reduxThunk from 'redux-thunk';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
 
-import reducers from './store/reducers';
-import Root from './skins/root';
+import configureStore  from './store';
+import App from './routes';
 
 import './index.css';
 
 
-// require('dotenv').config();
+const { store, persistor } = configureStore();
 
-const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
-const store = createStoreWithMiddleware(
-    reducers,
-    // Para utilizar o ReduxDevTools - AmbDev
-    window.__REDUX_DECTOOLS_EXTENSION__ && window.__REDUX_DECTOOLS_EXTENSION__()
+ReactDOM.render(
+    <Provider store={ store }>
+        <PersistGate loading={ null } persistor={ persistor }>
+            <App />
+        </PersistGate>
+    </Provider>,
+    document.getElementById('root')
 );
-
-ReactDOM.render(<Root store={store}/>, document.getElementById('root'));
