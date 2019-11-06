@@ -8,6 +8,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { Link } from 'react-router-dom';
 import PropTypes from "prop-types";
+import Hidden from '@material-ui/core/Hidden';
 
 
 import logo from '../../assets/logo_icon.png';
@@ -42,6 +43,10 @@ const styles = theme => ({
     minHeight: 0,
     backgroundColor: '#42a0ed'
   },
+  tab: {
+    minWidth: 100,
+    fontSize: 10
+  },
   indicator: {
     backgroundColor: '#5e1dad',
   },
@@ -74,20 +79,23 @@ class NavigationMenu extends React.Component {
                 <Typography variant="h6" id="titlePart2">FGA</Typography>
               </Button>
             </Box>
-            <Tabs aria-label="simple tabs example"
-              centered
-              classes={{
-                indicator: classes.indicator
-              }}
-              className={classes.tabs}
-              fullWidth
-              value={this.state.value}
-              onChange={this.handleChange}>
-              <Tab value={0} label="Página Inicial" component={Link} to="/home" />
-              <Tab value={1} label="Informações Pessoais" component={Link} to="/personal-infos" />
-              <Tab value={2} label="Procurar Monitoria" component={Link} to="/search-monitoring" />
-              <Tab value={3} label="Acompanhar Resultados" component={Link} to="/results" />
-            </Tabs>
+            <Hidden smDown implementation="css">
+
+              <Tabs aria-label="simple tabs example"
+                centered
+                classes={{
+                  indicator: classes.indicator
+                }}
+                className={classes.tabs}
+                fullWidth
+                value={this.state.value}
+                onChange={this.handleChange}>
+                <Tab className={classes.tab} label="Página Inicial" component={Link} to="/home" />
+                <Tab className={classes.tab} label="Informações Pessoais" component={Link} to="/personal-infos" />
+                <Tab className={classes.tab} label="Procurar Monitoria" component={Link} to="/search-monitoring" />
+                <Tab className={classes.tab} label="Acompanhar Resultados" component={Link} to="/results" />
+              </Tabs>
+            </Hidden>
             <Button style={{ color: "white" }}>
               Sair
           </Button>
