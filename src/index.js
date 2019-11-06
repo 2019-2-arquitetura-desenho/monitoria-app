@@ -3,24 +3,34 @@ import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import Menu from './containers/NavgationMenu/navigationMenu';
+import PageShell from './components/PageShell/pageShell';
 import App from './pages/app';
 import Login from './pages/Login/login';
 import Register from './pages/Register/register';
 import Home from './pages/Home/home';
-import Menu from './components/NavgationMenu/navigationMenu';
+import PersonalInfos from './pages/PersonalInfos/personalInfos';
+import SearchMonitoring from './pages/SearchMonitoring/searchMonitoring';
+import Results from './pages/Results/results';
+
 
 import './index.css';
 
 require('dotenv').config();
 
-
 export class Routes extends React.Component {
-    render() {
+
+    pathNotInBlackList() {
         const path = window.location.pathname;
+        return path !== '/' && path !== '/login'
+            && path !== '/register'
+    }
+
+    render() {
         return (
             <div>
                 <BrowserRouter>
-                    {path !== '/' &&
+                    {this.pathNotInBlackList() &&
                         <div>
                             <Menu />
                         </div>
@@ -28,8 +38,12 @@ export class Routes extends React.Component {
                     <Switch>
                         <Route exact path="/" component={App} />
                         <Route path="/login" component={Login} />
-                        <Route path="/register" component={Register} />
-                        <Route path="/home" component={Home} />
+                        <Route path="/register" component={PageShell(Register)} />
+                        <Route path="/home" component={PageShell(Home)} />
+                        <Route path="/personal-infos" component={PageShell(PersonalInfos)} />
+                        <Route path="/search-monitoring" component={PageShell(SearchMonitoring)} />
+                        <Route path="/results" component={PageShell(Results)} />
+
                     </Switch>
                 </BrowserRouter>
             </div>
