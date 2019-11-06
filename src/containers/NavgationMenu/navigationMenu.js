@@ -10,6 +10,9 @@ import { Link } from 'react-router-dom';
 import PropTypes from "prop-types";
 import Hidden from '@material-ui/core/Hidden';
 
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+
 
 import logo from '../../assets/logo_icon.png';
 import { Button } from '@material-ui/core';
@@ -50,6 +53,12 @@ const styles = theme => ({
   indicator: {
     backgroundColor: '#5e1dad',
   },
+  menuButton: {
+    // marginRight: theme.spacing(2),
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+  },
 });
 
 class NavigationMenu extends React.Component {
@@ -73,6 +82,15 @@ class NavigationMenu extends React.Component {
         <AppBar position="fixed">
           <Toolbar className={classes.toolbar}>
             <Box className={classes.title}>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                // onClick={handleDrawerToggle}
+                className={classes.menuButton}
+              >
+                <MenuIcon />
+              </IconButton>
               <Button component={Link} to="/home">
                 <img alt="logo" id="logo" src={logo} style={{ width: '30px', height: '30px' }} />
                 <Typography style={{ marginLeft: '10px' }} variant="h6" id="titlePart1">Monitoria</Typography>
