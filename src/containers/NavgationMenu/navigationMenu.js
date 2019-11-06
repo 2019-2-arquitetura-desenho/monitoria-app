@@ -9,9 +9,8 @@ import Tab from '@material-ui/core/Tab';
 import { Link } from 'react-router-dom';
 import PropTypes from "prop-types";
 import Hidden from '@material-ui/core/Hidden';
+import ResponsiveDrawer from './responsiveDrawer';
 
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 
 
 import logo from '../../assets/logo_icon.png';
@@ -68,10 +67,8 @@ class NavigationMenu extends React.Component {
 
   handleChange = (event, value) => {
     this.setState({ value });
-  };
-
-  handleChangeIndex = index => {
-    this.setState({ value: index });
+    console.log("call")
+    console.log(value)
   };
 
   render() {
@@ -82,15 +79,12 @@ class NavigationMenu extends React.Component {
         <AppBar position="fixed">
           <Toolbar className={classes.toolbar}>
             <Box className={classes.title}>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                // onClick={handleDrawerToggle}
-                className={classes.menuButton}
-              >
-                <MenuIcon />
-              </IconButton>
+              <Hidden mdUp implementation="css">
+
+                <ResponsiveDrawer changeIndicator={this.handleChange}
+                  valueIndicator={this.state.value} />
+              </Hidden>
+
               <Button component={Link} to="/home">
                 <img alt="logo" id="logo" src={logo} style={{ width: '30px', height: '30px' }} />
                 <Typography style={{ marginLeft: '10px' }} variant="h6" id="titlePart1">Monitoria</Typography>
