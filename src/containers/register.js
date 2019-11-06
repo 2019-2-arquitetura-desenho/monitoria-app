@@ -293,7 +293,7 @@ class Register extends React.Component {
                                     </Box>
                                 </Typography>
                                 <Box textAlign="center">
-                                    <img src={ doubtIcon } width="20%" height="20%" />
+                                    <img src={ doubtIcon } alt ="Doubt Icon"  width="20%" height="20%" />
                                 </Box>
                                 <Typography variant="h5">
                                     <Box style={styles.boxText}>
