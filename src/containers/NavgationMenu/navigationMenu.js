@@ -61,14 +61,21 @@ const styles = theme => ({
 });
 
 class NavigationMenu extends React.Component {
-  state = {
-    value: 0
-  };
+
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      value: 0
+    };
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
-    console.log("call")
-    console.log(value)
+  };
+
+  handleChangeDrawer = (value) => {
+    this.setState({ value });
   };
 
   render() {
@@ -81,8 +88,8 @@ class NavigationMenu extends React.Component {
             <Box className={classes.title}>
               <Hidden mdUp implementation="css">
 
-                <ResponsiveDrawer changeIndicator={this.handleChange}
-                  valueIndicator={this.state.value} />
+                <ResponsiveDrawer changeIndicator={this.handleChangeDrawer}
+                />
               </Hidden>
 
               <Button component={Link} to="/home">

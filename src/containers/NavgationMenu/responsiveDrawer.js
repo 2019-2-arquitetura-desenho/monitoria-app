@@ -39,13 +39,16 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,
         padding: theme.spacing(3),
     },
+    textList: {
+        color: 'black'
+    }
 }));
 
 function ResponsiveDrawer(props) {
-    const { container } = props;
+    const { container, changeIndicator } = props;
     const classes = useStyles();
     const theme = useTheme();
-    const [mobileOpen, setMobileOpen, changeIndicator, valueIndicator] = React.useState(false);
+    const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -56,20 +59,28 @@ function ResponsiveDrawer(props) {
             <div className={classes.toolbar} />
             <Divider />
             <List>
-                <ListItem className={classes.tab} component={Link} to="/home" onClick={changeIndicator}>
-                    <ListItemText primary={'Página Inicial'} />
+                <ListItem onClick={() => changeIndicator(0)}
+                    className={classes.tab} component={Link}
+                    to="/home">
+                    <ListItemText className={classes.textList} primary={'Página Inicial'} />
                 </ListItem>
-                <ListItem className={classes.tab} component={Link} to="/personal-infos">
-                    <ListItemText primary={'Informações Pessoais'} />
+                <ListItem onClick={() => changeIndicator(1)}
+                    className={classes.tab} component={Link}
+                    to="/personal-infos">
+                    <ListItemText className={classes.textList} primary={'Informações Pessoais'} />
                 </ListItem>
-                <ListItem className={classes.tab} component={Link} to="/search-monitoring" >
-                    <ListItemText primary={'Procurar Monitoria'} />
+                <ListItem value={2} onClick={() => changeIndicator(2)}
+                    className={classes.tab} component={Link}
+                    to="/search-monitoring" >
+                    <ListItemText className={classes.textList} primary={'Procurar Monitoria'} />
                 </ListItem>
-                <ListItem className={classes.tab} component={Link} to="/results" >
-                    <ListItemText primary={'Acompanhar Resultados'} />
+                <ListItem value={3} onClick={() => changeIndicator(3)}
+                    className={classes.tab} component={Link}
+                    to="/results" >
+                    <ListItemText className={classes.textList} primary={'Acompanhar Resultados'} />
                 </ListItem>
             </List>
-        </div>
+        </div >
     );
 
     return (
@@ -102,5 +113,9 @@ function ResponsiveDrawer(props) {
         </div>
     );
 }
+
+// ResponsiveDrawer.propTypes = {
+//     myClick: PropTypes.func
+// };
 
 export default ResponsiveDrawer;
