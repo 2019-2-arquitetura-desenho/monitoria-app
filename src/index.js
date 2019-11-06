@@ -7,6 +7,7 @@ import App from './pages/app';
 import Login from './pages/Login/login';
 import Register from './pages/Register/register';
 import Home from './pages/Home/home';
+import Menu from './components/NavgationMenu/navigationMenu';
 
 import './index.css';
 
@@ -15,15 +16,23 @@ require('dotenv').config();
 
 export class Routes extends React.Component {
     render() {
+        const path = window.location.pathname;
         return (
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path="/" component={App} />
-                    <Route path="/login" component={Login} />
-                    <Route path="/register" component={Register} />
-                    <Route path="/home" component={Home} />
-                </Switch>
-            </BrowserRouter>
+            <div>
+                <BrowserRouter>
+                    {path !== '/' &&
+                        <div>
+                            <Menu />
+                        </div>
+                    }
+                    <Switch>
+                        <Route exact path="/" component={App} />
+                        <Route path="/login" component={Login} />
+                        <Route path="/register" component={Register} />
+                        <Route path="/home" component={Home} />
+                    </Switch>
+                </BrowserRouter>
+            </div>
         );
     }
 }
