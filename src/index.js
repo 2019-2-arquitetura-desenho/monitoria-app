@@ -9,6 +9,8 @@ import App from './routes';
 import './index.css';
 
 
+require('dotenv').config();
+
 const { store, persistor } = configureStore();
 
 ReactDOM.render(
