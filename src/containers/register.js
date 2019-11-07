@@ -117,7 +117,7 @@ class Register extends React.Component {
     }
 
     handleCloseUploadDialog() {
-        this.setState({ isUploadDialogOpen: false });
+        this.setState({ isUploadDialogOpen: false, isFileSubmit: false });
     }
 
     onUpdateFileDialog(fileItems) {
@@ -125,7 +125,7 @@ class Register extends React.Component {
     }
 
     handleCancelUploadDialog() {
-        this.setState({ isUploadDialogOpen: false });
+        this.setState({ isUploadDialogOpen: false, isFileSubmit: false });
     }
 
     handleConfirmUploadDialog() {
