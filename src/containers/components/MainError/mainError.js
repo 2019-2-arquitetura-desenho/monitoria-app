@@ -25,7 +25,6 @@ const styles = {
         marginTop: "1%",
         marginLeft: "8%",
         marginRight: "8%",
-        marginBottom: "1%",
         color: "#ff0000", // vermelho
         fontWeigth: "bold"
     }
