@@ -7,6 +7,8 @@ const Authentication = (state = {}, action) => {
             return { ...state, isAuthenticated: true, userData: action.payload };
         case 'REGISTER_ERROR':
             return { ...state, isAuthenticated: false, requisitionError: action.payload };
+        case 'LOGOUT':
+            return { ...state, isAuthenticated: false, userData: undefined };
         default:
             return state;
     }
