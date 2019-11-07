@@ -5,7 +5,7 @@ class PersonalInfos extends React.Component {
     render() {
         return (
             <div>
-                <Menu />
+                <Menu position={1}/>
                 <h1>Personal Infos</h1>
                 <h1>Personal Infos</h1>
                 <h1>Personal Infos</h1>

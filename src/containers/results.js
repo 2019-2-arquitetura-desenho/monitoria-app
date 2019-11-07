@@ -5,7 +5,7 @@ class Results extends React.Component {
     render() {
         return (
             <div>
-                <Menu />
+                <Menu position={3}/>
                 <h1>Results</h1>
                 <h1>Results</h1>
                 <h1>Results</h1>

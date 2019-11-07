@@ -23,7 +23,7 @@ class Home extends React.Component {
     render() {
         return (
             <div>
-                <Menu />
+                <Menu position={0}/>
                 <h1>Home</h1>
                 <button onClick={this.onPressExitButton}>Sair</button>
             </div>

@@ -5,7 +5,7 @@ class SearchMonitoring extends React.Component {
     render() {
         return (
             <div>
-                <Menu />
+                <Menu position={2}/>
                 <h1>Search Monitoring</h1>
                 <h1>Search Monitoring</h1>
                 <h1>Search Monitoring</h1>
