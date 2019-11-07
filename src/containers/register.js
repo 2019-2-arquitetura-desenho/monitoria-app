@@ -157,7 +157,7 @@ class Register extends React.Component {
         let password = this.state.password;
         let confirmPassword = this.state.confirmPassword;
 
-        if(!name){
+        if (!name){
             inputErrors['name'] = "Digite o nome";
             f_errorName = true;
         }
@@ -183,8 +183,8 @@ class Register extends React.Component {
             }
           }
 
-          if(!f_errorPassword){
-            if(!confirmPassword){
+          if (!f_errorPassword){
+            if (!confirmPassword){
               inputErrors['confirmPassword'] = "Confirme sua senha";
               f_errorConfirmPassword = true;
             } else if (password !== confirmPassword){
@@ -214,7 +214,7 @@ class Register extends React.Component {
             fileSubmit, isFileSubmit, isUploadDialogOpen, inputErrors, loading
         } = this.state;
 
-        if(loading){
+        if (loading){
             return (
                 <Grid item xs={12} sm={6}>
                     <div style={ styles.progress }>
