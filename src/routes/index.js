@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
+import PublicRoute from './especials/publicRoute';
 import PrivateRoute from './especials/privateRoute';
 import Register from '../containers/register';
 import Login from '../containers/login';
@@ -15,8 +16,8 @@ export default class App extends React.Component {
     render() {
         return (
             <Router>
-                <Route exact path="/cadastro" component={ Register } />
-                <Route exact path="/entrar" component={ Login } />
+                <PublicRoute exact path="/cadastro" component={ Register } />
+                <PublicRoute exact path="/entrar" component={ Login } />
                 <PrivateRoute exact path="/" component={ PageShell(Home) } />
                 <PrivateRoute exact path="/home" component={PageShell(Home)} />
                 <PrivateRoute exact path="/personal-infos" component={PageShell(PersonalInfos)} />
