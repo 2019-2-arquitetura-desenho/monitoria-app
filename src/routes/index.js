@@ -23,6 +23,6 @@ export default class App extends React.Component {
                 <PrivateRoute exact path="/search-monitoring" component={PageShell(SearchMonitoring)} />
                 <PrivateRoute exact path="/results" component={PageShell(Results)} />
             </Router>
-        )
+        );
     }
 }
