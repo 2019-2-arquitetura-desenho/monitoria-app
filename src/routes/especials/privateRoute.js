@@ -13,13 +13,13 @@ const PrivateRoute = ({
             <Redirect to={{
                 pathname: '/entrar',
                 state: { from: props.location }
-            }}/>
+            }} />
         )
     )} />
 )
 
 const mapStateToProps = (state) => ({
     isAuthenticated: state.authentication.isAuthenticated 
-})
+});
 
-export default connect(mapStateToProps, null)(PrivateRoute)
+export default connect(mapStateToProps, null)(PrivateRoute);
