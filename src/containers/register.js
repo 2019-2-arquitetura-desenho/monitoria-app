@@ -63,14 +63,14 @@ class Register extends React.Component {
             this.props.restartRegister();
 
             if (this.props.requisitionError === "Error: Network Error"){
-                console.log("Erro de Rede");
+                // console.log("Erro de Rede");
 
                 this.setState({
                     mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
                     loading: false
                 });
             } else {
-                console.log("Erro relacionado aos campos de entrada de texto do formulário de cadastro");
+                // console.log("Erro relacionado aos campos de entrada de texto do formulário de cadastro");
 
                 let inputErrors = {}
                 if (this.props.requisitionError.data.name){
@@ -85,6 +85,10 @@ class Register extends React.Component {
                     loading: false
                 })
             }
+        }
+
+        if (this.props.isAuthenticated === true){
+            this.props.history.push("/");
         }
     }
 
