@@ -1,9 +1,10 @@
 import axios from 'axios';
+const host_api = process.env.REACT_APP_URL_API;
 
 export function register(name, email, password, document){
     return function(dispatch){
         axios.post(
-            'http://localhost:8000/registration/',
+            host_api + '/registration/',
             {
                 name: name,
                 email: email,
