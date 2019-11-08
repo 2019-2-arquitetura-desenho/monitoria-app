@@ -180,7 +180,7 @@ class Register extends React.Component {
         if (!email){
             inputErrors['email'] = "Digite o email";
             f_errorEmail = true;
-          } else if (!email.includes("@") || !email.includes(".com")) {
+          } else if (!email.includes("@")) {
             inputErrors['email'] = "Digite um e-mail válido";
             f_errorEmail = true;
           }
