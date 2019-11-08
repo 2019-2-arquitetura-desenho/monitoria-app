@@ -79,6 +79,21 @@ class Register extends React.Component {
                 if (this.props.requisitionError.data.email){
                     inputErrors['email'] = this.props.requisitionError.data.email
                 }
+                if (this.props.requisitionError.data.password1){
+                    // console.log(this.props.requisitionError.data.password1)
+                    // console.log(this.props.requisitionError.data.password1.length)
+
+                    inputErrors['password'] = "Escolha uma senha mais segura."
+
+                    let passwordError = this.props.requisitionError.data.password1
+                    if (passwordError.length === 2){
+                        if (passwordError[1] === "Esta senha é inteiramente numérica."){
+                            inputErrors['password'] += "Não utilize somente números na sua senha."
+                        } else {
+                            inputErrors['password'] += " " + passwordError[1]
+                        }
+                    }
+                }
 
                 this.setState({
                     inputErrors: inputErrors,
