@@ -394,7 +394,7 @@ function mapStateToProps(state) {
 
 export const registerContainer = connect(
    mapStateToProps,
-   { register, restartRegister },
+   { register, restartRegister }
 )(Register)
 
 export default registerContainer;

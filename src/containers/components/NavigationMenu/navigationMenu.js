@@ -79,7 +79,7 @@ class NavigationMenu extends React.Component {
   };
 
   render() {
-    const { classes, position, theme } = this.props
+    const { classes, position, onPressLogoutButton, theme } = this.props
 
     return (
       <div className={classes.root}>
@@ -87,11 +87,8 @@ class NavigationMenu extends React.Component {
           <Toolbar className={classes.toolbar}>
             <Box className={classes.title}>
               <Hidden mdUp implementation="css">
-
-                <ResponsiveDrawer changeIndicator={this.handleChangeDrawer}
-                />
+                <ResponsiveDrawer changeIndicator={this.handleChangeDrawer} />
               </Hidden>
-
               <Button component={Link} to="/home">
                 <img alt="logo" id="logo" src={logo} style={{ width: '30px', height: '30px' }} />
                 <Typography style={{ marginLeft: '10px' }} variant="h6" id="titlePart1">Monitoria</Typography>
@@ -99,7 +96,6 @@ class NavigationMenu extends React.Component {
               </Button>
             </Box>
             <Hidden smDown implementation="css">
-
               <Tabs aria-label="simple tabs example"
                 centered
                 classes={{
@@ -108,16 +104,17 @@ class NavigationMenu extends React.Component {
                 className={classes.tabs}
                 fullWidth
                 value={position}
-                onChange={this.handleChange}>
+                onChange={this.handleChange}
+              >
                 <Tab className={classes.tab} label="Página Inicial" component={Link} to="/home" />
                 <Tab className={classes.tab} label="Informações Pessoais" component={Link} to="/personal-infos" />
                 <Tab className={classes.tab} label="Procurar Monitoria" component={Link} to="/search-monitoring" />
                 <Tab className={classes.tab} label="Acompanhar Resultados" component={Link} to="/results" />
               </Tabs>
             </Hidden>
-            <Button style={{ color: "white" }}>
+            <Button onClick={ onPressLogoutButton } style={{ color: "white" }}>
               Sair
-          </Button>
+            </Button>
           </Toolbar>
         </AppBar>
       </div>
