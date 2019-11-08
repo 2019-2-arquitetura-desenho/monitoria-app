@@ -17,7 +17,7 @@ export function register(name, email, password, document){
                 payload: response.data
             });
         }).catch(error => {
-            console.log('Erro no cadastro.');
+            // console.log('Erro no cadastro.');
             if(!error.response){
                 // console.log('Error: ERR_CONNECTION_REFUSED');
                 dispatch({
