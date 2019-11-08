@@ -353,8 +353,8 @@ const styles = {
     },
     screenContent: {
         width: "92%",
-        marginTop: "3%",
-        marginBottom: "3%",
+        marginTop: "1%",
+        marginBottom: "1%",
         backgroundColor: "#ffffff"
     },
     boxSubTitle: {
@@ -374,7 +374,7 @@ const styles = {
         marginTop: "4%",
         marginLeft: "12%",
         marginRight: "12%",
-        marginBottom: "16%",
+        marginBottom: "12%",
         fontWeight: "bold",
         // fontFamily: 'fontFamily'
     },
