@@ -3,12 +3,12 @@ import { withRouter } from 'react-router-dom';
 
 
 import './login.css';
-import LoginInput from '../../components/LoginInput/loginInput';
-import LoginButton from '../../components/LoginButton/loginButton';
-import AlertMessage from '../../components/AlertMessage/alertMessage';
+import LoginInput from './components/LoginInput/loginInput';
+import LoginButton from './components/LoginButton/loginButton';
+import AlertMessage from './components/AlertMessage/alertMessage';
 
-import logo from '../../assets/logo_full.png';
-import classroomImg from '../../assets/classroom.svg';
+import logo from './assets/logo_full.png';
+import classroomImg from './assets/classroom.svg';
 
 
 const host_api = process.env.REACT_APP_URL_API;

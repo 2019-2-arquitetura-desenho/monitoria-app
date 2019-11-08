@@ -79,7 +79,7 @@ class NavigationMenu extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props
+    const { classes, position, theme } = this.props
 
     return (
       <div className={classes.root}>
@@ -107,7 +107,7 @@ class NavigationMenu extends React.Component {
                 }}
                 className={classes.tabs}
                 fullWidth
-                value={this.state.value}
+                value={position}
                 onChange={this.handleChange}>
                 <Tab className={classes.tab} label="Página Inicial" component={Link} to="/home" />
                 <Tab className={classes.tab} label="Informações Pessoais" component={Link} to="/personal-infos" />
