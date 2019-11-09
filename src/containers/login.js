@@ -4,8 +4,8 @@ import { login } from '../store/actions';
 
 
 import './login.css';
-import LoginInput from './components/LoginInput/loginInput';
 import LoginButton from './components/LoginButton/loginButton';
+import InputText from './components/InputText/inputText';
 
 
 import logo from './assets/logo_full.png';
@@ -160,21 +160,20 @@ class Login extends Component {
 
             <form className="formLogin" onSubmit={this.submitLogin}>
               <div className="userLoginContent">
-                <LoginInput
+                <InputText
                   id="email"
-                  icon="mail"
-                  value="E-mail"
                   type="email"
-                  inputValue={this.emailChange}
-                  error={this.state.inputErrors}
+                  label="Email"
+                  value={this.state.email}
+                  onChange={this.emailChange}
+                  error={this.state.inputErrors.email}
                 />
-                <LoginInput
+                <InputText
                   id="password"
-                  icon="lock"
-                  value="Senha"
                   type="password"
-                  inputValue={this.passwordChange}
-                  error={this.state.inputErrors}
+                  value={this.state.password}
+                  onChange={this.passwordChange}
+                  error={this.state.inputErrors.password}
                 />
 
               </div>
