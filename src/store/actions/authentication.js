@@ -50,7 +50,6 @@ export function login(email, password) {
       url,
       dataToSend
     ).then(response => {
-      console.log("Login Sucesso");
       dispatch({
         type: 'LOGIN_SUCESS',
         payload: response.data

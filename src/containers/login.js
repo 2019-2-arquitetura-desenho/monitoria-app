@@ -7,7 +7,6 @@ import './login.css';
 import LoginButton from './components/LoginButton/loginButton';
 import InputText from './components/InputText/inputText';
 
-
 import logo from './assets/logo_full.png';
 import classroomImg from './assets/classroom.svg';
 
@@ -23,10 +22,10 @@ class Login extends Component {
     this.popUpType = '';
 
     this.state = {
+      loading: true,
       email: '',
       password: '',
       inputErrors: {}
-
     }
   }
 
@@ -39,8 +38,7 @@ class Login extends Component {
   }
 
   requisitionErrorHandler() {
-    if (this.props.requisitionError !== undefined) {
-      console.log("test update: ", this.props.requisitionError)
+    if (this.props.requisitionError !== undefined && this.state.loading === true) {
       this.props.restartRegister();
 
       if (this.props.requisitionError === "Error: Network Error") {
@@ -61,10 +59,6 @@ class Login extends Component {
         })
       }
     }
-  }
-
-  nextPath(path) {
-    this.props.history.push(path);
   }
 
   submitLogin(e) {
@@ -102,6 +96,8 @@ class Login extends Component {
     this.setState({ inputErrors: inputErrors });
 
     if (!f_errorEmail && !f_errorPassword) {
+      this.setState({ loading: true })
+
       this.props.login(email, password);
     }
   }
@@ -121,6 +117,47 @@ class Login extends Component {
     this.setState({
       password: e.target.value
     })
+  }
+
+  nextPath(path) {
+    this.props.history.push(path);
+  }
+
+  loginForm() {
+    return (
+      <form className="formLogin" onSubmit={this.submitLogin}>
+        <div className="userLoginContent">
+          <InputText
+            id="email"
+            type="email"
+            label="Email"
+            value={this.state.email}
+            onChange={this.emailChange}
+            error={this.state.inputErrors.email}
+          />
+          <InputText
+            id="password"
+            type="password"
+            label="Senha"
+            value={this.state.password}
+            onChange={this.passwordChange}
+            error={this.state.inputErrors.password}
+          />
+
+        </div>
+
+        <div className="userButtonsGroup">
+          <LoginButton
+            value="Entrar"
+            onClick={this.submitLogin}
+          />
+          <LoginButton
+            value="Criar Conta"
+            onClick={this.submitSignUp}
+          />
+        </div>
+      </form>
+    );
   }
 
 
@@ -149,45 +186,18 @@ class Login extends Component {
             <div className="logoContent">
               <img alt="logo" id="logo" src={logo} />
             </div>
-
-            <form className="formLogin" onSubmit={this.submitLogin}>
-              <div className="userLoginContent">
-                <InputText
-                  id="email"
-                  type="email"
-                  label="Email"
-                  value={this.state.email}
-                  onChange={this.emailChange}
-                  error={this.state.inputErrors.email}
-                />
-                <InputText
-                  id="password"
-                  type="password"
-                  label="Senha"
-                  value={this.state.password}
-                  onChange={this.passwordChange}
-                  error={this.state.inputErrors.password}
-                />
-
-              </div>
-
-              <div className="userButtonsGroup">
-                <LoginButton
-                  value="Entrar"
-                  onClick={this.submitLogin}
-                />
-                <LoginButton
-                  value="Criar Conta"
-                  onClick={this.submitSignUp}
-                />
-              </div>
-            </form>
-
-
+            {this.loginForm()}
           </div>
         </div>
       </div >
     );
+  }
+}
+const styles = {
+  progress: {
+    display: "flex",
+    marginTop: "25%",
+    marginLeft: "50%",
   }
 }
 
