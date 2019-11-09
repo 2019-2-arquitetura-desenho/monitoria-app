@@ -10,5 +10,9 @@ const PersonalInfos = (state = {}, action) => {
                 ...state,
                 userData: action.payload
             }
+        default:
+            return state;
     }
 }
+
+export default PersonalInfos;
