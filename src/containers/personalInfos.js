@@ -117,19 +117,37 @@ class PersonalInfos extends React.Component {
             onChange={this.handleChange}
             error={inputErrors.ira}
           />
-
-          <FileSubmit
-            label={"Reeviar Histórico"}
-            isFileSubmit={isFileSubmit}
-            fileSubmit={fileSubmit}
-            onButtonUploadClick={this.handleClickOpenUploadDialog}
-            isUploadDialogOpen={isUploadDialogOpen}
-            onCloseUploadDialog={this.handleCloseUploadDialog}
-            onUpdateFileUploadDialog={this.onUpdateFileUploadDialog}
-            onClickCancelUploadDialog={this.handleCancelUploadDialog}
-            onClickConfirmUploadDialog={this.handleConfirmUploadDialog}
-            onUpdateFileUploadScreen={this.onUpdateFileUploadScreen}
-          />
+          <Grid container xs={12}
+            justify="center">
+            <Grid item xs={6}>
+              <FileSubmit
+                label={"Reenviar Histórico"}
+                isFileSubmit={isFileSubmit}
+                fileSubmit={fileSubmit}
+                onButtonUploadClick={this.handleClickOpenUploadDialog}
+                isUploadDialogOpen={isUploadDialogOpen}
+                onCloseUploadDialog={this.handleCloseUploadDialog}
+                onUpdateFileUploadDialog={this.onUpdateFileUploadDialog}
+                onClickCancelUploadDialog={this.handleCancelUploadDialog}
+                onClickConfirmUploadDialog={this.handleConfirmUploadDialog}
+                onUpdateFileUploadScreen={this.onUpdateFileUploadScreen}
+              />
+            </Grid>
+            <Grid item xs={6} >
+              {/* <FileSubmit
+                label={"Reeviar Histórico"}
+                isFileSubmit={isFileSubmit}
+                fileSubmit={fileSubmit}
+                onButtonUploadClick={this.handleClickOpenUploadDialog}
+                isUploadDialogOpen={isUploadDialogOpen}
+                onCloseUploadDialog={this.handleCloseUploadDialog}
+                onUpdateFileUploadDialog={this.onUpdateFileUploadDialog}
+                onClickCancelUploadDialog={this.handleCancelUploadDialog}
+                onClickConfirmUploadDialog={this.handleConfirmUploadDialog}
+                onUpdateFileUploadScreen={this.onUpdateFileUploadScreen}
+              /> */}
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     );
