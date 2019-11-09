@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { login } from '../store/actions';
+import { login, restartRegister } from '../store/actions';
 
 
 import './login.css';
@@ -39,10 +39,9 @@ class Login extends Component {
   }
 
   requisitionErrorHandler() {
-    if (this.props.requisitionError !== undefined && this.state.loading === true) {
+    if (this.props.requisitionError !== undefined) {
+      console.log("test update: ", this.props.requisitionError)
       this.props.restartRegister();
-
-      console.log("RequisitionError: ", this.props.requisitionError)
 
       if (this.props.requisitionError === "Error: Network Error") {
 
@@ -52,15 +51,8 @@ class Login extends Component {
         });
       } else {
         let inputErrors = {}
-        if (this.props.requisitionError.data.name) {
-          inputErrors['name'] = this.props.requisitionError.data.name;
-        }
-        if (this.props.requisitionError.data.email) {
-          inputErrors['email'] = this.props.requisitionError.data.email;
-        }
-        if (this.props.requisitionError.data.password1) {
-
-          inputErrors['password'] = "Escolha uma senha mais segura.";
+        if (this.props.requisitionError.data.non_field_errors) {
+          inputErrors['password'] = this.props.requisitionError.data.non_field_errors;
         }
 
         this.setState({
@@ -208,7 +200,7 @@ function mapStateToProps(state) {
 
 export const loginContainer = connect(
   mapStateToProps,
-  { login },
+  { login, restartRegister },
 )(Login)
 
 export default loginContainer;
