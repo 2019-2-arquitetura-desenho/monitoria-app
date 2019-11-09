@@ -171,6 +171,7 @@ class Login extends Component {
                 <InputText
                   id="password"
                   type="password"
+                  label="Senha"
                   value={this.state.password}
                   onChange={this.passwordChange}
                   error={this.state.inputErrors.password}
