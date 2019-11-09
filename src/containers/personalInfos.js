@@ -84,7 +84,7 @@ class PersonalInfos extends React.Component {
     } = this.state;
     return (
       <Grid container justify="center"  >
-        <Grid xs={12} sm={8}>
+        <Grid xs={12} sm={10}>
           <InputText
             id="name"
             type="text"
@@ -117,9 +117,9 @@ class PersonalInfos extends React.Component {
             onChange={this.handleChange}
             error={inputErrors.ira}
           />
-          <Grid container xs={12}
+          <Grid container
             justify="center">
-            <Grid item xs={6}>
+            <Grid item xs={5}>
               <FileSubmit
                 label={"Reenviar Histórico"}
                 isFileSubmit={isFileSubmit}
@@ -134,18 +134,7 @@ class PersonalInfos extends React.Component {
               />
             </Grid>
             <Grid item xs={6} >
-              {/* <FileSubmit
-                label={"Reeviar Histórico"}
-                isFileSubmit={isFileSubmit}
-                fileSubmit={fileSubmit}
-                onButtonUploadClick={this.handleClickOpenUploadDialog}
-                isUploadDialogOpen={isUploadDialogOpen}
-                onCloseUploadDialog={this.handleCloseUploadDialog}
-                onUpdateFileUploadDialog={this.onUpdateFileUploadDialog}
-                onClickCancelUploadDialog={this.handleCancelUploadDialog}
-                onClickConfirmUploadDialog={this.handleConfirmUploadDialog}
-                onUpdateFileUploadScreen={this.onUpdateFileUploadScreen}
-              /> */}
+
             </Grid>
           </Grid>
         </Grid>
