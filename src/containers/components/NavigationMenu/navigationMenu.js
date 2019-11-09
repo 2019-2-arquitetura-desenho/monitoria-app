@@ -20,7 +20,7 @@ import { Button } from '@material-ui/core';
 const styles = theme => ({
   root: {
     ...theme.mixins.toolbar,
-    flexGrow: 1,
+    flexGrow: 1
   },
   appBar: {
     backgroundColor: '#42a0ed'
@@ -105,7 +105,6 @@ class NavigationMenu extends React.Component {
                   indicator: classes.indicator
                 }}
                 className={classes.tabs}
-                fullWidth
                 value={position}
                 onChange={this.handleChange}>
                 <Tab className={classes.tab} label="Página Inicial" component={Link} to="/home" />

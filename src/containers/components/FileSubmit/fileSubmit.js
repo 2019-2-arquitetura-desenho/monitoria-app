@@ -15,30 +15,31 @@ registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
 
 class FileSubmit extends React.Component {
 
-    switchButtonFilePond(){
+    switchButtonFilePond() {
         const {
-            isFileSubmit, fileSubmit, onButtonUploadClick, onUpdateFileUploadScreen
+            isFileSubmit, fileSubmit, onButtonUploadClick, onUpdateFileUploadScreen,
+            label
         } = this.props
 
-        if (!isFileSubmit || fileSubmit.length===0){
+        if (!isFileSubmit || fileSubmit.length === 0) {
             return (
                 <Button
                     variant="contained"
                     size="large"
                     color="primary"
-                    style={ styles.buttonUpload }
-                    onClick={ onButtonUploadClick }
-                    startIcon={ <FileUploadIcon /> }
+                    style={styles.buttonUpload}
+                    onClick={onButtonUploadClick}
+                    startIcon={<FileUploadIcon />}
                 >
-                    Enviar Histórico Escolar
+                    {label}
                 </Button>
             );
         } else {
             return (
-                <div style={ styles.filePondScreen }>
+                <div style={styles.filePondScreen}>
                     <FilePond
-                        files={ fileSubmit }
-                        onupdatefiles={ onUpdateFileUploadScreen }
+                        files={fileSubmit}
+                        onupdatefiles={onUpdateFileUploadScreen}
                     />
                 </div>
             );
@@ -51,14 +52,14 @@ class FileSubmit extends React.Component {
             onClickConfirmUploadDialog
         } = this.props
 
-        return(
+        return (
             <React.Fragment>
-                { this.switchButtonFilePond() }
+                {this.switchButtonFilePond()}
                 <Dialog
-                    fullWidth={ true }
+                    fullWidth={true}
                     maxWidth="sm"
-                    open={ isUploadDialogOpen }
-                    onClose={ onCloseUploadDialog }
+                    open={isUploadDialogOpen}
+                    onClose={onCloseUploadDialog}
                     aria-labelledby="max-width-dialog-title"
                     aria-describedby="max-width-dialog-description"
                 >
@@ -69,15 +70,15 @@ class FileSubmit extends React.Component {
                         <DialogContentText id="max-width-dialog-description">
                             Envie-nos, em <b>formato PDF</b>, o seu histórico escolar universitário.
                         </DialogContentText>
-                        <FilePond 
-                            files={ fileSubmit }
-                            onupdatefiles={ onUpdateFileUploadDialog }
+                        <FilePond
+                            files={fileSubmit}
+                            onupdatefiles={onUpdateFileUploadDialog}
                             labelIdle='Arraste e Solte seu arquivo ou <span class="filepond--label-action">Escolha</span>'
                             acceptedFileTypes={['application/pdf']}
                         />
                         <DialogActions>
-                            <Button onClick={ onClickCancelUploadDialog } color="primary">Cancelar</Button>
-                            <Button onClick={ onClickConfirmUploadDialog } color="secondary">Confirmar</Button>
+                            <Button onClick={onClickCancelUploadDialog} color="primary">Cancelar</Button>
+                            <Button onClick={onClickConfirmUploadDialog} color="secondary">Confirmar</Button>
                         </DialogActions>
                     </DialogContent>
                 </Dialog>
