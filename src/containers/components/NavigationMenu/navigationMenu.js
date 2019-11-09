@@ -22,9 +22,6 @@ const styles = theme => ({
     ...theme.mixins.toolbar,
     flexGrow: 1,
   },
-  appBar: {
-    backgroundColor: '#42a0ed'
-  },
   toolbar: {
     minHeight: 60,
     display: 'flex',
@@ -78,7 +75,7 @@ class NavigationMenu extends React.Component {
   };
 
   render() {
-    const { classes, position, onPressLogoutButton, theme } = this.props
+    const { classes, position, onPressLogoutButton} = this.props
 
     return (
       <div className={classes.root}>
