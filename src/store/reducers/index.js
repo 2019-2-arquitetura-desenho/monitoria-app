@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 
 import Authentication from './authentication';
-import PersonalInfos from './personalInfos';
+import UserProfile from './userProfile';
 
 
 const reducers = combineReducers({
     authentication: Authentication,
-    personalInfos: PersonalInfos
+    userProfile: UserProfile
 });
 
 export default reducers;

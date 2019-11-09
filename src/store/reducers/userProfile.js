@@ -1,4 +1,4 @@
-const PersonalInfos = (state = {}, action) => {
+const UserProfile = (state = {}, action) => {
     switch (action.type) {
         case 'UPDATE_PROFILE_SUCCESS':
             return {
@@ -15,4 +15,4 @@ const PersonalInfos = (state = {}, action) => {
     }
 }
 
-export default PersonalInfos;
+export default UserProfile;
