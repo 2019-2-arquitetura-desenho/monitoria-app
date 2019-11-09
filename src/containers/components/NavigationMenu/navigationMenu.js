@@ -53,7 +53,6 @@ const styles = theme => ({
     backgroundColor: '#5e1dad',
   },
   menuButton: {
-    // marginRight: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
@@ -79,7 +78,7 @@ class NavigationMenu extends React.Component {
   };
 
   render() {
-    const { classes, position, theme } = this.props
+    const { classes, position } = this.props
 
     return (
       <div className={classes.root}>

@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { login } from '../store/actions';
 
 
 import './login.css';
 import LoginInput from './components/LoginInput/loginInput';
 import LoginButton from './components/LoginButton/loginButton';
-import AlertMessage from './components/AlertMessage/alertMessage';
+
 
 import logo from './assets/logo_full.png';
 import classroomImg from './assets/classroom.svg';
 
-
-const host_api = process.env.REACT_APP_URL_API;
 
 class Login extends Component {
   constructor() {
@@ -24,17 +23,52 @@ class Login extends Component {
     this.popUpType = '';
 
     this.state = {
-      email: undefined,
-      password: undefined
+      email: '',
+      password: '',
+      inputErrors: {}
+
     }
   }
 
-  togglePopup(message, popUpType = "error") {
-    this.textMessagePopUp = message;
-    this.popUpType = popUpType;
-    this.setState({
-      showPopup: !this.state.showPopup
-    });
+  componentDidUpdate() {
+    this.requisitionErrorHandler();
+
+    if (this.props.isAuthenticated === true) {
+      this.props.history.push("/");
+    }
+  }
+
+  requisitionErrorHandler() {
+    if (this.props.requisitionError !== undefined && this.state.loading === true) {
+      this.props.restartRegister();
+
+      console.log("RequisitionError: ", this.props.requisitionError)
+
+      if (this.props.requisitionError === "Error: Network Error") {
+
+        this.setState({
+          mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
+          loading: false
+        });
+      } else {
+        let inputErrors = {}
+        if (this.props.requisitionError.data.name) {
+          inputErrors['name'] = this.props.requisitionError.data.name;
+        }
+        if (this.props.requisitionError.data.email) {
+          inputErrors['email'] = this.props.requisitionError.data.email;
+        }
+        if (this.props.requisitionError.data.password1) {
+
+          inputErrors['password'] = "Escolha uma senha mais segura.";
+        }
+
+        this.setState({
+          inputErrors: inputErrors,
+          loading: false
+        })
+      }
+    }
   }
 
   nextPath(path) {
@@ -42,44 +76,47 @@ class Login extends Component {
   }
 
   submitLogin(e) {
-    if (!this.state.email || !this.state.password)
-      return;
     e.preventDefault();
-    let dataToSend = {
-      email: this.state.email,
-      password: this.state.password
-    };
-    let url = host_api + '/login/';
-    fetch(url, {
-      method: "POST",
-      body: JSON.stringify(dataToSend),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(response => response.json())
-      .then(responseJson => {
-        console.log(responseJson)
-        if (responseJson.token) {
-          console.log(responseJson);
-          localStorage.setItem('MONITORIAAPP_TOKEN', responseJson.token);
-          this.nextPath('/home');
-        }
-        else if (responseJson.email) {
-          this.togglePopup("Insira um formato de email válido", "error")
-        }
-        else if (responseJson.non_field_errors) {
-          this.togglePopup("Email ou senha inválidos", "error")
-        }
-      }).catch(err => {
-        console.log('-------');
-        console.log(err);
 
-        this.togglePopup("Erro ao Processar!!!", "error");
-      })
+    let inputErrors = {};
+
+    let f_errorEmail;
+    let f_errorPassword;
+
+    let email = this.state.email;
+    let password = this.state.password;
+
+    if (!email) {
+      inputErrors['email'] = "Digite o email";
+      f_errorEmail = true;
+    } else if (!email.includes("@")) {
+      inputErrors['email'] = "Digite um e-mail válido";
+      f_errorEmail = true;
+    }
+
+    if (!password) {
+      inputErrors['password'] = "Digite uma senha";
+      f_errorPassword = true;
+    } else {
+      if (password.length < 8) {
+        inputErrors['password'] = "Use 8 caracteres ou mais para a sua senha";
+        f_errorPassword = true;
+      } else if (password.length > 16) {
+        inputErrors['password'] = "Use 16 caracteres ou menos para a sua senha";
+        f_errorPassword = true;
+      }
+    }
+
+    this.setState({ inputErrors: inputErrors });
+
+    if (!f_errorEmail && !f_errorPassword) {
+      this.props.login(email, password);
+    }
   }
 
   submitSignUp(e) {
     e.preventDefault();
+    this.nextPath('/cadastro');
   }
 
   emailChange(e) {
@@ -105,9 +142,8 @@ class Login extends Component {
               <h1 id="titlePart2">FGA</h1>
             </div>
             <div className="descApp">
-              <text>Descrição detalhada do app e
-                  apresentação de funcionalidades
-                            </text>
+              {/* Descrição do app e
+              apresentação de funcionalidades */}
             </div>
             <div className="contentImg">
               <img alt="classroomImg" className="classroomImg"
@@ -122,25 +158,23 @@ class Login extends Component {
               <img alt="logo" id="logo" src={logo} />
             </div>
 
-            {this.state.showPopup ?
-              <AlertMessage onClick={this.togglePopup.bind(this)}
-                type={this.popUpType}
-                textMessage={this.textMessagePopUp} /> :
-              null}
-
             <form className="formLogin" onSubmit={this.submitLogin}>
               <div className="userLoginContent">
                 <LoginInput
+                  id="email"
                   icon="mail"
                   value="E-mail"
                   type="email"
                   inputValue={this.emailChange}
+                  error={this.state.inputErrors}
                 />
                 <LoginInput
+                  id="password"
                   icon="lock"
                   value="Senha"
                   type="password"
                   inputValue={this.passwordChange}
+                  error={this.state.inputErrors}
                 />
 
               </div>
@@ -165,4 +199,16 @@ class Login extends Component {
   }
 }
 
-export default withRouter(Login);
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: state.authentication.isAuthenticated,
+    requisitionError: state.authentication.requisitionError
+  }
+}
+
+export const loginContainer = connect(
+  mapStateToProps,
+  { login },
+)(Login)
+
+export default loginContainer;
