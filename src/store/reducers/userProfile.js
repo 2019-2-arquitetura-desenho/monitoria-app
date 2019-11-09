@@ -3,12 +3,12 @@ const UserProfile = (state = {}, action) => {
         case 'UPDATE_PROFILE_SUCCESS':
             return {
                 ...state,
-                userData: action.payload
+                profileData: action.payload
             };
         case 'GET_PROFILE_SUCCESS':
             return {
                 ...state,
-                userData: action.payload
+                profileData: action.payload
             }
         default:
             return state;

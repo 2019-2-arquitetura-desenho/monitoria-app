@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 
 const host_api = process.env.REACT_APP_URL_API;
 
-function updateProfile(name, email, password, ira, registration, document) {
+export function updateProfile(token, name, email, password, ira, matricula, document) {
     let url = host_api + '/set_profile/';
     let dataToSend = {
-        token: this.props.token,
+        token,
         email,
         password,
         name,
         ira,
-        registration,
+        matricula,
         // document
     };
     return function (dispatch) {
@@ -29,10 +29,10 @@ function updateProfile(name, email, password, ira, registration, document) {
     }
 }
 
-function getProfile() {
+export function getProfile(token) {
     let url = host_api + '/get_profile/';
     let dataToSend = {
-        token: this.props.token
+        token
     };
     return function (dispatch) {
         axios.post(
@@ -49,17 +49,3 @@ function getProfile() {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        isAuthenticated: state.authentication.isAuthenticated,
-        token: state.authentication.userData.token
-    }
-}
-
-export const updateProfileAction = connect(
-    mapStateToProps
-)(updateProfile);
-
-export const getProfileAction = connect(
-    mapStateToProps,
-)(getProfile);

@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { updateProfile, getProfile } from '../store/actions';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -23,7 +25,7 @@ class PersonalInfos extends React.Component {
       name: '',
       email: '',
       ira: '',
-      registration: '',
+      matricula: '',
 
       isUploadDialogOpen: false,
       isFileSubmit: false,
@@ -78,14 +80,31 @@ class PersonalInfos extends React.Component {
     }
   }
 
+  componentWillMount() {
+    // get infos of profile
+    // this.props.register(name, email, password, this.state.fileSubmit)
+    this.props.getProfile(this.props.token);
+    if (this.props.profileData) {
+      this.setState({
+        name: this.props.profileData.name,
+        email: this.props.profileData.email,
+        matricula: this.props.profileData.matricula,
+        ira: this.props.profileData.ira
+      })
+    }
+  }
+
+  componentDidUpdate() {
+  }
+
   formInfos() {
     const {
-      name, email, registration, ira, inputErrors, fileSubmit, isFileSubmit,
+      name, email, matricula, ira, inputErrors, fileSubmit, isFileSubmit,
       isUploadDialogOpen,
     } = this.state;
     return (
       <Grid container justify="center"  >
-        <Grid xs={12} sm={10}>
+        <Grid item xs={12} sm={10}>
           <InputText
             id="name"
             type="text"
@@ -106,9 +125,9 @@ class PersonalInfos extends React.Component {
             id="registration"
             type="number"
             label="Matrícula*"
-            value={registration}
+            value={matricula}
             onChange={this.handleChange}
-            error={inputErrors.registration}
+            error={inputErrors.matricula}
           />
           <InputText
             id="ira"
@@ -147,8 +166,8 @@ class PersonalInfos extends React.Component {
     const { classes, position } = this.props
     return (
       <React.Fragment>
+        <Menu position={1} />
         <div className={classes.root}>
-          <Menu position={1} />
 
           <Container maxWidth="md" className={classes.container}>
             <Typography
@@ -186,10 +205,11 @@ const styles = theme => ({
   root: {
     backgroundColor: '#42a0ed',
     paddingTop: theme.spacing(5),
+    height: '100vh'
   },
   container: {
     backgroundColor: '#fff',
-    height: '100vh'
+    paddingBottom: 20
   },
   title: {
     color: "#267cc1",
@@ -214,4 +234,18 @@ const styles = theme => ({
   }
 });
 
-export default withStyles(styles, { withTheme: true })(PersonalInfos);
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: state.authentication.isAuthenticated,
+    token: state.authentication.userData.token,
+    requisitionError: state.userProfile.requisitionError,
+    profileData: state.userProfile.profileData
+  }
+}
+
+export const personalInfosContainer = connect(
+  mapStateToProps,
+  { updateProfile, getProfile },
+)(withStyles(styles, { withTheme: true })(PersonalInfos))
+
+export default personalInfosContainer;
