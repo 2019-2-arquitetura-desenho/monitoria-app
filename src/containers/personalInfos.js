@@ -36,6 +36,7 @@ class PersonalInfos extends React.Component {
       inputErrors: {}
     }
 
+    this.handleChange = this.handleChange.bind(this);
     this.handleClickOpenUploadDialog = this.handleClickOpenUploadDialog.bind(this);
     this.handleCloseUploadDialog = this.handleCloseUploadDialog.bind(this);
     this.onUpdateFileUploadDialog = this.onUpdateFileDialog.bind(this);
@@ -43,6 +44,10 @@ class PersonalInfos extends React.Component {
     this.handleConfirmUploadDialog = this.handleConfirmUploadDialog.bind(this);
     this.onUpdateFileUploadScreen = this.onUpdateFileUploadScreen.bind(this);
     // this.onPressSubmit = this.onPressSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ [event.target.id]: event.target.value });
   }
 
   handleClickOpenUploadDialog() {
@@ -95,7 +100,7 @@ class PersonalInfos extends React.Component {
           />
           <InputText
             id="email"
-            type="text"
+            type="email"
             label="Email*"
             value={email}
             onChange={this.handleChange}
@@ -103,7 +108,7 @@ class PersonalInfos extends React.Component {
           />
           <InputText
             id="registration"
-            type="text"
+            type="number"
             label="Matrícula*"
             value={registration}
             onChange={this.handleChange}
@@ -111,7 +116,7 @@ class PersonalInfos extends React.Component {
           />
           <InputText
             id="ira"
-            type="text"
+            type="number"
             label="IRA*"
             value={ira}
             onChange={this.handleChange}
