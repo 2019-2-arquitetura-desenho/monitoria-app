@@ -8,12 +8,16 @@ import {
   Typography,
   Container,
   Divider,
+  MuiThemeProvider,
+  createMuiTheme,
   Box
 } from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
 import Menu from './components/NavigationMenu/navigationMenu';
 import InputText from './components/InputText/inputText';
 import FileSubmit from './components/FileSubmit/fileSubmit';
+import SubmitButton from './components/SubmitButton/submitButton';
+
 
 
 class PersonalInfos extends React.Component {
@@ -80,6 +84,10 @@ class PersonalInfos extends React.Component {
     }
   }
 
+  onPressChangePassword() {
+
+  }
+
   componentWillMount() {
     // get infos of profile
     // this.props.register(name, email, password, this.state.fileSubmit)
@@ -102,6 +110,7 @@ class PersonalInfos extends React.Component {
       name, email, matricula, ira, inputErrors, fileSubmit, isFileSubmit,
       isUploadDialogOpen,
     } = this.state;
+    const { classes } = this.props;
     return (
       <Grid container justify="center"  >
         <Grid item xs={12} sm={10}>
@@ -109,7 +118,7 @@ class PersonalInfos extends React.Component {
             id="name"
             type="text"
             label="Nome*"
-            value={name}
+            value={name ? name : "Sem Nome"}
             onChange={this.handleChange}
             error={inputErrors.name}
           />
@@ -117,7 +126,7 @@ class PersonalInfos extends React.Component {
             id="email"
             type="email"
             label="Email*"
-            value={email}
+            value={email ? email : "Sem e-mail"}
             onChange={this.handleChange}
             error={inputErrors.email}
           />
@@ -125,7 +134,7 @@ class PersonalInfos extends React.Component {
             id="registration"
             type="number"
             label="Matrícula*"
-            value={matricula}
+            value={matricula ? matricula : "000000000"}
             onChange={this.handleChange}
             error={inputErrors.matricula}
           />
@@ -133,12 +142,12 @@ class PersonalInfos extends React.Component {
             id="ira"
             type="number"
             label="IRA*"
-            value={ira}
+            value={ira ? ira : 0.0}
             onChange={this.handleChange}
             error={inputErrors.ira}
           />
           <Grid container
-            justify="center">
+            justify="center" className={classes.gridFormButtons}>
             <Grid item xs={5}>
               <FileSubmit
                 label={"Reenviar Histórico"}
@@ -154,18 +163,18 @@ class PersonalInfos extends React.Component {
               />
             </Grid>
             <Grid item xs={6} >
-
+              <SubmitButton titleButton="Alterar Senha" onClickSubmitButton={this.onPressChangePassword} />
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Grid >
     );
   }
 
   render() {
     const { classes, position } = this.props
     return (
-      <React.Fragment>
+      <MuiThemeProvider theme={theme}>
         <Menu position={1} />
         <div className={classes.root}>
 
@@ -191,10 +200,25 @@ class PersonalInfos extends React.Component {
 
           </Container>
         </div>
-      </React.Fragment>
+      </MuiThemeProvider>
     );
   }
 }
+
+const theme = createMuiTheme({
+  palette: {
+    background: {
+      default: "#42a0ed"
+    },
+    primary: {
+      main: "#42a0ed",
+      contrastText: "white"
+    },
+    secondary: {
+      main: "#267cc1"
+    }
+  }
+})
 
 PersonalInfos.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -231,6 +255,13 @@ const styles = theme => ({
   divider: {
     size: 30,
     color: "black"
+  },
+  gridFormButtons: {
+    display: 'flex',
+    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignSelf: 'center',
+    flexDirection: 'row',
   }
 });
 
