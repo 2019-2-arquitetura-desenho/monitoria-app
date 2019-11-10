@@ -89,8 +89,6 @@ class PersonalInfos extends React.Component {
   }
 
   componentWillMount() {
-    // get infos of profile
-    // this.props.register(name, email, password, this.state.fileSubmit)
     this.props.getProfile(this.props.token);
     if (this.props.profileData) {
       this.setState({
@@ -103,6 +101,14 @@ class PersonalInfos extends React.Component {
   }
 
   componentDidUpdate() {
+  }
+
+  componentWillUnmount() {
+    console.log("Update Profile")
+    const {
+      name, email, ira, matricula
+    } = this.state;
+    this.props.updateProfile(this.props.token, name, email, ira, matricula);
   }
 
   formInfos() {
