@@ -18,7 +18,12 @@ const Authentication = (state = {}, action) => {
         isAuthenticated: false,
         requisitionError: action.payload
       };
-    case 'LOGIN_SUCESS':
+    case 'RESTART_LOGIN':
+      return {
+        ...state,
+        requisitionError: undefined
+      };
+    case 'LOGIN_SUCCESS':
       return {
         ...state,
         isAuthenticated: true,

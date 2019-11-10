@@ -51,7 +51,7 @@ export function login(email, password) {
       dataToSend
     ).then(response => {
       dispatch({
-        type: 'LOGIN_SUCESS',
+        type: 'LOGIN_SUCCESS',
         payload: response.data
       });
 
@@ -68,6 +68,12 @@ export function login(email, password) {
         });
       }
     });
+  }
+}
+
+export function restartLogin() {
+  return function (dispatch) {
+    dispatch({ type: 'RESTART_LOGIN' });
   }
 }
 
