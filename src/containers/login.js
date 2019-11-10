@@ -2,32 +2,42 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { login, restartRegister } from '../store/actions';
 
+import {
+  createMuiTheme,
+  MuiThemeProvider,
+  CssBaseline,
+  CircularProgress
+} from '@material-ui/core';
+
+import InputText from './components/InputText/inputText';
+import SubmitButton from './components/SubmitButton/submitButton';
+import classroomImg from './assets/classroom.svg';
+import logo from './assets/logo_full.png';
 
 import './login.css';
-import LoginButton from './components/LoginButton/loginButton';
-import InputText from './components/InputText/inputText';
-
-import logo from './assets/logo_full.png';
-import classroomImg from './assets/classroom.svg';
 
 
 class Login extends Component {
   constructor() {
     super();
-    this.submitLogin = this.submitLogin.bind(this);
-    this.submitSignUp = this.submitSignUp.bind(this);
-    this.emailChange = this.emailChange.bind(this);
-    this.passwordChange = this.passwordChange.bind(this);
-    this.textMessagePopUp = '';
-    this.popUpType = '';
 
     this.state = {
-      loading: true,
+      loading: false,
+      
       email: '',
+
       password: '',
+      showPassword: false,
+
       inputErrors: {}
     }
-  }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
+    this.handleMouseDownPassword = this.handleMouseDownPassword.bind(this);
+    this.submitLogin = this.submitLogin.bind(this);
+    this.submitSignUp = this.submitSignUp.bind(this);
+}
 
   componentDidUpdate() {
     this.requisitionErrorHandler();
@@ -83,14 +93,6 @@ class Login extends Component {
     if (!password) {
       inputErrors['password'] = "Digite uma senha";
       f_errorPassword = true;
-    } else {
-      if (password.length < 8) {
-        inputErrors['password'] = "Use 8 caracteres ou mais para a sua senha";
-        f_errorPassword = true;
-      } else if (password.length > 16) {
-        inputErrors['password'] = "Use 16 caracteres ou menos para a sua senha";
-        f_errorPassword = true;
-      }
     }
 
     this.setState({ inputErrors: inputErrors });
@@ -98,8 +100,30 @@ class Login extends Component {
     if (!f_errorEmail && !f_errorPassword) {
       this.setState({ loading: true })
 
-      this.props.login(email, password);
+      clearTimeout();
+      setTimeout(
+        function() {
+          this.props.login(email, password);
+        }.bind(this),
+        1000
+      )
     }
+  }
+
+  handleChange(event) {
+    this.setState({ [event.target.id]: event.target.value });
+  }
+
+  handleClickShowPassword() {
+    this.setState({ showPassword: !this.state.showPassword });
+  }
+
+  handleMouseDownPassword(event) {
+    event.preventDefault();
+  }
+
+  nextPath(path) {
+    this.props.history.push(path);
   }
 
   submitSignUp(e) {
@@ -107,63 +131,54 @@ class Login extends Component {
     this.nextPath('/cadastro');
   }
 
-  emailChange(e) {
-    this.setState({
-      email: e.target.value
-    })
-  }
-
-  passwordChange(e) {
-    this.setState({
-      password: e.target.value
-    })
-  }
-
-  nextPath(path) {
-    this.props.history.push(path);
-  }
-
   loginForm() {
-    return (
-      <form className="formLogin" onSubmit={this.submitLogin}>
-        <div className="userLoginContent">
-          <InputText
-            id="email"
-            type="email"
-            label="Email"
-            value={this.state.email}
-            onChange={this.emailChange}
-            error={this.state.inputErrors.email}
-          />
-          <InputText
-            id="password"
-            type="password"
-            label="Senha"
-            value={this.state.password}
-            onChange={this.passwordChange}
-            error={this.state.inputErrors.password}
-          />
-
-        </div>
-
-        <div className="userButtonsGroup">
-          <LoginButton
-            value="Entrar"
-            onClick={this.submitLogin}
-          />
-          <LoginButton
-            value="Criar Conta"
-            onClick={this.submitSignUp}
-          />
-        </div>
-      </form>
-    );
+    const { mainError, email, password, showPassword, inputErrors, loading } = this.state;
+    
+      return (
+        <form className="formLogin">
+          <div className="userLoginContent">
+            <InputText
+              id="email"
+              type="email"
+              label="Email"
+              value={email}
+              onChange={this.handleChange}
+              error={inputErrors.email}
+            />
+            <InputText
+              id="password"
+              type={showPassword ? "text":"password"}
+              label="Senha"
+              value={password}
+              onChange={this.handleChange}
+              onClickShow={this.handleClickShowPassword}
+              onMouseDown={this.handleMouseDownPassword}
+              valueVisibility={showPassword}
+              error={inputErrors.password}
+            />
+          </div>
+          <div className="userButtonsGroup">
+            <SubmitButton
+              titleButton="Cadastrar"
+              buttonColor="primary"
+              onClickSubmitButton={this.submitSignUp}
+            />
+            <SubmitButton
+              titleButton="Entrar"
+              buttonColor="secondary"
+              onClickSubmitButton={this.submitLogin}
+            />
+          </div>
+        </form>
+      ); 
+    }
   }
-
 
   render() {
     return (
-      <div className="container" >
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <div className="container" >
         <div className="content">
           <div className="presentationPanel">
             <div className="title">
@@ -190,9 +205,24 @@ class Login extends Component {
           </div>
         </div>
       </div >
+      </MuiThemeProvider>
     );
   }
 }
+
+const theme = createMuiTheme({
+  palette: {
+      primary: {
+          main: "#42a0ed",
+          contrastText: "white"
+      },
+      secondary: {
+          main: "#267cc1",
+          contrastText: "white"
+      }
+  }
+})
+
 const styles = {
   progress: {
     display: "flex",

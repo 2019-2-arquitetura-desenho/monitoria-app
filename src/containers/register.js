@@ -285,7 +285,7 @@ class Register extends React.Component {
                         onClickConfirmUploadDialog={this.handleConfirmUploadDialog}
                         onUpdateFileUploadScreen={this.onUpdateFileUploadScreen}
                     />
-                    <SubmitButton titleButton="Criar Conta" onClickSubmitButton={this.onPressSubmit} />
+                    <SubmitButton titleButton="Criar Conta" buttonColor="secondary" nonClickSubmitButton={this.onPressSubmit} />
                 </Grid>
             );
         }
