@@ -9,6 +9,7 @@ import {
   CircularProgress
 } from '@material-ui/core';
 
+import MainError from './components/MainError/mainError';
 import InputText from './components/InputText/inputText';
 import SubmitButton from './components/SubmitButton/submitButton';
 import classroomImg from './assets/classroom.svg';
@@ -29,6 +30,7 @@ class Login extends Component {
       password: '',
       showPassword: false,
 
+      mainError: '',
       inputErrors: {}
     }
 
@@ -58,12 +60,21 @@ class Login extends Component {
           loading: false
         });
       } else {
+        let mainError = '';
         let inputErrors = {}
+
         if (this.props.requisitionError.data.non_field_errors) {
-          inputErrors['password'] = this.props.requisitionError.data.non_field_errors;
+          mainError = this.props.requisitionError.data.non_field_errors;
+        }
+        if (this.props.requisitionError.data.email) {
+          inputErrors['email'] = this.props.requisitionError.data.email
+        }
+        if (this.props.requisitionError.data.password1) {
+          inputErrors['password'] = this.props.requisitionError.data.password1
         }
 
         this.setState({
+          mainError: mainError,
           inputErrors: inputErrors,
           loading: false
         })
@@ -146,6 +157,7 @@ class Login extends Component {
       return (
         <form className="formLogin">
           <div className="userLoginContent">
+            <MainError error={mainError} />
             <InputText
               id="email"
               type="email"
