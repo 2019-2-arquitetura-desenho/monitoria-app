@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core';
 
 
 class SubmitButton extends React.Component {
-    render(){
+    render() {
         const {
             onClickSubmitButton, titleButton
         } = this.props
@@ -14,14 +14,14 @@ class SubmitButton extends React.Component {
                 variant="contained"
                 color="secondary"
                 size="large"
-                style={ styles.submitButton }
-                onClick={ onClickSubmitButton }
+                style={styles.submitButton}
+                onClick={onClickSubmitButton}
             >
-                { titleButton }
+                {titleButton}
             </Button>
-            )
-        }
+        )
     }
+}
 
 const styles = {
     submitButton: {
@@ -31,7 +31,7 @@ const styles = {
         marginRight: "8%",
         marginBottom: "4%",
         fontWeight: "bold"
-      }
+    }
 }
 
 export default SubmitButton;

@@ -119,41 +119,44 @@ class PersonalInfos extends React.Component {
     const { classes } = this.props;
     return (
       <Grid container justify="center"  >
-        <Grid item xs={12} sm={10}>
-          <InputText
-            id="name"
-            type="text"
-            label="Nome*"
-            value={name ? name : "Sem Nome"}
-            onChange={this.handleChange}
-            error={inputErrors.name}
-          />
-          <InputText
-            id="email"
-            type="email"
-            label="Email*"
-            value={email ? email : "Sem e-mail"}
-            onChange={this.handleChange}
-            error={inputErrors.email}
-          />
-          <InputText
-            id="registration"
-            type="number"
-            label="Matrícula*"
-            value={matricula ? matricula : "000000000"}
-            onChange={this.handleChange}
-            error={inputErrors.matricula}
-          />
-          <InputText
-            id="ira"
-            type="number"
-            label="IRA*"
-            value={ira ? ira : 0.0}
-            onChange={this.handleChange}
-            error={inputErrors.ira}
-          />
-          <Grid container
-            justify="center" className={classes.gridFormButtons}>
+        <Grid item xs={12} sm={10} >
+
+          <Grid>
+            <InputText
+              id="name"
+              type="text"
+              label="Nome*"
+              value={name ? name : "Sem Nome"}
+              onChange={this.handleChange}
+              error={inputErrors.name}
+            />
+            <InputText
+              id="email"
+              type="email"
+              label="Email*"
+              value={email ? email : "Sem e-mail"}
+              onChange={this.handleChange}
+              error={inputErrors.email}
+            />
+            <InputText
+              id="registration"
+              type="number"
+              label="Matrícula*"
+              value={matricula ? matricula : "000000000"}
+              onChange={this.handleChange}
+              error={inputErrors.matricula}
+            />
+            <InputText
+              id="ira"
+              type="number"
+              label="IRA*"
+              value={ira ? ira : 0.0}
+              onChange={this.handleChange}
+              error={inputErrors.ira}
+            />
+          </Grid>
+          <Grid justify="center"
+            className={classes.gridFormButtons}>
             <Grid item xs={5}>
               <FileSubmit
                 label={"Reenviar Histórico"}
@@ -168,7 +171,7 @@ class PersonalInfos extends React.Component {
                 onUpdateFileUploadScreen={this.onUpdateFileUploadScreen}
               />
             </Grid>
-            <Grid item xs={6} >
+            <Grid item xs={5} >
               <SubmitButton titleButton="Alterar Senha" onClickSubmitButton={this.onPressChangePassword} />
             </Grid>
           </Grid>
@@ -180,11 +183,11 @@ class PersonalInfos extends React.Component {
   render() {
     const { classes, position } = this.props
     return (
-      <MuiThemeProvider theme={theme}>
-        <Menu position={1} />
-        <div className={classes.root}>
+      <div className={classes.root}>
+        <MuiThemeProvider theme={theme}>
+          <Menu position={1} />
 
-          <Container maxWidth="md" className={classes.container}>
+          <Container component="div" maxWidth="md" className={classes.container}>
             <Typography
               variant="h5" align="center"
               className={classes.title}>
@@ -205,8 +208,8 @@ class PersonalInfos extends React.Component {
             {this.formInfos()}
 
           </Container>
-        </div>
-      </MuiThemeProvider>
+        </MuiThemeProvider>
+      </div>
     );
   }
 }
@@ -234,12 +237,12 @@ PersonalInfos.propTypes = {
 const styles = theme => ({
   root: {
     backgroundColor: '#42a0ed',
-    paddingTop: theme.spacing(5),
     height: '100vh'
   },
   container: {
+    marginTop: theme.spacing(3),
     backgroundColor: '#fff',
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   title: {
     color: "#267cc1",
@@ -265,8 +268,6 @@ const styles = theme => ({
   gridFormButtons: {
     display: 'flex',
     alignItems: 'center',
-    // justifyContent: 'center',
-    // alignSelf: 'center',
     flexDirection: 'row',
   }
 });
