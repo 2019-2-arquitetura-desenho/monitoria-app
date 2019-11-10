@@ -164,7 +164,7 @@ class PersonalInfos extends React.Component {
 
   formInfos() {
     const { profileData } = this.props;
-    if (profileData.user.is_superuser) {
+    if (!profileData.user.is_superuser) {
       return (
         <Grid container justify="center"  >
           <FormProfessor
@@ -217,10 +217,9 @@ class PersonalInfos extends React.Component {
                 As Informações aqui presentes não estão disponíveis para
                 a visualização dos alunos, exceto o nome
               </Typography>
-              <Typography align="center">
-
+              <Box className={classes.mainErrorBox}>
                 <MainError error={mainError} />
-              </Typography>
+              </Box>
             </Box>
 
             {this.formInfos()}
@@ -271,6 +270,11 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center'
+  },
+  mainErrorBox: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%'
   },
   helpLabel: {
     color: "#267cc1",

@@ -26,7 +26,6 @@ const FormStudent = (props) => {
     name, email, matricula, ira, inputErrors, fileSubmit, isFileSubmit
   } = props.stateParent;
 
-  console.log("Input errors: ", inputErrors)
   const classes = useStyles();
   const { onChange, setStatusFileSubmit, setFileSubmit, onSubmitName,
     onSubmitEmail } = props;
@@ -61,7 +60,6 @@ const FormStudent = (props) => {
 
   const handleClickBtnName = (event) => {
     onSubmitName()
-    // setBtnName(event.currentTarget);
   }
 
   const handleClickBtnEmail = (event) => {
@@ -109,7 +107,7 @@ const FormStudent = (props) => {
               id="name"
               type="text"
               label="Nome*"
-              value={name ? name : "Sem Nome"}
+              value={name}
               onChange={onChange}
               error={inputErrors.name}
             />
@@ -126,7 +124,7 @@ const FormStudent = (props) => {
               id="email"
               type="email"
               label="Email*"
-              value={email ? email : "Sem e-mail"}
+              value={email}
               onChange={onChange}
               error={inputErrors.email}
             />
