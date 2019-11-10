@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { login, restartRegister } from '../store/actions';
+import { login, restartLogin } from '../store/actions';
 
 import {
   createMuiTheme,
   MuiThemeProvider,
   CssBaseline,
+  Button,
   CircularProgress
 } from '@material-ui/core';
 
@@ -37,6 +38,7 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
     this.handleMouseDownPassword = this.handleMouseDownPassword.bind(this);
+    this.submitRecoveryPassword = this.submitRecoveryPassword.bind(this);
     this.submitLogin = this.submitLogin.bind(this);
     this.submitSignUp = this.submitSignUp.bind(this);
 }
@@ -51,7 +53,7 @@ class Login extends Component {
 
   requisitionErrorHandler() {
     if (this.props.requisitionError !== undefined && this.state.loading === true) {
-      this.props.restartRegister();
+      this.props.restartLogin();
 
       if (this.props.requisitionError === "Error: Network Error") {
 
@@ -80,6 +82,32 @@ class Login extends Component {
         })
       }
     }
+  }
+
+  handleChange(event) {
+    this.setState({ [event.target.id]: event.target.value });
+  }
+
+  handleClickShowPassword() {
+    this.setState({ showPassword: !this.state.showPassword });
+  }
+
+  handleMouseDownPassword(event) {
+    event.preventDefault();
+  }
+
+  nextPath(path) {
+    this.props.history.push(path);
+  }
+
+  submitRecoveryPassword(e) {
+    e.preventDefault();
+    this.nextPath('/recuperar-senha');
+  }
+
+  submitSignUp(e) {
+    e.preventDefault();
+    this.nextPath('/cadastro');
   }
 
   submitLogin(e) {
@@ -121,27 +149,6 @@ class Login extends Component {
     }
   }
 
-  handleChange(event) {
-    this.setState({ [event.target.id]: event.target.value });
-  }
-
-  handleClickShowPassword() {
-    this.setState({ showPassword: !this.state.showPassword });
-  }
-
-  handleMouseDownPassword(event) {
-    event.preventDefault();
-  }
-
-  nextPath(path) {
-    this.props.history.push(path);
-  }
-
-  submitSignUp(e) {
-    e.preventDefault();
-    this.nextPath('/cadastro');
-  }
-
   loginForm() {
     const { mainError, email, password, showPassword, inputErrors, loading } = this.state;
 
@@ -177,6 +184,14 @@ class Login extends Component {
               valueVisibility={showPassword}
               error={inputErrors.password}
             />
+            <div style={styles.contentPasswordRecoveryButton}>
+              <Button
+                onClick={this.submitRecoveryPassword}
+                style={styles.passwordRecoveryButton}
+              >
+                Recuperar Senha
+              </Button>
+            </div>
           </div>
           <div className="userButtonsGroup">
             <SubmitButton
@@ -230,12 +245,12 @@ class Login extends Component {
 const theme = createMuiTheme({
   palette: {
       primary: {
-          main: "#42a0ed",
-          contrastText: "white"
+        main: "#42a0ed",
+        contrastText: "white"
       },
       secondary: {
-          main: "#267cc1",
-          contrastText: "white"
+        main: "#267cc1",
+        contrastText: "white"
       }
   }
 })
@@ -243,6 +258,14 @@ const theme = createMuiTheme({
 const styles = {
   progress: {
     textAlign: "center"
+  },
+  contentPasswordRecoveryButton: {
+    textAlign: "right",
+    marginRight: "8%",
+    marginTop: "-1%"
+  },
+  passwordRecoveryButton: {
+    color: "#5e1dad"
   }
 }
 
@@ -255,7 +278,7 @@ function mapStateToProps(state) {
 
 export const loginContainer = connect(
   mapStateToProps,
-  { login, restartRegister },
+  { login, restartLogin },
 )(Login)
 
 export default loginContainer;
