@@ -285,7 +285,11 @@ class Register extends React.Component {
                         onClickConfirmUploadDialog={this.handleConfirmUploadDialog}
                         onUpdateFileUploadScreen={this.onUpdateFileUploadScreen}
                     />
-                    <SubmitButton titleButton="Criar Conta" buttonColor="secondary" nonClickSubmitButton={this.onPressSubmit} />
+                    <SubmitButton
+                        titleButton="Criar Conta"
+                        buttonColor="secondary"
+                        onClickSubmitButton={this.onPressSubmit}
+                    />
                 </Grid>
             );
         }
@@ -374,9 +378,9 @@ const styles = {
         // fontFamily: 'fontFamily'
     },
     progress: {
-        display: "flex",
         marginTop: "25%",
-        marginLeft: "50%",
+        marginBottom: "25%",
+        textAlign: "center", 
     }
 }
 

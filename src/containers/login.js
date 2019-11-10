@@ -133,7 +133,16 @@ class Login extends Component {
 
   loginForm() {
     const { mainError, email, password, showPassword, inputErrors, loading } = this.state;
-    
+
+    if (loading) {
+      return (
+        <form className="formLogin">
+          <div style={styles.progress}>
+            <CircularProgress color="secondary" />
+          </div>
+        </form>
+      );
+    } else {
       return (
         <form className="formLogin">
           <div className="userLoginContent">
@@ -178,33 +187,29 @@ class Login extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
-        <div className="container" >
-        <div className="content">
-          <div className="presentationPanel">
-            <div className="title">
-              <h1 id="titlePart1">Monitoria</h1>
-              <h1 id="titlePart2">FGA</h1>
+        <div className="container">
+          <div className="content">
+            <div className="presentationPanel">
+              <div className="title">
+                <h1 id="titlePart1">Monitoria</h1>
+                <h1 id="titlePart2">FGA</h1>
+              </div>
+              <div className="descApp">
+                {/* Descrição do app e
+                  apresentação de funcionalidades */}
+              </div>
+              <div className="contentImg">
+                <img alt="classroomImg" className="classroomImg" src={classroomImg} />
+              </div>
             </div>
-            <div className="descApp">
-              {/* Descrição do app e
-              apresentação de funcionalidades */}
+            <div className="loginPanel">
+              <div className="logoContent">
+                <img alt="logo" id="logo" src={logo} />
+              </div>
+              {this.loginForm()}
             </div>
-            <div className="contentImg">
-              <img alt="classroomImg" className="classroomImg"
-                src={classroomImg}
-              />
-            </div>
-          </div>
-
-
-          <div className="loginPanel">
-            <div className="logoContent">
-              <img alt="logo" id="logo" src={logo} />
-            </div>
-            {this.loginForm()}
           </div>
         </div>
-      </div >
       </MuiThemeProvider>
     );
   }
@@ -225,9 +230,7 @@ const theme = createMuiTheme({
 
 const styles = {
   progress: {
-    display: "flex",
-    marginTop: "25%",
-    marginLeft: "50%",
+    textAlign: "center"
   }
 }
 
