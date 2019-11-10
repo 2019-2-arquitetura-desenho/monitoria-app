@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import FileSubmit from '../components/FileSubmit/fileSubmit';
 import SubmitButton from '../components/SubmitButton/submitButton';
 import InputText from '../components/InputText/inputText';
+import UpdateButton from './updateButton';
 
 const useStyles = makeStyles(theme => ({
   gridFormButtons: {
@@ -55,42 +56,75 @@ const FormStudent = (props) => {
   const open = Boolean(openDialog);
 
   return (
-    <Grid item xs={12} sm={10} >
-      <Grid>
-        <InputText
-          id="name"
-          type="text"
-          label="Nome*"
-          value={name ? name : "Sem Nome"}
-          onChange={onChange}
-          error={inputErrors.name}
-        />
-        <InputText
-          id="email"
-          type="email"
-          label="Email*"
-          value={email ? email : "Sem e-mail"}
-          onChange={onChange}
-          error={inputErrors.email}
-        />
-        <InputText
-          id="registration"
-          type="number"
-          label="Matrícula*"
-          value={matricula ? matricula : "000000000"}
-          onChange={onChange}
-          error={inputErrors.matricula}
-          disable={true}
-        />
-        <InputText
-          id="ira"
-          type="number"
-          label="IRA*"
-          value={ira ? ira : 0.0}
-          onChange={onChange}
-          error={inputErrors.ira}
-          disable={true}
-        />
+    <Grid item xs={10} >
+      <Grid container justify="center">
+        <Grid item xs={10}
+          className={classes.gridFormButtons}>
+          <Grid item xs={9}>
+            <InputText
+              id="name"
+              type="text"
+              label="Nome*"
+              value={name ? name : "Sem Nome"}
+              onChange={onChange}
+              error={inputErrors.name}
+            />
+          </Grid>
+          <Grid item xs={1}>
+            <UpdateButton
+              titleButton="Alterar" />
+          </Grid>
+        </Grid>
+
+        <Grid item xs={10}
+          className={classes.gridFormButtons}>
+          <Grid item xs={9}>
+            <InputText
+              id="email"
+              type="email"
+              label="Email*"
+              value={email ? email : "Sem e-mail"}
+              onChange={onChange}
+              error={inputErrors.email}
+            />
+          </Grid>
+          <Grid item xs={1}>
+            <UpdateButton
+              titleButton="Alterar" />
+          </Grid>
+        </Grid>
+
+        <Grid item xs={10}
+          className={classes.gridFormButtons}>
+          <Grid item xs={9}>
+            <InputText
+              id="registration"
+              type="number"
+              label="Matrícula*"
+              value={matricula ? matricula : "000000000"}
+              onChange={onChange}
+              error={inputErrors.matricula}
+              disable={true}
+            />
+          </Grid>
+        </Grid>
+
+        <Grid item xs={10}
+          className={classes.gridFormButtons}>
+          <Grid item xs={9}>
+            <InputText
+              id="ira"
+              type="number"
+              label="IRA*"
+              value={ira ? ira : 0.0}
+              onChange={onChange}
+              error={inputErrors.ira}
+              disable={true}
+            />
+          </Grid>
+        </Grid>
+
+
       </Grid>
       <Grid container justify="center"
         className={classes.gridFormButtons}>

@@ -80,7 +80,7 @@ class PersonalInfos extends React.Component {
 
   formInfos() {
     const { profileData } = this.props;
-    if (profileData.user.is_superuser) {
+    if (!profileData.user.is_superuser) {
       return (
         <Grid container justify="center"  >
           <FormProfessor
@@ -91,7 +91,7 @@ class PersonalInfos extends React.Component {
       );
     } else {
       return (
-        <Grid container justify="center"  >
+        <Grid container justify="center" >
           <FormStudent
             stateParent={this.state}
             onChange={this.handleChange}
