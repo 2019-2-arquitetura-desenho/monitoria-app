@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import PublicRoute from './especials/publicRoute';
 import PrivateRoute from './especials/privateRoute';
 import Register from '../containers/register';
-import Login from '../containers/login';
+import Login from '../containers/Login/login';
 import RecoveryPassword from '../containers/recoveryPassword';
 import PageShell from '../containers/components/PageShell/pageShell';
 import Home from '../containers/home';

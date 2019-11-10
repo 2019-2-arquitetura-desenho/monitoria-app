@@ -14,7 +14,7 @@ export function register(name, email, password, document) {
     ).then(response => {
       dispatch({
         type: 'REGISTER_SUCCESS',
-        payload: response.data
+        payload: response.data.token
       });
     }).catch(error => {
       if (!error.response) {
@@ -52,7 +52,7 @@ export function login(email, password) {
     ).then(response => {
       dispatch({
         type: 'LOGIN_SUCCESS',
-        payload: response.data
+        payload: response.data.token
       });
 
     }).catch(error => {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { login, restartLogin } from '../store/actions';
+import { login, restartLogin } from '../../store/actions';
 
 import {
   createMuiTheme,
@@ -10,11 +10,11 @@ import {
   CircularProgress
 } from '@material-ui/core';
 
-import MainError from './components/MainError/mainError';
-import InputText from './components/InputText/inputText';
-import SubmitButton from './components/SubmitButton/submitButton';
-import classroomImg from './assets/classroom.svg';
-import logo from './assets/logo_full.png';
+import MainError from '../components/MainError/mainError';
+import InputText from '../components/InputText/inputText';
+import SubmitButton from '../components/SubmitButton/submitButton';
+import classroomImg from '../assets/classroom.svg';
+import logo from '../assets/logo_full.png';
 
 import './login.css';
 
@@ -222,8 +222,9 @@ class Login extends Component {
                 <h1 id="titlePart2">FGA</h1>
               </div>
               <div className="descApp">
-                {/* Descrição do app e
-                  apresentação de funcionalidades */}
+                <h2 style={{textAlign: "center"}}>
+                  Inscreva-se e acompanhe os resultados on-line
+                </h2>
               </div>
               <div className="contentImg">
                 <img alt="classroomImg" className="classroomImg" src={classroomImg} />
