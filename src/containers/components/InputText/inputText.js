@@ -24,6 +24,8 @@ class InputText extends React.Component {
       onClickShow, onMouseDown, error
     } = this.props;
 
+    const disable = this.props.disable ? this.props.disable : false;
+
     let inputProps = ""
 
     if (id === "name") {
@@ -127,6 +129,7 @@ class InputText extends React.Component {
         InputProps={inputProps}
         error={error ? true : false}
         helperText={error}
+        disabled={disable}
       />
     );
   }

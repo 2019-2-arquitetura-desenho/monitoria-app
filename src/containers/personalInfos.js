@@ -145,6 +145,7 @@ class PersonalInfos extends React.Component {
               value={matricula ? matricula : "000000000"}
               onChange={this.handleChange}
               error={inputErrors.matricula}
+              disable={true}
             />
             <InputText
               id="ira"
@@ -153,6 +154,7 @@ class PersonalInfos extends React.Component {
               value={ira ? ira : 0.0}
               onChange={this.handleChange}
               error={inputErrors.ira}
+              disable={true}
             />
           </Grid>
           <Grid justify="center"
