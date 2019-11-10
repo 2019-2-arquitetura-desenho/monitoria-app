@@ -1,12 +1,6 @@
 import React from 'react';
 import {
   Grid,
-  Typography,
-  Container,
-  Divider,
-  MuiThemeProvider,
-  createMuiTheme,
-  Box
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FileSubmit from '../components/FileSubmit/fileSubmit';
@@ -21,9 +15,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function onPressChangePassword() {
-
-}
 
 
 const FormStudent = (props) => {
@@ -58,6 +49,9 @@ const FormStudent = (props) => {
     setOpen(null);
   }
 
+  const onPressChangePassword = () => {
+
+  }
 
   const open = Boolean(openDialog);
 

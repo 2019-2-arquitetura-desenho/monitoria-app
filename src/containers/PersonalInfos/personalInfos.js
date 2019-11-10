@@ -79,11 +79,6 @@ class PersonalInfos extends React.Component {
     this.props.updateProfile(this.props.token, name, email, ira, matricula);
   }
 
-  inputsStudent() {
-
-
-  }
-
   inputProfessor() {
     const {
       name, email, matricula, ira, inputErrors, fileSubmit, isFileSubmit,
