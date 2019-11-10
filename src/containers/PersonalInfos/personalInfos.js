@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateProfile, getProfile } from '../../store/actions';
+import { updateProfile, getProfile, restartUpdateProfile } from '../../store/actions';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -17,6 +17,7 @@ import Menu from '../components/NavigationMenu/navigationMenu';
 import InputText from '../components/InputText/inputText';
 import FormStudent from './formStudent';
 import FormProfessor from './formProfessor';
+import MainError from '../components/MainError/mainError';
 
 
 class PersonalInfos extends React.Component {
@@ -27,19 +28,22 @@ class PersonalInfos extends React.Component {
     this.state = {
       name: '',
       email: '',
+      password: '',
       ira: '',
       matricula: '',
 
       isFileSubmit: false,
       fileSubmit: [],
 
+      mainError: "",
       inputErrors: {}
     }
 
     this.handleChange = this.handleChange.bind(this);
     this.setFileSubmit = this.setFileSubmit.bind(this);
     this.setStatusFileSubmit = this.setStatusFileSubmit.bind(this);
-    // this.onPressSubmit = this.onPressSubmit.bind(this);
+    this.onPressSubmitName = this.onPressSubmitName.bind(this);
+    this.onPressSubmitEmail = this.onPressSubmitEmail.bind(this);
   }
 
   handleChange(event) {
@@ -48,7 +52,6 @@ class PersonalInfos extends React.Component {
 
   setFileSubmit(file) {
     this.setState({ fileSubmit: file });
-    console.log("FILE: ", this.state.fileSubmit);
   }
 
   setStatusFileSubmit(status) {
@@ -67,25 +70,108 @@ class PersonalInfos extends React.Component {
     }
   }
 
+
   componentDidUpdate() {
+    console.log("Props requisition error: ", this.props.requisitionError)
+
+    if (this.props.requisitionError !== undefined) {
+      this.props.restartUpdateProfile();
+
+      console.log("error main: ", this.state.mainError)
+      if (this.props.requisitionError === "Error: Network Error") {
+
+        this.setState({
+          mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde."
+        });
+
+      } else {
+        let inputErrors = {}
+        if (this.props.requisitionError.data.name) {
+          inputErrors['name'] = this.props.requisitionError.data.name
+        }
+        if (this.props.requisitionError.data.email) {
+          inputErrors['email'] = this.props.requisitionError.data.email
+        }
+        if (this.props.requisitionError.data.password1) {
+
+          inputErrors['password'] = "Escolha uma senha mais segura."
+
+          let passwordError = this.props.requisitionError.data.password1
+          if (passwordError.length === 2) {
+            if (passwordError[1] === "Esta senha é inteiramente numérica.") {
+              inputErrors['password'] += "Não utilize somente números na sua senha."
+            } else {
+              inputErrors['password'] += " " + passwordError[1]
+            }
+          }
+        }
+
+        this.setState({
+          inputErrors: inputErrors,
+          loading: false
+        })
+      }
+    }
   }
 
-  componentWillUnmount() {
-    console.log("Update Profile: ")
+  onPressSubmitName() {
     const {
-      name, email, ira, matricula
+      name
     } = this.state;
-    this.props.updateProfile(this.props.token, name, email, ira, matricula);
+
+    let inputErrors = {};
+    let f_errorName = false;
+
+    this.setState({ mainError: "" });
+
+    if (!name) {
+      inputErrors['name'] = "Digite o nome";
+      f_errorName = true;
+    }
+
+    this.setState({ inputErrors: inputErrors });
+
+    if (!f_errorName) {
+      this.props.updateProfile({ token: this.props.token, name });
+    }
+  }
+
+  onPressSubmitEmail() {
+    const {
+      email
+    } = this.state;
+
+    let inputErrors = {};
+    let f_errorEmail = false;
+
+    this.setState({ mainError: "" });
+
+    if (!email) {
+      inputErrors['email'] = "Digite o email";
+      f_errorEmail = true;
+    } else if (!email.includes("@")) {
+      inputErrors['email'] = "Digite um e-mail válido";
+      f_errorEmail = true;
+    }
+
+    this.setState({ inputErrors: inputErrors });
+
+    if (!f_errorEmail) {
+      this.props.updateProfile({ token: this.props.token, email });
+    }
+
   }
 
   formInfos() {
     const { profileData } = this.props;
-    if (!profileData.user.is_superuser) {
+    if (profileData.user.is_superuser) {
       return (
         <Grid container justify="center"  >
           <FormProfessor
             stateParent={this.state}
             onChange={this.handleChange}
+            onSubmitName={this.onPressSubmitName}
+            onSubmitEmail={this.onPressSubmitEmail}
           />
         </Grid >
       );
@@ -97,6 +183,8 @@ class PersonalInfos extends React.Component {
             onChange={this.handleChange}
             setStatusFileSubmit={this.setStatusFileSubmit}
             setFileSubmit={this.setFileSubmit}
+            onSubmitName={this.onPressSubmitName}
+            onSubmitEmail={this.onPressSubmitEmail}
           />
         </Grid >
       );
@@ -105,6 +193,9 @@ class PersonalInfos extends React.Component {
 
   render() {
     const { classes, profileData } = this.props
+    const {
+      mainError
+    } = this.state;
     return (
       <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
@@ -125,6 +216,10 @@ class PersonalInfos extends React.Component {
                 <HelpIcon style={{ paddingRight: '5px' }} />
                 As Informações aqui presentes não estão disponíveis para
                 a visualização dos alunos, exceto o nome
+              </Typography>
+              <Typography align="center">
+
+                <MainError error={mainError} />
               </Typography>
             </Box>
 
@@ -202,7 +297,7 @@ function mapStateToProps(state) {
 
 export const personalInfosContainer = connect(
   mapStateToProps,
-  { updateProfile, getProfile },
+  { updateProfile, getProfile, restartUpdateProfile },
 )(withStyles(styles, { withTheme: true })(PersonalInfos))
 
 export default personalInfosContainer;

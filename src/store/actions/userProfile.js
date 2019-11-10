@@ -3,31 +3,47 @@ import { connect } from 'react-redux';
 
 const host_api = process.env.REACT_APP_URL_API;
 
-export function updateProfile(token, name, email, password, ira, matricula, document) {
+export function updateProfile(props) {
+  const {
+    token, name, email, password, document
+  } = props;
+
   let url = host_api + '/set_profile/';
   let dataToSend = {
     token,
     name,
-    // email,
-    // password,
-    // ira,
-    // matricula,
-    // document
+    email,
+    password,
+    document
   };
+
+
   return function (dispatch) {
+    dispatch({
+      type: 'UPDATE_PROFILE_REQUEST',
+      isFetching: {
+        name: name ? true : false,
+        email: email ? true : false,
+        password: password ? true : false,
+        document: document ? true : false
+      }
+    });
+
     axios.post(
       url,
       dataToSend
     ).then(response => {
       dispatch({
         type: 'UPDATE_PROFILE_SUCCESS',
-        payload: response.data
+        payload: response.data,
+        isFetching: { name: false, email: false, password: false, document: false }
       });
     }).catch(error => {
       if (!error.response) {
         dispatch({
           type: 'UPDATE_PROFILE_ERROR',
-          payload: 'Error: Network Error'
+          payload: 'Error: Network Error',
+          isFetching: { name: false, email: false, password: false, document: false }
         });
       } else {
         dispatch({
@@ -36,6 +52,12 @@ export function updateProfile(token, name, email, password, ira, matricula, docu
         });
       }
     });
+  }
+}
+
+export function restartUpdateProfile() {
+  return function (dispatch) {
+    dispatch({ type: 'RESTART_UPDATE_PROFILE' });
   }
 }
 

@@ -1,12 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Grid,
+  CircularProgress,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FileSubmit from '../components/FileSubmit/fileSubmit';
 import SubmitButton from '../components/SubmitButton/submitButton';
 import InputText from '../components/InputText/inputText';
 import UpdateButton from './updateButton';
+
 
 const useStyles = makeStyles(theme => ({
   gridFormButtons: {
@@ -22,8 +25,11 @@ const FormStudent = (props) => {
   const {
     name, email, matricula, ira, inputErrors, fileSubmit, isFileSubmit
   } = props.stateParent;
+
+  console.log("Input errors: ", inputErrors)
   const classes = useStyles();
-  const { onChange, setStatusFileSubmit, setFileSubmit } = props;
+  const { onChange, setStatusFileSubmit, setFileSubmit, onSubmitName,
+    onSubmitEmail } = props;
   const [openDialog, setOpen] = React.useState(null);
 
   const handleClickOpenUploadDialog = event => {
@@ -53,6 +59,44 @@ const FormStudent = (props) => {
 
   }
 
+  const handleClickBtnName = (event) => {
+    onSubmitName()
+    // setBtnName(event.currentTarget);
+  }
+
+  const handleClickBtnEmail = (event) => {
+    onSubmitEmail()
+  }
+
+
+  function changeNameComp() {
+    if (props.isFetching.name)
+      return (
+        <CircularProgress color="secondary" />
+      );
+    else
+      return (
+        <UpdateButton
+          titleButton="Alterar"
+          onClickSubmitButton={handleClickBtnName}
+        />
+      );
+  }
+
+  function changeEmailComp() {
+    if (props.isFetching.email)
+      return (
+        <CircularProgress color="secondary" />
+      );
+    else
+      return (
+        <UpdateButton
+          titleButton="Alterar"
+          onClickSubmitButton={handleClickBtnEmail}
+        />
+      );
+  }
+
   const open = Boolean(openDialog);
 
   return (
@@ -71,8 +115,7 @@ const FormStudent = (props) => {
             />
           </Grid>
           <Grid item xs={1}>
-            <UpdateButton
-              titleButton="Alterar" />
+            {changeNameComp()}
           </Grid>
         </Grid>
 
@@ -89,8 +132,7 @@ const FormStudent = (props) => {
             />
           </Grid>
           <Grid item xs={1}>
-            <UpdateButton
-              titleButton="Alterar" />
+            {changeEmailComp()}
           </Grid>
         </Grid>
 
@@ -149,6 +191,16 @@ const FormStudent = (props) => {
   );
 }
 
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: state.authentication.isAuthenticated,
+    requisitionError: state.userProfile.requisitionError,
+    isFetching: state.userProfile.isFetching
+  }
+}
 
+export const formStudentComponent = connect(
+  mapStateToProps
+)(FormStudent)
 
-export default FormStudent;
+export default formStudentComponent;

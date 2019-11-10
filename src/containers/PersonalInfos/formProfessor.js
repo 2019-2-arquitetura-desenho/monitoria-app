@@ -19,7 +19,7 @@ const FormProfessor = (props) => {
   const {
     name, email, inputErrors
   } = props.stateParent;
-  const { onChange } = props;
+  const { onChange, onSubmitName, onSubmitEmail } = props;
   const classes = useStyles();
 
   return (
@@ -39,7 +39,9 @@ const FormProfessor = (props) => {
           </Grid>
           <Grid item xs={1}>
             <UpdateButton
-              titleButton="Alterar" />
+              titleButton="Alterar"
+              onClickSubmitButton={onSubmitName}
+            />
           </Grid>
         </Grid>
 
@@ -57,7 +59,9 @@ const FormProfessor = (props) => {
           </Grid>
           <Grid item xs={1}>
             <UpdateButton
-              titleButton="Alterar" />
+              titleButton="Alterar"
+              onClickSubmitButton={onSubmitEmail}
+            />
           </Grid>
         </Grid>
       </Grid>
