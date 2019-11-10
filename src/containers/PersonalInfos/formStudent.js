@@ -19,8 +19,7 @@ const useStyles = makeStyles(theme => ({
 
 const FormStudent = (props) => {
   const {
-    name, email, matricula, ira, inputErrors, fileSubmit, isFileSubmit,
-    isUploadDialogOpen
+    name, email, matricula, ira, inputErrors, fileSubmit, isFileSubmit
   } = props.stateParent;
   const classes = useStyles();
   const { onChange, setStatusFileSubmit, setFileSubmit } = props;

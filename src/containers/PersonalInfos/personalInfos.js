@@ -16,7 +16,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import Menu from '../components/NavigationMenu/navigationMenu';
 import InputText from '../components/InputText/inputText';
 import FormStudent from './formStudent';
-
+import FormProfessor from './formProfessor';
 
 
 class PersonalInfos extends React.Component {
@@ -30,7 +30,6 @@ class PersonalInfos extends React.Component {
       ira: '',
       matricula: '',
 
-      isUploadDialogOpen: false,
       isFileSubmit: false,
       fileSubmit: [],
 
@@ -79,42 +78,15 @@ class PersonalInfos extends React.Component {
     this.props.updateProfile(this.props.token, name, email, ira, matricula);
   }
 
-  inputProfessor() {
-    const {
-      name, email, matricula, ira, inputErrors, fileSubmit, isFileSubmit,
-      isUploadDialogOpen,
-    } = this.state;
-    const { classes } = this.props;
-    return (
-      <Grid item xs={12} sm={10} >
-        <Grid>
-          <InputText
-            id="name"
-            type="text"
-            label="Nome*"
-            value={name ? name : "Sem Nome"}
-            onChange={this.handleChange}
-            error={inputErrors.name}
-          />
-          <InputText
-            id="email"
-            type="email"
-            label="Email*"
-            value={email ? email : "Sem e-mail"}
-            onChange={this.handleChange}
-            error={inputErrors.email}
-          />
-        </Grid>
-      </Grid>
-    );
-  }
-
   formInfos() {
     const { profileData } = this.props;
     if (profileData.user.is_superuser) {
       return (
         <Grid container justify="center"  >
-          {this.inputProfessor()}
+          <FormProfessor
+            stateParent={this.state}
+            onChange={this.handleChange}
+          />
         </Grid >
       );
     } else {
@@ -132,7 +104,7 @@ class PersonalInfos extends React.Component {
   }
 
   render() {
-    const { classes, position } = this.props
+    const { classes, profileData } = this.props
     return (
       <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
@@ -142,7 +114,7 @@ class PersonalInfos extends React.Component {
             <Typography
               variant="h5" align="center"
               className={classes.title}>
-              Suas Informações
+              Suas Informações - {profileData.user.is_superuser ? "Professor" : "Aluno"}
             </Typography>
             <Divider className={classes.divider} />
             <Box className={classes.boxHelpLabel}>
@@ -152,7 +124,7 @@ class PersonalInfos extends React.Component {
               >
                 <HelpIcon style={{ paddingRight: '5px' }} />
                 As Informações aqui presentes não estão disponíveis para
-                a visualização de outros alunos, exceto o nome
+                a visualização dos alunos, exceto o nome
               </Typography>
             </Box>
 
@@ -193,6 +165,7 @@ const styles = theme => ({
   container: {
     marginTop: theme.spacing(3),
     backgroundColor: '#fff',
+    height: '80%',
     paddingBottom: 20,
   },
   title: {
