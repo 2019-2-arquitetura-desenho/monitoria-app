@@ -22,7 +22,7 @@ import MainError from './components/MainError/mainError';
 
 
 class Register extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -40,7 +40,7 @@ class Register extends React.Component {
             isFileSubmit: false,
             fileSubmit: [],
 
-            mainError: "",
+            mainError: '',
             inputErrors: {},
         };
 
@@ -59,36 +59,31 @@ class Register extends React.Component {
     }
 
     componentDidUpdate() {
-        if (this.props.requisitionError !== undefined && this.state.loading===true){
+        if (this.props.requisitionError !== undefined && this.state.loading === true) {
             this.props.restartRegister();
 
-            if (this.props.requisitionError === "Error: Network Error"){
-                // console.log("Erro de Rede");
+            if (this.props.requisitionError === "Error: Network Error") {
 
                 this.setState({
                     mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
                     loading: false
                 });
             } else {
-                // console.log("Erro relacionado aos campos de entrada de texto do formulário de cadastro");
-
                 let inputErrors = {}
-                if (this.props.requisitionError.data.name){
+                if (this.props.requisitionError.data.name) {
                     inputErrors['name'] = this.props.requisitionError.data.name
                 }
-                if (this.props.requisitionError.data.email){
+                if (this.props.requisitionError.data.email) {
                     inputErrors['email'] = this.props.requisitionError.data.email
                 }
-                if (this.props.requisitionError.data.password1){
-                    // console.log(this.props.requisitionError.data.password1)
-                    // console.log(this.props.requisitionError.data.password1.length)
+                if (this.props.requisitionError.data.password1) {
 
                     inputErrors['password'] = "Escolha uma senha mais segura."
 
                     let passwordError = this.props.requisitionError.data.password1
-                    if (passwordError.length === 2){
-                        if (passwordError[1] === "Esta senha é inteiramente numérica."){
-                            inputErrors['password'] += "Não utilize somente números na sua senha."
+                    if (passwordError.length === 2) {
+                        if (passwordError[1] === "Esta senha é inteiramente numérica.") {
+                            inputErrors['password'] += " Não utilize somente números na sua senha."
                         } else {
                             inputErrors['password'] += " " + passwordError[1]
                         }
@@ -102,7 +97,7 @@ class Register extends React.Component {
             }
         }
 
-        if (this.props.isAuthenticated === true){
+        if (this.props.isAuthenticated === true) {
             this.props.history.push("/");
         }
     }
@@ -144,9 +139,9 @@ class Register extends React.Component {
     }
 
     handleConfirmUploadDialog() {
-        if (this.state.fileSubmit === undefined){
+        if (this.state.fileSubmit === undefined) {
             this.setState({ isUploadDialogOpen: false });
-        } else if (this.state.fileSubmit === 0){
+        } else if (this.state.fileSubmit === 0) {
             this.setState({ isUploadDialogOpen: false });
         } else {
             this.setState({ isUploadDialogOpen: false, isFileSubmit: true });
@@ -154,7 +149,7 @@ class Register extends React.Component {
     }
 
     onUpdateFileUploadScreen(fileItems) {
-        if (this.state.fileSubmit.length !== fileItems.map(fileItem => fileItem.file).length){
+        if (this.state.fileSubmit.length !== fileItems.map(fileItem => fileItem.file).length) {
             this.setState({ fileSubmit: fileItems.map(fileItem => fileItem.file) });
         }
     }
@@ -172,50 +167,50 @@ class Register extends React.Component {
         let password = this.state.password;
         let confirmPassword = this.state.confirmPassword;
 
-        if (!name){
+        if (!name) {
             inputErrors['name'] = "Digite o nome";
             f_errorName = true;
         }
 
-        if (!email){
+        if (!email) {
             inputErrors['email'] = "Digite o email";
             f_errorEmail = true;
-          } else if (!email.includes("@")) {
+        } else if (!email.includes("@")) {
             inputErrors['email'] = "Digite um e-mail válido";
             f_errorEmail = true;
-          }
+        }
 
-          if (!password){
+        if (!password) {
             inputErrors['password'] = "Digite uma senha";
             f_errorPassword = true;
-          } else {
-            if (password.length < 8){
-              inputErrors['password'] = "Use 8 caracteres ou mais para a sua senha";
-              f_errorPassword = true;
-            } else if (password.length > 16){
-              inputErrors['password'] = "Use 16 caracteres ou menos para a sua senha";
-              f_errorPassword = true;
+        } else {
+            if (password.length < 8) {
+                inputErrors['password'] = "Use 8 caracteres ou mais para a sua senha";
+                f_errorPassword = true;
+            } else if (password.length > 16) {
+                inputErrors['password'] = "Use 16 caracteres ou menos para a sua senha";
+                f_errorPassword = true;
             }
-          }
+        }
 
-          if (!f_errorPassword){
-            if (!confirmPassword){
-              inputErrors['confirmPassword'] = "Confirme sua senha";
-              f_errorConfirmPassword = true;
-            } else if (password !== confirmPassword){
-              inputErrors['confirmPassword'] = "As senhas não coincidem";
-              f_errorConfirmPassword = true;
+        if (!f_errorPassword) {
+            if (!confirmPassword) {
+                inputErrors['confirmPassword'] = "Confirme sua senha";
+                f_errorConfirmPassword = true;
+            } else if (password !== confirmPassword) {
+                inputErrors['confirmPassword'] = "As senhas não coincidem";
+                f_errorConfirmPassword = true;
             }
-          }
+        }
 
-          this.setState({ inputErrors: inputErrors });
+        this.setState({ inputErrors: inputErrors });
 
-        if (!f_errorName && !f_errorEmail && !f_errorPassword && !f_errorConfirmPassword){
+        if (!f_errorName && !f_errorEmail && !f_errorPassword && !f_errorConfirmPassword) {
             this.setState({ loading: true, mainError: "" });
 
             clearTimeout();
             setTimeout(
-                function(){
+                function () {
                     this.props.register(name, email, password, this.state.fileSubmit)
                 }.bind(this),
                 1000
@@ -224,15 +219,15 @@ class Register extends React.Component {
     }
 
     registerForm() {
-        const { 
+        const {
             mainError, name, email, password, showPassword, confirmPassword, showConfirmPassword,
             fileSubmit, isFileSubmit, isUploadDialogOpen, inputErrors, loading
         } = this.state;
 
-        if (loading){
+        if (loading) {
             return (
                 <Grid item xs={12} sm={6}>
-                    <div style={ styles.progress }>
+                    <div style={styles.progress}>
                         <CircularProgress color="secondary" />
                     </div>
                 </Grid>
@@ -240,57 +235,61 @@ class Register extends React.Component {
         } else {
             return (
                 <Grid item xs={12} sm={6}>
-                    <MainError error={ mainError } />
+                    <MainError error={mainError} />
                     <InputText
                         id="name"
                         type="text"
                         label="Nome*"
-                        value={ name }
-                        onChange={ this.handleChange }
-                        error={ inputErrors.name }
+                        value={name}
+                        onChange={this.handleChange}
+                        error={inputErrors.name}
                     />
                     <InputText
                         id="email"
                         type="email"
                         label="Email*"
-                        value={ email }
-                        onChange={ this.handleChange }
-                        error={ inputErrors.email }
+                        value={email}
+                        onChange={this.handleChange}
+                        error={inputErrors.email}
                     />
                     <InputText
                         id="password"
-                        type={ showPassword ? "text" : "password" }
+                        type={showPassword ? "text" : "password"}
                         label="Senha*"
-                        value={ password }
-                        onChange={ this.handleChange }
-                        onClickShow={ this.handleClickShowPassword }
-                        onMouseDown={ this.handleMouseDownPassword }
-                        valueVisibility={ showPassword }
-                        error={ inputErrors.password }
+                        value={password}
+                        onChange={this.handleChange}
+                        onClickShow={this.handleClickShowPassword}
+                        onMouseDown={this.handleMouseDownPassword}
+                        valueVisibility={showPassword}
+                        error={inputErrors.password}
                     />
                     <InputText
                         id="confirmPassword"
-                        type={ showConfirmPassword ? "text" : "password" }
+                        type={showConfirmPassword ? "text" : "password"}
                         label="Confirmar Senha*"
-                        value={ confirmPassword }
-                        onChange={ this.handleChange }
-                        onClickShow={ this.handleClickShowConfirmPassword }
-                        onMouseDown={ this.handleMouseDownConfirmPassword }
-                        valueVisibility={ showConfirmPassword }
-                        error={ inputErrors.confirmPassword }
+                        value={confirmPassword}
+                        onChange={this.handleChange}
+                        onClickShow={this.handleClickShowConfirmPassword}
+                        onMouseDown={this.handleMouseDownConfirmPassword}
+                        valueVisibility={showConfirmPassword}
+                        error={inputErrors.confirmPassword}
                     />
-                    <FileSubmit 
-                        isFileSubmit={ isFileSubmit }
-                        fileSubmit={ fileSubmit }
-                        onButtonUploadClick={ this.handleClickOpenUploadDialog }
-                        isUploadDialogOpen={ isUploadDialogOpen }
-                        onCloseUploadDialog={ this.handleCloseUploadDialog }
-                        onUpdateFileUploadDialog={ this.onUpdateFileUploadDialog }
-                        onClickCancelUploadDialog={ this.handleCancelUploadDialog }
-                        onClickConfirmUploadDialog={ this.handleConfirmUploadDialog }
-                        onUpdateFileUploadScreen={ this.onUpdateFileUploadScreen }    
+                    <FileSubmit
+                        isFileSubmit={isFileSubmit}
+                        fileSubmit={fileSubmit}
+                        onButtonUploadClick={this.handleClickOpenUploadDialog}
+                        isUploadDialogOpen={isUploadDialogOpen}
+                        onCloseUploadDialog={this.handleCloseUploadDialog}
+                        onUpdateFileUploadDialog={this.onUpdateFileUploadDialog}
+                        onClickCancelUploadDialog={this.handleCancelUploadDialog}
+                        onClickConfirmUploadDialog={this.handleConfirmUploadDialog}
+                        onUpdateFileUploadScreen={this.onUpdateFileUploadScreen}
                     />
-                    <SubmitButton titleButton="Criar Conta" onClickSubmitButton={ this.onPressSubmit } />
+                    <SubmitButton
+                        titleButton="Criar Conta"
+                        buttonColor="secondary"
+                        onClickSubmitButton={this.onPressSubmit}
+                    />
                 </Grid>
             );
         }
@@ -298,13 +297,13 @@ class Register extends React.Component {
 
     render() {
         return (
-            <MuiThemeProvider theme={ theme }>
+            <MuiThemeProvider theme={theme}>
                 <CssBaseline />
-                <Grid container style={ styles.screenBackground }>
-                    <Typography component="div" style={ styles.screenContent }>
+                <Grid container style={styles.screenBackground}>
+                    <Typography component="div" style={styles.screenContent}>
                         <Grid container spacing={1}>
                             <MainTitle title="Criar Conta" />
-                            { this.registerForm() }
+                            {this.registerForm()}
                             <Grid item xs={12} sm={6}>
                                 <Typography variant="h4">
                                     <Box style={styles.boxSubTitle}>
@@ -312,11 +311,11 @@ class Register extends React.Component {
                                     </Box>
                                 </Typography>
                                 <Box textAlign="center">
-                                    <img src={ doubtIcon } alt ="Doubt Icon"  width="20%" height="20%" />
+                                    <img src={doubtIcon} alt="Doubt Icon" width="20%" height="20%" />
                                 </Box>
                                 <Typography variant="h5">
                                     <Box style={styles.boxText}>
-                                        Para validarmos sua conta, comparamos as informações presentes no 
+                                        Para validarmos sua conta, comparamos as informações presentes no
                                         documento enviado com as presentes no sistema da UnB.
                                     </Box>
                                 </Typography>
@@ -337,7 +336,7 @@ const theme = createMuiTheme({
         primary: {
             main: "#42a0ed",
             contrastText: "white"
-        }, 
+        },
         secondary: {
             main: "#267cc1"
         }
@@ -355,13 +354,14 @@ const styles = {
         width: "92%",
         marginTop: "1%",
         marginBottom: "1%",
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff",
+        minHeight: "85%"
     },
     boxSubTitle: {
         textAlign: "center",
         fontSize: "95%",
         color: "#267cc1",
-        marginTop: "8%",
+        marginTop: "6%",
         marginLeft: "8%",
         marginRight: "8%",
         marginBottom: "4%",
@@ -374,14 +374,14 @@ const styles = {
         marginTop: "4%",
         marginLeft: "12%",
         marginRight: "12%",
-        marginBottom: "12%",
+        marginBottom: "4%",
         fontWeight: "bold",
         // fontFamily: 'fontFamily'
     },
     progress: {
-        display: "flex",
         marginTop: "25%",
-        marginLeft: "50%",
+        marginBottom: "25%",
+        textAlign: "center", 
     }
 }
 
@@ -393,8 +393,8 @@ function mapStateToProps(state) {
 }
 
 export const registerContainer = connect(
-   mapStateToProps,
-   { register, restartRegister },
+    mapStateToProps,
+    { register, restartRegister },
 )(Register)
 
 export default registerContainer;

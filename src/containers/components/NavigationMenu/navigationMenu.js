@@ -21,10 +21,9 @@ const styles = theme => ({
   root: {
     ...theme.mixins.toolbar,
     flexGrow: 1,
-    backgroundColor: '#42a0ed'
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  appBar: {
+    backgroundColor: '#42a0ed'
   },
   toolbar: {
     minHeight: 60,
@@ -39,7 +38,7 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     alignSelf: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   tabs: {
     minHeight: 0,
@@ -53,10 +52,10 @@ const styles = theme => ({
     backgroundColor: '#5e1dad',
   },
   menuButton: {
-    // marginRight: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
+    backgroundColor: '#42a0ed'
   },
 });
 
@@ -79,11 +78,11 @@ class NavigationMenu extends React.Component {
   };
 
   render() {
-    const { classes, position, theme } = this.props
+    const { classes, position } = this.props
 
     return (
       <div className={classes.root}>
-        <AppBar position="fixed">
+        <AppBar position="fixed" className={classes.appBar}>
           <Toolbar className={classes.toolbar}>
             <Box className={classes.title}>
               <Hidden mdUp implementation="css">
