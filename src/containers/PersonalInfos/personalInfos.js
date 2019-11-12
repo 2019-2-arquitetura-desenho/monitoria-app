@@ -164,7 +164,7 @@ class PersonalInfos extends React.Component {
 
   formInfos() {
     const { profileData } = this.props;
-    if (!profileData.user.is_superuser) {
+    if (profileData.user.is_superuser) {
       return (
         <Grid container justify="center"  >
           <FormProfessor
@@ -293,7 +293,7 @@ const styles = theme => ({
 function mapStateToProps(state) {
   return {
     isAuthenticated: state.authentication.isAuthenticated,
-    token: state.authentication.userData.token,
+    token: state.authentication.token,
     requisitionError: state.userProfile.requisitionError,
     profileData: state.userProfile.profileData
   }
