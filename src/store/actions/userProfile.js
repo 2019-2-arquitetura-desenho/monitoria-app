@@ -71,20 +71,17 @@ export function getProfile(token) {
       url,
       dataToSend
     ).then(response => {
-      console.log("DISPATCH SUCCESS PROFILE")
       dispatch({
         type: 'GET_PROFILE_SUCCESS',
         payload: response.data
       });
     }).catch(error => {
-      console.log("DISPATCH ERROR PROFILE")
       if (!error.response) {
         dispatch({
           type: 'GET_PROFILE_ERROR',
           payload: 'Error: Network Error'
         });
       } else {
-        console.log(error.response)
         dispatch({
           type: 'GET_PROFILE_ERROR',
           payload: error.response

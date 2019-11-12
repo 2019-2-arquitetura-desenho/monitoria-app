@@ -31,6 +31,7 @@ class PersonalInfos extends React.Component {
       password: '',
       ira: '',
       matricula: '',
+      user: '',
 
       isFileSubmit: false,
       fileSubmit: [],
@@ -65,7 +66,8 @@ class PersonalInfos extends React.Component {
         name: this.props.profileData.name,
         email: this.props.profileData.email,
         matricula: this.props.profileData.matricula,
-        ira: this.props.profileData.ira
+        ira: this.props.profileData.ira,
+        user: this.props.profileData.user
       })
     }
   }
@@ -163,8 +165,7 @@ class PersonalInfos extends React.Component {
   }
 
   formInfos() {
-    const { profileData } = this.props;
-    if (profileData.user.is_superuser) {
+    if (this.state.user.is_superuser) {
       return (
         <Grid container justify="center"  >
           <FormProfessor
@@ -192,7 +193,7 @@ class PersonalInfos extends React.Component {
   }
 
   render() {
-    const { classes, profileData } = this.props
+    const { classes } = this.props
     const {
       mainError
     } = this.state;
@@ -205,7 +206,7 @@ class PersonalInfos extends React.Component {
             <Typography
               variant="h5" align="center"
               className={classes.title}>
-              Suas Informações - {profileData.user.is_superuser ? "Professor" : "Aluno"}
+              Suas Informações - {this.state.user.is_superuser ? "Professor" : "Aluno"}
             </Typography>
             <Divider className={classes.divider} />
             <Box className={classes.boxHelpLabel}>
