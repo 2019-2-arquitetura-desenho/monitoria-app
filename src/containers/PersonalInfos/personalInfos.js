@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
 import Menu from '../components/NavigationMenu/navigationMenu';
-import InputText from '../components/InputText/inputText';
+//import InputText from '../components/InputText/inputText';
 import FormStudent from './formStudent';
 import FormProfessor from './formProfessor';
 import MainError from '../components/MainError/mainError';

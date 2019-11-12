@@ -33,7 +33,7 @@ const UpdateButton = (props) => {
 }
 
 
-const styles = {
+/*const styles = {
   buttonStyle: {
     width: "86%",
     marginTop: "4%",
@@ -43,5 +43,5 @@ const styles = {
     fontWeight: "bold"
   }
 }
-
+*/
 export default UpdateButton;
