@@ -8,19 +8,19 @@ const UserProfile = (state = {}, action) => {
     case 'UPDATE_PROFILE_REQUEST':
       return {
         ...state,
-        isFetching: action.isFetching
+        updatingProfile: action.updatingProfile
       };
     case 'UPDATE_PROFILE_SUCCESS':
       return {
         ...state,
         profileData: action.payload,
-        isFetching: action.isFetching
+        updatingProfile: action.updatingProfile
       };
     case 'UPDATE_PROFILE_ERROR':
       return {
         ...state,
         requisitionError: action.payload,
-        isFetching: action.isFetching
+        updatingProfile: action.updatingProfile
       };
     case 'RESTART_UPDATE_PROFILE':
       return {

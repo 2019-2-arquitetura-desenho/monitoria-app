@@ -14,7 +14,7 @@ export function register(name, email, password, document) {
     ).then(response => {
       dispatch({
         type: 'REGISTER_SUCCESS',
-        payload: response.data
+        payload: response.data.token
       });
     }).catch(error => {
       if (!error.response) {
@@ -50,9 +50,10 @@ export function login(email, password) {
       url,
       dataToSend
     ).then(response => {
+      console.log("LOGIN TOKEN: ", response.data.token)
       dispatch({
-        type: 'LOGIN_SUCESS',
-        payload: response.data
+        type: 'LOGIN_SUCCESS',
+        payload: response.data.token
       });
 
     }).catch(error => {
@@ -68,6 +69,12 @@ export function login(email, password) {
         });
       }
     });
+  }
+}
+
+export function restartLogin() {
+  return function (dispatch) {
+    dispatch({ type: 'RESTART_LOGIN' });
   }
 }
 

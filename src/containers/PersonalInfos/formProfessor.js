@@ -21,7 +21,7 @@ const FormProfessor = (props) => {
   const {
     name, email, inputErrors
   } = props.stateParent;
-  const { onChange, onSubmitName, onSubmitEmail } = props;
+  const { onChange, onSubmitName, onSubmitEmail, updatingProfile } = props;
   const classes = useStyles();
 
 
@@ -34,7 +34,7 @@ const FormProfessor = (props) => {
   }
 
   function changeNameComp() {
-    if (props.isFetching.name)
+    if (updatingProfile && updatingProfile.name)
       return (
         <CircularProgress color="secondary" />
       );
@@ -48,7 +48,7 @@ const FormProfessor = (props) => {
   }
 
   function changeEmailComp() {
-    if (props.isFetching.email)
+    if (updatingProfile && updatingProfile.email)
       return (
         <CircularProgress color="secondary" />
       );
@@ -107,7 +107,7 @@ function mapStateToProps(state) {
   return {
     isAuthenticated: state.authentication.isAuthenticated,
     requisitionError: state.userProfile.requisitionError,
-    isFetching: state.userProfile.isFetching
+    updatingProfile: state.userProfile.updatingProfile
   }
 }
 

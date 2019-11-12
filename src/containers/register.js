@@ -40,7 +40,7 @@ class Register extends React.Component {
             isFileSubmit: false,
             fileSubmit: [],
 
-            mainError: "",
+            mainError: '',
             inputErrors: {},
         };
 
@@ -83,7 +83,7 @@ class Register extends React.Component {
                     let passwordError = this.props.requisitionError.data.password1
                     if (passwordError.length === 2) {
                         if (passwordError[1] === "Esta senha é inteiramente numérica.") {
-                            inputErrors['password'] += "Não utilize somente números na sua senha."
+                            inputErrors['password'] += " Não utilize somente números na sua senha."
                         } else {
                             inputErrors['password'] += " " + passwordError[1]
                         }
@@ -286,7 +286,11 @@ class Register extends React.Component {
                         onClickConfirmUploadDialog={this.handleConfirmUploadDialog}
                         onUpdateFileUploadScreen={this.onUpdateFileUploadScreen}
                     />
-                    <SubmitButton titleButton="Criar Conta" onClickSubmitButton={this.onPressSubmit} />
+                    <SubmitButton
+                        titleButton="Criar Conta"
+                        buttonColor="secondary"
+                        onClickSubmitButton={this.onPressSubmit}
+                    />
                 </Grid>
             );
         }
@@ -351,13 +355,14 @@ const styles = {
         width: "92%",
         marginTop: "1%",
         marginBottom: "1%",
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff",
+        minHeight: "85%"
     },
     boxSubTitle: {
         textAlign: "center",
         fontSize: "95%",
         color: "#267cc1",
-        marginTop: "8%",
+        marginTop: "6%",
         marginLeft: "8%",
         marginRight: "8%",
         marginBottom: "4%",
@@ -370,14 +375,14 @@ const styles = {
         marginTop: "4%",
         marginLeft: "12%",
         marginRight: "12%",
-        marginBottom: "12%",
+        marginBottom: "4%",
         fontWeight: "bold",
         // fontFamily: 'fontFamily'
     },
     progress: {
-        display: "flex",
         marginTop: "25%",
-        marginLeft: "50%",
+        marginBottom: "25%",
+        textAlign: "center", 
     }
 }
 

@@ -164,7 +164,7 @@ class PersonalInfos extends React.Component {
 
   formInfos() {
     const { profileData } = this.props;
-    if (profileData.user.is_superuser) {
+    if (!profileData.user.is_superuser) {
       return (
         <Grid container justify="center"  >
           <FormProfessor

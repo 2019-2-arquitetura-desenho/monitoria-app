@@ -21,7 +21,7 @@ export function updateProfile(props) {
   return function (dispatch) {
     dispatch({
       type: 'UPDATE_PROFILE_REQUEST',
-      isFetching: {
+      updatingProfile: {
         name: name ? true : false,
         email: email ? true : false,
         password: password ? true : false,
@@ -36,14 +36,14 @@ export function updateProfile(props) {
       dispatch({
         type: 'UPDATE_PROFILE_SUCCESS',
         payload: response.data,
-        isFetching: { name: false, email: false, password: false, document: false }
+        updatingProfile: { name: false, email: false, password: false, document: false }
       });
     }).catch(error => {
       if (!error.response) {
         dispatch({
           type: 'UPDATE_PROFILE_ERROR',
           payload: 'Error: Network Error',
-          isFetching: { name: false, email: false, password: false, document: false }
+          updatingProfile: { name: false, email: false, password: false, document: false }
         });
       } else {
         dispatch({
@@ -71,17 +71,20 @@ export function getProfile(token) {
       url,
       dataToSend
     ).then(response => {
+      console.log("DISPATCH SUCCESS PROFILE")
       dispatch({
         type: 'GET_PROFILE_SUCCESS',
         payload: response.data
       });
     }).catch(error => {
+      console.log("DISPATCH ERROR PROFILE")
       if (!error.response) {
         dispatch({
           type: 'GET_PROFILE_ERROR',
           payload: 'Error: Network Error'
         });
       } else {
+        console.log(error.response)
         dispatch({
           type: 'GET_PROFILE_ERROR',
           payload: error.response

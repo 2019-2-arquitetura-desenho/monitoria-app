@@ -28,7 +28,7 @@ const FormStudent = (props) => {
 
   const classes = useStyles();
   const { onChange, setStatusFileSubmit, setFileSubmit, onSubmitName,
-    onSubmitEmail } = props;
+    onSubmitEmail, updatingProfile } = props;
   const [openDialog, setOpen] = React.useState(null);
 
   const handleClickOpenUploadDialog = event => {
@@ -68,7 +68,7 @@ const FormStudent = (props) => {
 
 
   function changeNameComp() {
-    if (props.isFetching.name)
+    if (updatingProfile && updatingProfile.name)
       return (
         <CircularProgress color="secondary" />
       );
@@ -82,7 +82,7 @@ const FormStudent = (props) => {
   }
 
   function changeEmailComp() {
-    if (props.isFetching.email)
+    if (updatingProfile && updatingProfile.email)
       return (
         <CircularProgress color="secondary" />
       );
@@ -193,7 +193,7 @@ function mapStateToProps(state) {
   return {
     isAuthenticated: state.authentication.isAuthenticated,
     requisitionError: state.userProfile.requisitionError,
-    isFetching: state.userProfile.isFetching
+    updatingProfile: state.userProfile.updatingProfile
   }
 }
 
