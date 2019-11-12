@@ -74,12 +74,10 @@ class PersonalInfos extends React.Component {
 
 
   componentDidUpdate() {
-    console.log("Props requisition error: ", this.props.requisitionError)
 
     if (this.props.requisitionError !== undefined) {
       this.props.restartUpdateProfile();
 
-      console.log("error main: ", this.state.mainError)
       if (this.props.requisitionError === "Error: Network Error") {
 
         this.setState({
