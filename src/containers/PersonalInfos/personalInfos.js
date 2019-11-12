@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
 import Menu from '../components/NavigationMenu/navigationMenu';
-import InputText from '../components/InputText/inputText';
+//import InputText from '../components/InputText/inputText';
 import FormStudent from './formStudent';
 import FormProfessor from './formProfessor';
 import MainError from '../components/MainError/mainError';
@@ -74,12 +74,10 @@ class PersonalInfos extends React.Component {
 
 
   componentDidUpdate() {
-    console.log("Props requisition error: ", this.props.requisitionError)
 
     if (this.props.requisitionError !== undefined) {
       this.props.restartUpdateProfile();
 
-      console.log("error main: ", this.state.mainError)
       if (this.props.requisitionError === "Error: Network Error") {
 
         this.setState({
