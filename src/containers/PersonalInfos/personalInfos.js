@@ -64,7 +64,7 @@ class PersonalInfos extends React.Component {
     if (this.props.profileData) {
       this.setState({
         name: this.props.profileData.name,
-        email: this.props.profileData.email,
+        email: this.props.profileData.user.email,
         matricula: this.props.profileData.matricula,
         ira: this.props.profileData.ira,
         user: this.props.profileData.user

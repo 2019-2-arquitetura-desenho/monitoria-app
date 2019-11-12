@@ -47,20 +47,6 @@ const FormProfessor = (props) => {
       );
   }
 
-  function changeEmailComp() {
-    if (updatingProfile && updatingProfile.email)
-      return (
-        <CircularProgress color="secondary" />
-      );
-    else
-      return (
-        <UpdateButton
-          titleButton="Alterar"
-          onClickSubmitButton={handleClickBtnEmail}
-        />
-      );
-  }
-
 
   return (
     <Grid item xs={10} >
@@ -92,10 +78,8 @@ const FormProfessor = (props) => {
               value={email}
               onChange={onChange}
               error={inputErrors.email}
+              disable={true}
             />
-          </Grid>
-          <Grid item xs={1}>
-            {changeEmailComp()}
           </Grid>
         </Grid>
       </Grid>

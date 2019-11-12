@@ -84,19 +84,6 @@ const FormStudent = (props) => {
       );
   }
 
-  function changeEmailComp() {
-    if (updatingProfile && updatingProfile.email)
-      return (
-        <CircularProgress color="secondary" />
-      );
-    else
-      return (
-        <UpdateButton
-          titleButton="Alterar"
-          onClickSubmitButton={handleClickBtnEmail}
-        />
-      );
-  }
 
   const open = Boolean(openDialog);
 
@@ -130,10 +117,8 @@ const FormStudent = (props) => {
               value={email}
               onChange={onChange}
               error={inputErrors.email}
+              disable={true}
             />
-          </Grid>
-          <Grid item xs={1}>
-            {changeEmailComp()}
           </Grid>
         </Grid>
 
