@@ -37,9 +37,7 @@ const Authentication = (state = {}, action) => {
       };
     case 'LOGOUT':
       return {
-        ...state,
-        isAuthenticated: false,
-        token: undefined
+        state: undefined
       };
     default:
       return state;
