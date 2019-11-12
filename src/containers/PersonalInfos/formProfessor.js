@@ -21,7 +21,7 @@ const FormProfessor = (props) => {
   const {
     name, email, inputErrors
   } = props.stateParent;
-  const { onChange, onSubmitName, onSubmitEmail, updatingProfile } = props;
+  const { onChange, onSubmitName, updatingProfile } = props;
   const classes = useStyles();
 
 
@@ -29,9 +29,9 @@ const FormProfessor = (props) => {
     onSubmitName()
   }
 
-  const handleClickBtnEmail = (event) => {
-    onSubmitEmail()
-  }
+  // const handleClickBtnEmail = (event) => {
+  //   onSubmitEmail()
+  // }
 
   function changeNameComp() {
     if (updatingProfile && updatingProfile.name)

@@ -31,7 +31,7 @@ const FormStudent = (props) => {
 
   const classes = useStyles();
   const { onChange, setStatusFileSubmit, setFileSubmit, onSubmitName,
-    onSubmitEmail, updatingProfile } = props;
+ updatingProfile } = props;
   const [openDialog, setOpen] = React.useState(null);
 
   const handleClickOpenUploadDialog = event => {
@@ -65,9 +65,9 @@ const FormStudent = (props) => {
     onSubmitName()
   }
 
-  const handleClickBtnEmail = (event) => {
-    onSubmitEmail()
-  }
+  // const handleClickBtnEmail = (event) => {
+  //   onSubmitEmail()
+  // }
 
 
   function changeNameComp() {
