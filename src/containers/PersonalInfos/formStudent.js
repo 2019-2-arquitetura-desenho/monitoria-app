@@ -3,12 +3,15 @@ import { connect } from 'react-redux';
 import {
   Grid,
   CircularProgress,
+  Link
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FileSubmit from '../components/FileSubmit/fileSubmit';
 import SubmitButton from '../components/SubmitButton/submitButton';
 import InputText from '../components/InputText/inputText';
 import UpdateButton from './updateButton';
+
+const host_api = process.env.REACT_APP_URL_API;
 
 
 const useStyles = makeStyles(theme => ({
@@ -182,10 +185,15 @@ const FormStudent = (props) => {
           />
         </Grid>
         <Grid item xs={5} >
-          <SubmitButton titleButton="Alterar Senha" onClickSubmitButton={onPressChangePassword} />
+          <Link href={host_api + "/password_reset/"}>
+            <SubmitButton titleButton="Alterar Senha"
+              onClickSubmitButton={onPressChangePassword}
+              buttonColor="secondary"
+            />
+          </Link>
         </Grid>
       </Grid>
-    </Grid>
+    </Grid >
   );
 }
 

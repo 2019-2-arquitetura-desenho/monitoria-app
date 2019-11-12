@@ -1,5 +1,4 @@
 import axios from 'axios';
-//import { connect } from 'react-redux';
 
 const host_api = process.env.REACT_APP_URL_API;
 
