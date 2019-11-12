@@ -59,7 +59,7 @@ class PersonalInfos extends React.Component {
     this.setState({ isFileSubmit: status })
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getProfile(this.props.token);
     if (this.props.profileData) {
       this.setState({

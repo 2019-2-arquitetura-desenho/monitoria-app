@@ -16,7 +16,7 @@ class Home extends React.Component {
         this.onPressExitButton = this.onPressExitButton.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.getProfile(this.props.token);
     }
 
