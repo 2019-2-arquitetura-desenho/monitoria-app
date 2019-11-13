@@ -55,13 +55,15 @@ const styles = {
   buttonBox: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
     height: 40,
+    width: "100%"
+  },
+  buttonBoxRow: {
+    marginRight: 10,
     width: 300
   },
-  button: {
-    paddingTop: 0,
-  }
 }
 
 const ClassContent = (props) => {
@@ -135,12 +137,13 @@ const ClassContent = (props) => {
         </TableBody>
       </Table>
       <Box className={classes.buttonBox} >
-        <SubscribeButton
-          className={classes.button}
-          titleButton="Inscrever-se para a Monitoria"
-          buttonColor="secondary"
-          onClickSubmitButton={onPress}
-        />
+        <Box className={classes.buttonBoxRow}>
+          <SubscribeButton
+            titleButton="Inscrever-se para a Monitoria"
+            buttonColor="secondary"
+            onClickSubmitButton={onPress}
+          />
+        </Box>
       </Box>
     </Grid>
   );
