@@ -4,9 +4,8 @@ import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import {
-  Search as SearchIcon,
-} from '@material-ui/icons';
+import { ReactComponent as SearchIcon } from '../../assets/search.svg';
+
 
 const styles = theme => ({
   container: {
@@ -55,7 +54,8 @@ class ValidField extends React.Component {
 
   render() {
     const { classes } = this.props;
-    let icon = <SearchIcon color="primary" />;
+    let icon = <SearchIcon fill="#42a0ed" width="20" height="20" />;
+
     return (
       <form className={classes.container} noValidate autoComplete="off">
         <TextField

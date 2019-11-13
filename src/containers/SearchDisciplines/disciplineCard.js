@@ -2,33 +2,16 @@ import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import {
   Paper,
-  createMuiTheme,
   Card,
-  CardHeader,
   CardContent,
   CardActions,
   Typography,
   Divider
 } from '@material-ui/core';
-import { flexbox } from '@material-ui/system';
+import ClassContent from './classContent';
 
 
-const theme = createMuiTheme({
-  palette: {
-    background: {
-      default: "#42a0ed"
-    },
-    primary: {
-      main: "#42a0ed",
-      contrastText: "white"
-    },
-    secondary: {
-      main: "#267cc1"
-    }
-  }
-})
-
-const styles = theme => ({
+const styles = {
   root: {
     backgroundColor: "#267CC1"
   },
@@ -50,11 +33,11 @@ const styles = theme => ({
     alignSelf: "center",
   },
   content: {
-    color: "#fff",
-  }
-});
 
-const SearchDisciplines = (props) => {
+  }
+};
+
+const DisciplineCard = (props) => {
   const {
     classes, title, codigo
   } = props;
@@ -72,11 +55,11 @@ const SearchDisciplines = (props) => {
         </CardContent>
         <Divider className={classes.divider} />
         <CardContent className={classes.content}>
-          a
+          <ClassContent />
         </CardContent>
       </Card>
     </Paper>
   );
 }
 
-export default withStyles(styles)(SearchDisciplines);
+export default withStyles(styles)(DisciplineCard);
