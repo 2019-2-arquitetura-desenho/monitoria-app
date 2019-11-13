@@ -1,22 +1,22 @@
 import React from 'react';
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import { fadeIn } from 'react-animations';
+import Radium, { StyleRoot } from 'radium';
 
+const styles = {
+  fadeIn: {
+    animation: 'x 1s',
+    animationName: Radium.keyframes(fadeIn, 'fadeIn')
+  }
+}
 
-const PageShell = (Page, previous) => {
-    return props => (
-        <div className="page">
-            <ReactCSSTransitionGroup
-                transitionAppear={true}
-                transitionAppearTimeout={600}
-                transitionEnterTimeout={600}
-                transitionLeaveTimeout={600}
-                transitionName={props.match.path === "/one" ? "SlideIn" : "SlideOut"}
-            >
-                {console.log(props)}
-                <Page {...props} />
-            </ReactCSSTransitionGroup>
-        </div>
-    );
+const PageShell = (Page) => {
+  return props => (
+    <StyleRoot>
+      <div style={styles.fadeIn}>
+        <Page {...props} />
+      </div>
+    </StyleRoot>
+  );
 };
 
 export default PageShell;

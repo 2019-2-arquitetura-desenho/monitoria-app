@@ -13,7 +13,6 @@ import {
   Box
 } from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
-import Menu from '../components/NavigationMenu/navigationMenu';
 import MainError from '../components/MainError/mainError';
 
 
@@ -35,8 +34,6 @@ class SearchDisciplines extends React.Component {
     return (
       <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
-          <Menu position={1} />
-
           <Container component="div" maxWidth="md" className={classes.container}>
             <Typography
               variant="h5" align="center"
@@ -53,7 +50,7 @@ class SearchDisciplines extends React.Component {
 
           </Container>
         </MuiThemeProvider>
-      </div>
+      </div >
     );
   }
 }
@@ -75,11 +72,12 @@ const theme = createMuiTheme({
 
 const styles = theme => ({
   root: {
+    paddingTop: theme.spacing(3),
     backgroundColor: '#42a0ed',
     height: '100vh'
   },
   container: {
-    marginTop: theme.spacing(3),
+    paddingTop: theme.spacing(2),
     backgroundColor: '#fff',
     height: '80%',
     paddingBottom: 20,
