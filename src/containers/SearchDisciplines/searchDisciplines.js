@@ -12,8 +12,8 @@ import {
   createMuiTheme,
   Box
 } from '@material-ui/core';
-import HelpIcon from '@material-ui/icons/Help';
 import MainError from '../components/MainError/mainError';
+import InputSearch from '../components/InputSearch/inputSearch';
 
 
 class SearchDisciplines extends React.Component {
@@ -35,11 +35,13 @@ class SearchDisciplines extends React.Component {
       <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
           <Container component="div" maxWidth="md" className={classes.container}>
-            <Typography
-              variant="h5" align="center"
-              className={classes.title}>
-
-            </Typography>
+            <Grid container justify="center">
+              <Typography
+                variant="h5"
+                className={classes.title}>
+                <InputSearch />
+              </Typography>
+            </Grid>
             <Divider className={classes.divider} />
             <Box className={classes.boxHelpLabel}>
               <Box className={classes.mainErrorBox}>
@@ -101,7 +103,8 @@ const styles = theme => ({
   },
   title: {
     color: "#267cc1",
-    paddingBottom: 15
+    paddingBottom: 15,
+    width: "60%"
   },
   boxHelpLabel: {
     display: 'flex',
