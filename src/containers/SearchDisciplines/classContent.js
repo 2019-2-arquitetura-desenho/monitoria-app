@@ -4,7 +4,12 @@ import {
   Grid,
   Divider,
   Typography,
-  Box
+  Box,
+  Table,
+  TableHead,
+  TableCell,
+  TableBody,
+  TableRow,
 } from '@material-ui/core';
 
 import { ReactComponent as SunIcon } from '../assets/sun.svg';
@@ -53,55 +58,51 @@ const ClassContent = (props) => {
 
   return (
     <Grid container className={classes.root} justify="center">
-      <Grid item className={classes.header}>
-        <Grid container direction="row" justify="space-around">
-          <Typography>
-            Turma
-          </Typography>
-          <Typography>
-            Turno
-          </Typography>
-          <Typography>
-            Horário
-          </Typography>
-          <Typography>
-            Professor
-          </Typography>
-        </Grid>
-        <Divider className={classes.divider} />
-      </Grid>
-      <Grid container className={classes.content}
-        direction="row" justify="space-around">
-        <Box fontFamily="Asap" fontSize={30} >
-          {classroom ? classroom : 'INEXISTENTE'}
-        </Box>
-        <Box className={classes.period} component="div">
-          <Typography>
-            <SunIcon width="50" height="50" />
-          </Typography>
-          <Typography>
-            {period ? period : 'INDEFINIDO'}
-          </Typography>
-        </Box>
-        <Box className={classes.shedules}>
-          {
-            shedules.map(shedule => (
-              <Typography align="center">
-                {shedule}
+      <Table>
+        <colgroup>
+          <col style={{ width: '20%' }} />
+          <col style={{ width: '20%' }} />
+          <col style={{ width: '30%' }} />
+          <col style={{ width: '30%' }} />
+        </colgroup>
+        <TableHead>
+          <TableCell >Turma</TableCell>
+          <TableCell >Turno</TableCell>
+          <TableCell>Horário</TableCell>
+          <TableCell>Professor</TableCell>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell >
+              {classroom ? classroom : 'INEXISTENTE'}
+            </TableCell>
+            <TableCell >
+              <Typography>
+                <SunIcon width="50" height="50" />
               </Typography>
-            ))
-          }
-        </Box>
-        <Box>
-          {
-            professors.map(professor => (
-              <Typography >
-                {professor}
+              <Typography>
+                {period ? period : 'INDEFINIDO'}
               </Typography>
-            ))
-          }
-        </Box>
-      </Grid>
+            </TableCell>
+            <TableCell >
+              {shedules.map(shedule => (
+                <Typography>
+                  {shedule}
+                </Typography>
+              ))}
+            </TableCell>
+            <TableCell>
+              {
+                professors.map(professor => (
+                  <Typography >
+                    {professor}
+                  </Typography>
+                ))
+              }
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
     </Grid>
   );
 }
