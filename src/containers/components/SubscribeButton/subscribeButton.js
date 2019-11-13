@@ -25,12 +25,9 @@ class SubmitButton extends React.Component {
 
 const styles = {
     submitButton: {
-        width: "86%",
-        marginTop: "4%",
-        marginLeft: "8%",
-        marginRight: "8%",
-        marginBottom: "4%",
-        fontWeight: "bold"
+        width: "100%",
+        fontWeight: "bold",
+        fontSize: 10
     }
 }
 

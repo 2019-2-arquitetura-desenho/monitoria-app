@@ -10,9 +10,12 @@ import {
   TableCell,
   TableBody,
   TableRow,
+  Button
 } from '@material-ui/core';
 
 import { ReactComponent as SunIcon } from '../assets/sun.svg';
+import SubscribeButton from '../components/SubscribeButton/subscribeButton';
+
 
 const styles = {
   root: {
@@ -48,12 +51,22 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start'
+  },
+  buttonBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    height: 40,
+    width: 300
+  },
+  button: {
+    paddingTop: 0,
   }
 }
 
 const ClassContent = (props) => {
   const {
-    classes, classroom, period, shedules, professors
+    classes, classroom, period, shedules, professors, onPress
   } = props;
 
   return (
@@ -121,6 +134,14 @@ const ClassContent = (props) => {
           </TableRow>
         </TableBody>
       </Table>
+      <Box className={classes.buttonBox} >
+        <SubscribeButton
+          className={classes.button}
+          titleButton="Inscrever-se para a Monitoria"
+          buttonColor="secondary"
+          onClickSubmitButton={onPress}
+        />
+      </Box>
     </Grid>
   );
 }

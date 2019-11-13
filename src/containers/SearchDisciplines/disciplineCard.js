@@ -4,7 +4,6 @@ import {
   Paper,
   Card,
   CardContent,
-  CardActions,
   Typography,
   Divider
 } from '@material-ui/core';
