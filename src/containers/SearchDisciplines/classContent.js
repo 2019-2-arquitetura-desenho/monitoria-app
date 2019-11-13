@@ -66,15 +66,33 @@ const ClassContent = (props) => {
           <col style={{ width: '30%' }} />
         </colgroup>
         <TableHead>
-          <TableCell >Turma</TableCell>
-          <TableCell >Turno</TableCell>
-          <TableCell>Horário</TableCell>
-          <TableCell>Professor</TableCell>
+          <TableCell>
+            <Box fontWeight="fontWeightBold">
+              Turma
+            </Box>
+          </TableCell>
+          <TableCell>
+            <Box fontWeight="fontWeightBold">
+              Turno
+            </Box>
+          </TableCell>
+          <TableCell>
+            <Box fontWeight="fontWeightBold">
+              Turno
+            </Box>
+          </TableCell>
+          <TableCell>
+            <Box fontWeight="fontWeightBold">
+              Professor
+            </Box>
+          </TableCell>
         </TableHead>
         <TableBody>
           <TableRow>
             <TableCell >
-              {classroom ? classroom : 'INEXISTENTE'}
+              <Box fontFamily="Asap" fontSize={30} fontWeight="">
+                {classroom ? classroom : 'INEXISTENTE'}
+              </Box>
             </TableCell>
             <TableCell >
               <Typography>
