@@ -68,7 +68,7 @@ function ResponsiveDrawer(props) {
                 </ListItem>
                 <ListItem value={2} onClick={() => changeIndicator(2)}
                     className={classes.tab} component={Link}
-                    to="/search-monitoring" >
+                    to="/search-disciplines" >
                     <ListItemText className={classes.textList} primary={'Procurar Monitoria'} />
                 </ListItem>
                 <ListItem value={3} onClick={() => changeIndicator(3)}

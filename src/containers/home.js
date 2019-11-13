@@ -2,9 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getProfile, logout } from '../store/actions';
 
-import Menu from './components/NavigationMenu/navigationMenu';
-
-
 class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -27,7 +24,6 @@ class Home extends React.Component {
     render() {
         return (
             <div>
-                <Menu position={0} />
                 <h1>Home</h1>
                 <button onClick={this.onPressExitButton}>Sair</button>
             </div>

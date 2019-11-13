@@ -10,8 +10,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from "prop-types";
 import Hidden from '@material-ui/core/Hidden';
 import ResponsiveDrawer from './responsiveDrawer';
-
-
+import { connect } from 'react-redux';
 
 import logo from '../../assets/logo_icon.png';
 import { Button } from '@material-ui/core';
@@ -20,10 +19,11 @@ import { Button } from '@material-ui/core';
 const styles = theme => ({
   root: {
     ...theme.mixins.toolbar,
-    flexGrow: 1
-  },
-  appBar: {
+    flexGrow: 1,
     backgroundColor: '#42a0ed'
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
   },
   toolbar: {
     minHeight: 60,
@@ -38,7 +38,7 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     alignSelf: 'center',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   tabs: {
     minHeight: 0,
@@ -52,10 +52,10 @@ const styles = theme => ({
     backgroundColor: '#5e1dad',
   },
   menuButton: {
+    // marginRight: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
-    backgroundColor: '#42a0ed'
   },
 });
 
@@ -78,48 +78,55 @@ class NavigationMenu extends React.Component {
   };
 
   render() {
-    const { classes, position } = this.props
+    const { classes, theme, isAuthenticated } = this.props
 
-    return (
-      <div className={classes.root}>
-        <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar className={classes.toolbar}>
-            <Box className={classes.title}>
-              <Hidden mdUp implementation="css">
+    if (isAuthenticated) {
+      return (
+        <div className={classes.root}>
+          <AppBar position="fixed">
+            <Toolbar className={classes.toolbar}>
+              <Box className={classes.title}>
+                <Hidden mdUp implementation="css">
 
-                <ResponsiveDrawer changeIndicator={this.handleChangeDrawer}
-                />
+                  <ResponsiveDrawer changeIndicator={this.handleChangeDrawer}
+                  />
+                </Hidden>
+
+                <Button component={Link} to="/home">
+                  <img alt="logo" id="logo" src={logo} style={{ width: '30px', height: '30px' }} />
+                  <Typography style={{ marginLeft: '10px' }} variant="h6" id="titlePart1">Monitoria</Typography>
+                  <Typography variant="h6" id="titlePart2">FGA</Typography>
+                </Button>
+              </Box>
+              <Hidden smDown implementation="css">
+
+                <Tabs aria-label="simple tabs example"
+                  centered
+                  classes={{
+                    indicator: classes.indicator
+                  }}
+                  className={classes.tabs}
+                  value={this.state.value}
+                  onChange={this.handleChange}>
+                  <Tab className={classes.tab} label="Página Inicial" component={Link} to="/entrar" />
+                  <Tab className={classes.tab} label="Informações Pessoais" component={Link} to="/personal-infos" />
+                  <Tab className={classes.tab} label="Procurar Monitoria" component={Link} to="/search-disciplines" />
+                  <Tab className={classes.tab} label="Acompanhar Resultados" component={Link} to="/results" />
+                </Tabs>
               </Hidden>
-
-              <Button component={Link} to="/home">
-                <img alt="logo" id="logo" src={logo} style={{ width: '30px', height: '30px' }} />
-                <Typography style={{ marginLeft: '10px' }} variant="h6" id="titlePart1">Monitoria</Typography>
-                <Typography variant="h6" id="titlePart2">FGA</Typography>
-              </Button>
-            </Box>
-            <Hidden smDown implementation="css">
-
-              <Tabs aria-label="simple tabs example"
-                centered
-                classes={{
-                  indicator: classes.indicator
-                }}
-                className={classes.tabs}
-                value={position}
-                onChange={this.handleChange}>
-                <Tab className={classes.tab} label="Página Inicial" component={Link} to="/home" />
-                <Tab className={classes.tab} label="Informações Pessoais" component={Link} to="/personal-infos" />
-                <Tab className={classes.tab} label="Procurar Monitoria" component={Link} to="/search-monitoring" />
-                <Tab className={classes.tab} label="Acompanhar Resultados" component={Link} to="/results" />
-              </Tabs>
-            </Hidden>
-            <Button style={{ color: "white" }}>
-              Sair
+              <Button style={{ color: "white" }}>
+                Sair
           </Button>
-          </Toolbar>
-        </AppBar>
-      </div>
-    );
+            </Toolbar>
+          </AppBar>
+        </div>
+      );
+    }
+    else {
+      return (
+        <div></div>
+      );
+    }
   }
 }
 
@@ -128,4 +135,12 @@ NavigationMenu.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(NavigationMenu);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.authentication.isAuthenticated
+});
+
+export const navigationMenuContainer = connect(
+  mapStateToProps
+)(withStyles(styles, { withTheme: true })(NavigationMenu));
+
+export default withStyles(styles, { withTheme: true })(navigationMenuContainer);
