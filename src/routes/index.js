@@ -11,7 +11,7 @@ import Home from '../containers/home';
 import PersonalInfos from '../containers/PersonalInfos/personalInfos';
 import SearchDisciplines from '../containers/SearchDisciplines/searchDisciplines';
 import Results from '../containers/results';
-import Menu from '../containers/components/NavigationMenu/navigationMenu';
+import Menu from '../containers/NavigationMenu/navigationMenu';
 
 
 export default class App extends React.Component {

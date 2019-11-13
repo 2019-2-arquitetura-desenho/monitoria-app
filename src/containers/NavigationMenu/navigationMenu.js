@@ -12,7 +12,7 @@ import Hidden from '@material-ui/core/Hidden';
 import ResponsiveDrawer from './responsiveDrawer';
 import { connect } from 'react-redux';
 
-import logo from '../../assets/logo_icon.png';
+import logo from '../assets/logo_icon.png';
 import { Button } from '@material-ui/core';
 
 
