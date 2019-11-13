@@ -46,7 +46,23 @@ class SearchDisciplines extends React.Component {
                 <MainError error={mainError} />
               </Box>
             </Box>
-
+            <h1>Search</h1>
+            <h1>Search</h1>
+            <h1>Search</h1>
+            <h1>Search</h1>
+            <h1>Search</h1>
+            <h1>Search</h1>
+            <h1>Search</h1>
+            <h1>Search</h1>
+            <h1>Search</h1>
+            <h1>Search</h1>
+            <h1>Search</h1>
+            <h1>Search</h1>
+            <h1>Search</h1>
+            <h1>Search</h1>
+            <h1>Search</h1>
+            <h1>Search</h1>
+            <h1>Search</h1>
 
           </Container>
         </MuiThemeProvider>
@@ -73,13 +89,14 @@ const theme = createMuiTheme({
 const styles = theme => ({
   root: {
     paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
     backgroundColor: '#42a0ed',
-    height: '100vh'
+    minHeight: '100vh'
   },
   container: {
     paddingTop: theme.spacing(2),
     backgroundColor: '#fff',
-    height: '80%',
+    minHeight: '80%',
     paddingBottom: 20,
   },
   title: {
