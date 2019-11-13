@@ -9,7 +9,7 @@ import RecoveryPassword from '../containers/recoveryPassword';
 import PageShell from '../containers/components/PageShell/pageShell';
 import Home from '../containers/home';
 import PersonalInfos from '../containers/PersonalInfos/personalInfos';
-import SearchMonitoring from '../containers/searchMonitoring';
+import SearchDisciplines from '../containers/SearchDisciplines/searchDisciplines';
 import Results from '../containers/results';
 
 
@@ -27,7 +27,7 @@ export default class App extends React.Component {
                 />
                 <PublicRoute
                     exact path="/recuperar-senha"
-                    component={ RecoveryPassword }
+                    component={RecoveryPassword}
                 />
                 <PrivateRoute
                     exact path="/"
@@ -43,7 +43,7 @@ export default class App extends React.Component {
                 />
                 <PrivateRoute
                     exact path="/search-monitoring"
-                    component={PageShell(SearchMonitoring)}
+                    component={PageShell(SearchDisciplines)}
                 />
                 <PrivateRoute
                     exact path="/results"
