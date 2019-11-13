@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import MainError from '../components/MainError/mainError';
 import InputSearch from '../components/InputSearch/inputSearch';
+import DisciplineCard from './disciplineCard';
 
 
 class SearchDisciplines extends React.Component {
@@ -48,24 +49,11 @@ class SearchDisciplines extends React.Component {
                 <MainError error={mainError} />
               </Box>
             </Box>
-            <h1>Search</h1>
-            <h1>Search</h1>
-            <h1>Search</h1>
-            <h1>Search</h1>
-            <h1>Search</h1>
-            <h1>Search</h1>
-            <h1>Search</h1>
-            <h1>Search</h1>
-            <h1>Search</h1>
-            <h1>Search</h1>
-            <h1>Search</h1>
-            <h1>Search</h1>
-            <h1>Search</h1>
-            <h1>Search</h1>
-            <h1>Search</h1>
-            <h1>Search</h1>
-            <h1>Search</h1>
 
+            <DisciplineCard
+              title="Cálculo 2"
+              codigo="5"
+            />
           </Container>
         </MuiThemeProvider>
       </div >
