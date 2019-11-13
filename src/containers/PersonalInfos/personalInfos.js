@@ -12,6 +12,7 @@ import {
   createMuiTheme,
   Box
 } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
 import HelpIcon from '@material-ui/icons/Help';
 import FormStudent from './formStudent';
 import FormProfessor from './formProfessor';
@@ -195,8 +196,8 @@ class PersonalInfos extends React.Component {
     } = this.state;
     return (
       <div className={classes.root}>
-        <MuiThemeProvider theme={theme}>
 
+        <MuiThemeProvider theme={theme}>
           <Container component="div" maxWidth="md" className={classes.container}>
             <Typography
               variant="h5" align="center"

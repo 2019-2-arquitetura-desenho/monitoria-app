@@ -21,15 +21,15 @@ export default class App extends React.Component {
                 <Menu />
                 <PublicRoute
                     exact path="/cadastro"
-                    component={Register}
+                    component={PageShell(Register)}
                 />
                 <PublicRoute
                     exact path="/entrar"
-                    component={Login}
+                    component={PageShell(Login)}
                 />
                 <PublicRoute
                     exact path="/recuperar-senha"
-                    component={RecoveryPassword}
+                    component={PageShell(RecoveryPassword)}
                 />
                 <PrivateRoute
                     exact path="/"
