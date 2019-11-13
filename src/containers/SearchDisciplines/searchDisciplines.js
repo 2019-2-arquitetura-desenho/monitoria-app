@@ -32,6 +32,21 @@ class SearchDisciplines extends React.Component {
       mainError
     } = this.state;
 
+    let disciplines = [{ title: 'Cálculo 2', code: 113042 }]
+
+    let classrooms = [
+      {
+        title: 'AA', period: 'Diurno', shedules: ['Segunda - 8:00/9:50'],
+        professors: ['Luiza Yoko Taneguti']
+      },
+      {
+        title: 'BB', period: 'Diurno', shedules: ['Terca - 14:00/15:50', 'Quinta - 14:00/15:50'],
+        professors: ['Lindomar Bomfim de Carvallho', 'Wesley Ferreira Lopes', 'Yevsey Yehoshua']
+      }
+    ]
+
+    disciplines[0].classrooms = classrooms
+
     return (
       <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
@@ -51,8 +66,7 @@ class SearchDisciplines extends React.Component {
             </Box>
 
             <DisciplineCard
-              title="Cálculo 2"
-              codigo="5"
+              discipline={disciplines[0]}
             />
           </Container>
         </MuiThemeProvider>

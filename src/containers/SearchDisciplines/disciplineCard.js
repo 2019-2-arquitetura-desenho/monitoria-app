@@ -13,7 +13,7 @@ import ClassContent from './classContent';
 
 const styles = {
   root: {
-    backgroundColor: "#267CC1"
+    backgroundColor: "#267CC1",
   },
   card: {
     display: "flex",
@@ -33,13 +33,15 @@ const styles = {
     alignSelf: "center",
   },
   content: {
-
+    display: 'flex',
+    flexDirection: "column",
+    justifyContent: "space-between",
   }
 };
 
 const DisciplineCard = (props) => {
   const {
-    classes, title, codigo
+    classes, discipline
   } = props;
 
   return (
@@ -47,15 +49,22 @@ const DisciplineCard = (props) => {
       <Card className={classes.card}>
         <CardContent className={classes.header}>
           <Typography>
-            {"Nome: " + (title ? title : "Disciplina")}
+            {"Nome: " + (discipline.title ? discipline.title : "Disciplina")}
           </Typography>
           <Typography>
-            {"Código: " + (codigo ? codigo : "000")}
+            {"Código: " + (discipline.code ? discipline.code : "000")}
           </Typography>
         </CardContent>
         <Divider className={classes.divider} />
         <CardContent className={classes.content}>
-          <ClassContent />
+          {discipline.classrooms.map(classroom => (
+            <ClassContent
+              classroom={classroom.title}
+              period={classroom.period}
+              shedules={classroom.shedules}
+              professors={classroom.professors}
+            />
+          ))}
         </CardContent>
       </Card>
     </Paper>

@@ -3,11 +3,11 @@ import { withStyles } from "@material-ui/core/styles";
 import {
   Grid,
   Divider,
-  Typography
+  Typography,
+  Box
 } from '@material-ui/core';
 
-
-
+import { ReactComponent as SunIcon } from '../assets/sun.svg';
 
 const styles = {
   root: {
@@ -17,6 +17,8 @@ const styles = {
     backgroundColor: '#fff',
     color: '#000',
     width: '100%',
+    marginTop: 20,
+    marginBottom: 10
   },
   header: {
     display: 'flex',
@@ -32,21 +34,21 @@ const styles = {
   content: {
     minHeight: 100
   },
-  class: {
-    color: "#000",
-    fontSize: 30,
-    fontFamily: 'Asap Condensed'
-  },
   period: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center'
+  },
+  shedules: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start'
   }
 }
 
 const ClassContent = (props) => {
   const {
-    classes
+    classes, classroom, period, shedules, professors
   } = props;
 
   return (
@@ -70,18 +72,35 @@ const ClassContent = (props) => {
       </Grid>
       <Grid container className={classes.content}
         direction="row" justify="space-around">
-        <Typography className={classes.class}>
-          AA
-        </Typography>
-        <Typography classname={classes.period}>
-          Turno
-        </Typography>
-        <Typography>
-          Horário
-        </Typography>
-        <Typography>
-          Professor
-        </Typography>
+        <Box fontFamily="Asap" fontSize={30} >
+          {classroom ? classroom : 'INEXISTENTE'}
+        </Box>
+        <Box className={classes.period} component="div">
+          <Typography>
+            <SunIcon width="50" height="50" />
+          </Typography>
+          <Typography>
+            {period ? period : 'INDEFINIDO'}
+          </Typography>
+        </Box>
+        <Box className={classes.shedules}>
+          {
+            shedules.map(shedule => (
+              <Typography align="center">
+                {shedule}
+              </Typography>
+            ))
+          }
+        </Box>
+        <Box>
+          {
+            professors.map(professor => (
+              <Typography >
+                {professor}
+              </Typography>
+            ))
+          }
+        </Box>
       </Grid>
     </Grid>
   );
