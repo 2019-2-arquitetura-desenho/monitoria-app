@@ -22,8 +22,9 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: '#42a0ed'
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  appBar: {
+    background: 'transparent',
+    boxShadow: 'none'
   },
   toolbar: {
     minHeight: 60,
@@ -51,12 +52,6 @@ const styles = theme => ({
   indicator: {
     backgroundColor: '#5e1dad',
   },
-  menuButton: {
-    // marginRight: theme.spacing(2),
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
-  },
 });
 
 class NavigationMenu extends React.Component {
@@ -83,7 +78,7 @@ class NavigationMenu extends React.Component {
     if (isAuthenticated) {
       return (
         <div className={classes.root}>
-          <AppBar position="fixed">
+          <AppBar position="fixed" className={classes.appBar}>
             <Toolbar className={classes.toolbar}>
               <Box className={classes.title}>
                 <Hidden mdUp implementation="css">
