@@ -275,6 +275,7 @@ class Register extends React.Component {
                         error={inputErrors.confirmPassword}
                     />
                     <FileSubmit
+                        label={"Enviar Histórico Escolar"}
                         isFileSubmit={isFileSubmit}
                         fileSubmit={fileSubmit}
                         onButtonUploadClick={this.handleClickOpenUploadDialog}

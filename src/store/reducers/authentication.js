@@ -35,12 +35,6 @@ const Authentication = (state = {}, action) => {
         isAuthenticated: false,
         requisitionError: action.payload
       };
-    case 'LOGOUT':
-      return {
-        ...state,
-        isAuthenticated: false,
-        token: undefined
-      };
     default:
       return state;
   }

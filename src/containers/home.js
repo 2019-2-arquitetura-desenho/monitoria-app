@@ -1,12 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { logout } from '../store/actions';
-
-import Menu from './components/NavigationMenu/navigationMenu';
-
+import { getProfile, logout } from '../store/actions';
 
 class Home extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -16,14 +13,17 @@ class Home extends React.Component {
         this.onPressExitButton = this.onPressExitButton.bind(this);
     }
 
-    onPressExitButton(){
+    componentDidMount() {
+        this.props.getProfile(this.props.token);
+    }
+
+    onPressExitButton() {
         this.props.logout();
     }
 
     render() {
         return (
             <div>
-                <Menu position={0}/>
                 <h1>Home</h1>
                 <button onClick={this.onPressExitButton}>Sair</button>
             </div>
@@ -32,7 +32,7 @@ class Home extends React.Component {
 }
 
 function mapStateToProps(state) {
-    return {}
+    return { token: state.authentication.token }
 }
 
-export default connect(mapStateToProps, { logout })(Home)
+export default connect(mapStateToProps, { getProfile, logout })(Home)
