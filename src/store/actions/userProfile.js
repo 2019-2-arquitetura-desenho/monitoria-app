@@ -47,7 +47,8 @@ export function updateProfile(props) {
       } else {
         dispatch({
           type: 'UPDATE_PROFILE_ERROR',
-          payload: error.response
+          payload: error.response,
+          updatingProfile: { name: false, email: false, password: false, document: false }
         });
       }
     });

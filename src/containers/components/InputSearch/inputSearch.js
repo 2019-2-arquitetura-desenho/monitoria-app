@@ -53,8 +53,8 @@ class ValidField extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-    let icon = <SearchIcon fill="#42a0ed" width="20" height="20" />;
+    const { classes, onPress } = this.props;
+    let icon = <SearchIcon fill="#42a0ed" width="20" height="20" onClick={onPress} />;
 
     return (
       <form className={classes.container} noValidate autoComplete="off">
