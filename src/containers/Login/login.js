@@ -7,7 +7,8 @@ import {
   MuiThemeProvider,
   CssBaseline,
   Button,
-  CircularProgress
+  CircularProgress,
+  Link
 } from '@material-ui/core';
 
 import MainError from '../components/MainError/mainError';
@@ -18,6 +19,8 @@ import logo from '../assets/logo_full.png';
 
 import './login.css';
 
+const host_api = process.env.REACT_APP_URL_API;
+
 
 class Login extends Component {
   constructor() {
@@ -25,7 +28,7 @@ class Login extends Component {
 
     this.state = {
       loading: false,
-      
+
       email: '',
 
       password: '',
@@ -41,7 +44,7 @@ class Login extends Component {
     this.submitRecoveryPassword = this.submitRecoveryPassword.bind(this);
     this.submitLogin = this.submitLogin.bind(this);
     this.submitSignUp = this.submitSignUp.bind(this);
-}
+  }
 
   componentDidUpdate() {
     this.requisitionErrorHandler();
@@ -102,7 +105,7 @@ class Login extends Component {
 
   submitRecoveryPassword(e) {
     e.preventDefault();
-    this.nextPath('/recuperar-senha');
+    // this.nextPath('/recuperar-senha');
   }
 
   submitSignUp(e) {
@@ -141,7 +144,7 @@ class Login extends Component {
 
       clearTimeout();
       setTimeout(
-        function() {
+        function () {
           this.props.login(email, password);
         }.bind(this),
         1000
@@ -175,7 +178,7 @@ class Login extends Component {
             />
             <InputText
               id="password"
-              type={showPassword ? "text":"password"}
+              type={showPassword ? "text" : "password"}
               label="Senha"
               value={password}
               onChange={this.handleChange}
@@ -185,12 +188,15 @@ class Login extends Component {
               error={inputErrors.password}
             />
             <div style={styles.contentPasswordRecoveryButton}>
-              <Button
-                onClick={this.submitRecoveryPassword}
-                style={styles.passwordRecoveryButton}
-              >
-                Recuperar Senha
+
+              <Link href={host_api + "/password_reset/"}>
+                <Button
+                  // onClick={this.submitRecoveryPassword}
+                  style={styles.passwordRecoveryButton}
+                >
+                  Recuperar Senha
               </Button>
+              </Link>
             </div>
           </div>
           <div className="userButtonsGroup">
@@ -206,7 +212,7 @@ class Login extends Component {
             />
           </div>
         </form>
-      ); 
+      );
     }
   }
 
@@ -222,7 +228,7 @@ class Login extends Component {
                 <h1 id="titlePart2">FGA</h1>
               </div>
               <div className="descApp">
-                <h2 style={{textAlign: "center"}}>
+                <h2 style={{ textAlign: "center" }}>
                   Inscreva-se e acompanhe os resultados on-line
                 </h2>
               </div>
@@ -245,14 +251,14 @@ class Login extends Component {
 
 const theme = createMuiTheme({
   palette: {
-      primary: {
-        main: "#42a0ed",
-        contrastText: "white"
-      },
-      secondary: {
-        main: "#267cc1",
-        contrastText: "white"
-      }
+    primary: {
+      main: "#42a0ed",
+      contrastText: "white"
+    },
+    secondary: {
+      main: "#267cc1",
+      contrastText: "white"
+    }
   }
 })
 
