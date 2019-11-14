@@ -90,15 +90,15 @@ const theme = createMuiTheme({
   }
 })
 
-const styles = theme => ({
+const styles = {
   root: {
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
+    paddingTop: 30,
+    paddingBottom: 30,
     backgroundColor: '#42a0ed',
     minHeight: '100vh'
   },
   container: {
-    paddingTop: theme.spacing(2),
+    paddingTop: 20,
     backgroundColor: '#fff',
     minHeight: '80%',
     paddingBottom: 20,
@@ -130,7 +130,7 @@ const styles = theme => ({
     size: 30,
     color: "black"
   }
-});
+};
 
 SearchDisciplines.propTypes = {
   classes: PropTypes.object.isRequired,

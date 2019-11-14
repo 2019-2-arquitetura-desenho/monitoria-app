@@ -56,8 +56,8 @@ const DisciplineCard = (props) => {
         </CardContent>
         <Divider className={classes.divider} />
         <CardContent className={classes.content}>
-          {discipline.classrooms.map(classroom => (
-            <ClassContent
+          {discipline.classrooms.map((classroom, index) => (
+            <ClassContent key={index}
               classroom={classroom.title}
               period={classroom.period}
               shedules={classroom.shedules}

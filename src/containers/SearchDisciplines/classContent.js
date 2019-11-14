@@ -79,26 +79,28 @@ const ClassContent = (props) => {
           <col style={{ width: '30%' }} />
         </colgroup>
         <TableHead>
-          <TableCell>
-            <Box fontWeight="fontWeightBold">
-              Turma
+          <TableRow>
+            <TableCell>
+              <Box fontWeight="fontWeightBold">
+                Turma
             </Box>
-          </TableCell>
-          <TableCell>
-            <Box fontWeight="fontWeightBold">
-              Turno
+            </TableCell>
+            <TableCell>
+              <Box fontWeight="fontWeightBold">
+                Turno
             </Box>
-          </TableCell>
-          <TableCell>
-            <Box fontWeight="fontWeightBold">
-              Turno
+            </TableCell>
+            <TableCell>
+              <Box fontWeight="fontWeightBold">
+                Turno
             </Box>
-          </TableCell>
-          <TableCell>
-            <Box fontWeight="fontWeightBold">
-              Professor
+            </TableCell>
+            <TableCell>
+              <Box fontWeight="fontWeightBold">
+                Professor
             </Box>
-          </TableCell>
+            </TableCell>
+          </TableRow>
         </TableHead>
         <TableBody>
           <TableRow>
@@ -116,16 +118,16 @@ const ClassContent = (props) => {
               </Typography>
             </TableCell>
             <TableCell >
-              {shedules.map(shedule => (
-                <Typography>
+              {shedules.map((shedule, index) => (
+                < Typography key={index} >
                   {shedule}
                 </Typography>
               ))}
             </TableCell>
             <TableCell>
               {
-                professors.map(professor => (
-                  <Typography >
+                professors.map((professor, index) => (
+                  <Typography key={index}>
                     {professor}
                   </Typography>
                 ))
@@ -143,7 +145,7 @@ const ClassContent = (props) => {
           />
         </Box>
       </Box>
-    </Grid>
+    </Grid >
   );
 }
 
