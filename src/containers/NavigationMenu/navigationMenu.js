@@ -14,7 +14,8 @@ import { connect } from 'react-redux';
 
 import logo from '../assets/logo_icon.png';
 import { Button } from '@material-ui/core';
-import { logout } from '../../store/actions';
+import { logout, refreshMenu } from '../../store/actions';
+import { withRouter } from 'react-router-dom';
 
 
 const styles = theme => ({
@@ -59,10 +60,10 @@ class NavigationMenu extends React.Component {
 
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
     this.state = {
       value: 0
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange = (event, value) => {
@@ -72,6 +73,22 @@ class NavigationMenu extends React.Component {
   handleChangeDrawer = (value) => {
     this.setState({ value });
   };
+
+  componentWillMount = () => {
+    const {
+      menuStateValue
+    } = this.props;
+    this.setState({ value: menuStateValue });
+  }
+
+  componentDidUpdate = () => {
+    const {
+      menuStateValue
+    } = this.props
+    if (this.state.value != 0 || this.props.location.pathname == "/home") {
+      this.props.refreshMenu(this.state.value)
+    }
+  }
 
   render() {
     const { classes, theme, isAuthenticated, logout } = this.props
@@ -132,12 +149,13 @@ NavigationMenu.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.authentication.isAuthenticated
+  isAuthenticated: state.authentication.isAuthenticated,
+  menuStateValue: state.menu.menuStateValue
 });
 
 export const navigationMenuContainer = connect(
   mapStateToProps,
-  { logout }
+  { logout, refreshMenu }
 )(withStyles(styles, { withTheme: true })(NavigationMenu));
 
-export default withStyles(styles, { withTheme: true })(navigationMenuContainer);
+export default withRouter(navigationMenuContainer);
