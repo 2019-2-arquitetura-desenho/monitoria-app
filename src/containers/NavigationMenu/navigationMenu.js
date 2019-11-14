@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 
 import logo from '../assets/logo_icon.png';
 import { Button } from '@material-ui/core';
-import { logout, refreshMenu } from '../../store/actions';
+import { logout } from '../../store/actions';
 import { withRouter } from 'react-router-dom';
 
 
@@ -61,9 +61,12 @@ class NavigationMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0
+      value: 0,
+      pathsMenuList: []
     };
     this.handleChange = this.handleChange.bind(this);
+    this.startPathsMenuList = this.startPathsMenuList.bind(this);
+    this.handleIndicator = this.handleIndicator.bind(this);
   }
 
   handleChange = (event, value) => {
@@ -74,20 +77,46 @@ class NavigationMenu extends React.Component {
     this.setState({ value });
   };
 
-  componentWillMount = () => {
-    const {
-      menuStateValue
-    } = this.props;
-    this.setState({ value: menuStateValue });
+  componentDidMount = () => {
+    this.startPathsMenuList();
   }
 
   componentDidUpdate = () => {
+  }
+
+  startPathsMenuList = () => {
+    let list = [
+      { label: 'Página Inicial', path: '/home', value: 0 },
+      { label: 'Informações Pessoais', path: '/personal-infos', value: 1 },
+      { label: 'Procurar Monitoria', path: '/search-disciplines', value: 2 },
+      { label: 'Acompanhar Resultados', path: '/results', value: 3 },
+    ]
+    this.setState({
+      pathsMenuList: list
+    });
+    this.handleIndicator(list);
+  }
+
+  handleIndicator = (list = []) => {
     const {
-      menuStateValue
-    } = this.props
-    if (this.state.value != 0 || this.props.location.pathname == "/home") {
-      this.props.refreshMenu(this.state.value)
-    }
+      location
+    } = this.props;
+    let currentIndicatorValue = null;
+    if (location.pathname == '/' || list.length == 0)
+      currentIndicatorValue = 0;
+    else
+      currentIndicatorValue = list.map(pathMenu =>
+        (pathMenu.path)
+      ).indexOf(location.pathname);
+    this.setState({
+      value: currentIndicatorValue
+    })
+  }
+
+  handlebuttonToHome = (event) => {
+    this.setState({
+      value: 0
+    })
   }
 
   render() {
@@ -105,14 +134,13 @@ class NavigationMenu extends React.Component {
                   />
                 </Hidden>
 
-                <Button component={Link} to="/home">
+                <Button component={Link} to="/home" onClick={this.handlebuttonToHome}>
                   <img alt="logo" id="logo" src={logo} style={{ width: '30px', height: '30px' }} />
                   <Typography style={{ marginLeft: '10px' }} variant="h6" id="titlePart1">Monitoria</Typography>
                   <Typography variant="h6" id="titlePart2">FGA</Typography>
                 </Button>
               </Box>
               <Hidden smDown implementation="css">
-
                 <Tabs aria-label="simple tabs example"
                   centered
                   classes={{
@@ -121,10 +149,10 @@ class NavigationMenu extends React.Component {
                   className={classes.tabs}
                   value={this.state.value}
                   onChange={this.handleChange}>
-                  <Tab className={classes.tab} label="Página Inicial" component={Link} to="/entrar" />
-                  <Tab className={classes.tab} label="Informações Pessoais" component={Link} to="/personal-infos" />
-                  <Tab className={classes.tab} label="Procurar Monitoria" component={Link} to="/search-disciplines" />
-                  <Tab className={classes.tab} label="Acompanhar Resultados" component={Link} to="/results" />
+                  {this.state.pathsMenuList.map(pathMenu => (
+                    <Tab key={pathMenu.value} className={classes.tab} label={pathMenu.label} component={Link} to={pathMenu.path}
+                    />
+                  ))}
                 </Tabs>
               </Hidden>
               <Button style={{ color: "white" }} onClick={logout}>
@@ -150,12 +178,11 @@ NavigationMenu.propTypes = {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.authentication.isAuthenticated,
-  menuStateValue: state.menu.menuStateValue
 });
 
 export const navigationMenuContainer = connect(
   mapStateToProps,
-  { logout, refreshMenu }
+  { logout }
 )(withStyles(styles, { withTheme: true })(NavigationMenu));
 
 export default withRouter(navigationMenuContainer);
