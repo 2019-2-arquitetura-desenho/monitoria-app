@@ -6,7 +6,6 @@ import { getProfile, logout } from '../store/actions';
 class Home extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {}
 
   }
@@ -16,6 +15,7 @@ class Home extends React.Component {
   }
 
   requirementsCard() {
+
     return (
       <React.Fragment>
         <div style={styles.topic}>
@@ -98,10 +98,11 @@ class Home extends React.Component {
   }
 
   content() {
-    const { userData, profileData } = this.props
-    console.log(profileData)
+    const { userData, profileData } = this.props;
+
     let user = profileData ? profileData.user : null;
-    if (true) {
+    let is_super_user = user ? user.is_super_user : false;
+    if (is_super_user) {
       return (
         <React.Fragment>
           <div style={styles.topic}>
@@ -190,4 +191,3 @@ export const homeContainer = connect(
 )(Home)
 
 export default homeContainer;
-
