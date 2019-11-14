@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const host_api = process.env.REACT_APP_URL_API;
 
-export function register(name, email, password, url) {
+export function register(name, email, password, file_url) {
   return function (dispatch) {
     axios.post(
       host_api + '/registration/',
@@ -11,7 +11,7 @@ export function register(name, email, password, url) {
         name: name,
         email: email,
         password: password,
-        pdf_url: url
+        // pdf_url: file_url
       }
     ).then(response => {
       dispatch({

@@ -250,37 +250,78 @@ class Register extends React.Component {
         if (!f_errorName && !f_errorEmail && !f_errorPassword && !f_errorConfirmPassword && !f_errorFile) {
             this.setState({ isRegisterLoading: true, mainError: "" });
 
-            const formData = new FormData();
-        
-            console.log("submit", file);
-    
-            formData.append("file", file);
-            formData.append("tags", 'histórico escolar');
-            formData.append("upload_preset", "fuuwagxl");
-            formData.append("api_key", "845594749864499");
-            formData.append("timestamp", (Date.now() / 1000) | 0);
-    
-            axios.post(
-                "https://api.cloudinary.com/v1_1/dstgmoevd/auto/upload/",
-                formData,
-                {
-                    headers: {
-                        "X-Requested-With": "XMLHttpRequest"
-                    }    
-                }
-            ).then(response => {
-                // console.log(response);
+            // Uploadcare File Upload
 
-                this.props.register(name, email, password, response.data.secure_url)
+            const formData = new FormData();
+
+            formData.append("file", file);
+            formData.append("UPLOADCARE_PUB_KEY", "2283d78f30fdf4fec719");
+            formData.append("UPLOADCARE_STORE", "1");
+            
+            axios.post(
+                "https://upload.uploadcare.com/base/",
+                formData
+            ).then(response => {
+                // console.log("Uploadcare", response);
+
+                const file_id = response.data.file;
+                const file_url = "https://ucarecdn.com/" + file_id + "/" + file.name
+
+                console.log(file_url);
+                
+                this.props.register(name, email, password, file_url)
 
             }).catch(error => {
-                console.log("Error Upload File", error);
+                console.log("Uploadcare", error);
+                
+                clearTimeout();
+                setTimeout(
+                    function () {
+                        
+                        this.setState({
+                            mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
+                            isRegisterLoading: false
+                        });
 
-                this.setState({
-                    mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
-                    isRegisterLoading: false
-                });
+                    }.bind(this),
+                    1000
+                );
             });
+
+
+            // Cloudinary File Upload
+
+            // const formData = new FormData();
+        
+            // console.log("submit", file);
+    
+            // formData.append("file", file);
+            // formData.append("tags", 'histórico escolar');
+            // formData.append("upload_preset", "fuuwagxl");
+            // formData.append("api_key", "845594749864499");
+            // formData.append("timestamp", (Date.now() / 1000) | 0);
+    
+            // axios.post(
+            //     "https://api.cloudinary.com/v1_1/dstgmoevd/auto/upload/",
+            //     formData,
+            //     {
+            //         headers: {
+            //             "X-Requested-With": "XMLHttpRequest"
+            //         }    
+            //     }
+            // ).then(response => {
+            //     // console.log(response);
+
+            //    this.props.register(name, email, password, response.data.secure_url)
+
+            // }).catch(error => {
+            //     console.log("Error Upload File", error);
+
+            //     this.setState({
+            //         mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
+            //         isRegisterLoading: false
+            //    });
+            // });
         }
     }
 
