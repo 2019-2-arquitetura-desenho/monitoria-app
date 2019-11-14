@@ -15,6 +15,7 @@ import {
 import MainError from '../components/MainError/mainError';
 import InputSearch from '../components/InputSearch/inputSearch';
 import DisciplineCard from './disciplineCard';
+import ConfirmationDialog from '../components/ConfirmationDialog/confirmationDialog';
 
 
 class SearchDisciplines extends React.Component {
@@ -51,6 +52,7 @@ class SearchDisciplines extends React.Component {
       <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
           <Container component="div" maxWidth="md" className={classes.container}>
+            <ConfirmationDialog />
             <Grid container justify="center">
               <Typography
                 variant="h5"

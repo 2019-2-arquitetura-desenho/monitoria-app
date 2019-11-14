@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 
 import { ReactComponent as SunIcon } from '../assets/sun.svg';
-import SubscribeButton from '../components/SubscribeButton/subscribeButton';
+import CardButton from '../components/CardButton/cardButton';
 
 
 const styles = {
@@ -138,7 +138,7 @@ const ClassContent = (props) => {
       </Table>
       <Box className={classes.buttonBox} >
         <Box className={classes.buttonBoxRow}>
-          <SubscribeButton
+          <CardButton
             titleButton="Inscrever-se para a Monitoria"
             buttonColor="secondary"
             onClickSubmitButton={onPress}
