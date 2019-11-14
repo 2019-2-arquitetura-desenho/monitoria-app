@@ -61,7 +61,7 @@ class InputText extends React.Component {
                             onMouseDown={ onMouseDown }
                         >
                             { valueVisibility ?
-                                <VisibilityOff /> : <Visibility />
+                                <Visibility /> : <VisibilityOff />
                             }
                         </IconButton>
                     </InputAdornment>
@@ -83,7 +83,7 @@ class InputText extends React.Component {
                             onMouseDown={ onMouseDown }
                         >
                             { valueVisibility ?
-                                <VisibilityOff /> : <Visibility />
+                                <Visibility /> : <VisibilityOff />
                             }
                         </IconButton>
                     </InputAdornment>

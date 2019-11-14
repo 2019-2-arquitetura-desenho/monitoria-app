@@ -22,7 +22,6 @@ class errorText extends React.Component {
 
 const styles = {
     errorText: {
-        marginTop: "1%",
         marginLeft: "8%",
         marginRight: "8%",
         color: "#ff0000", // vermelho
