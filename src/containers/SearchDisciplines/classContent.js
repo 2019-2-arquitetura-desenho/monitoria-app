@@ -2,7 +2,6 @@ import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import {
   Grid,
-  Divider,
   Typography,
   Box,
   Table,
@@ -10,7 +9,6 @@ import {
   TableCell,
   TableBody,
   TableRow,
-  Button
 } from '@material-ui/core';
 
 import { ReactComponent as SunIcon } from '../assets/sun.svg';
