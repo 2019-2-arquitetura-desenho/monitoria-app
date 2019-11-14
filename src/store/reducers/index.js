@@ -2,11 +2,13 @@ import { combineReducers } from 'redux';
 
 import Authentication from './authentication';
 import UserProfile from './userProfile';
+import Disciplines from './disiplines';
 
 
 const reducers = combineReducers({
     authentication: Authentication,
-    userProfile: UserProfile
+    userProfile: UserProfile,
+    disciplines: Disciplines
 });
 
 const rootReducer = (state, action) => {

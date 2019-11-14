@@ -24,13 +24,13 @@ export function getDisciplines(token, idStudent) {
       if (!error.response) {
         dispatch({
           type: 'GET_DISCIPLINES_ERROR',
-          payload: 'Error: Network Error',
+          requestError: 'Error: Network Error',
           fetchingData: false
         });
       } else {
         dispatch({
           type: 'GET_DISCIPLINES_ERROR',
-          payload: error.response,
+          requestError: error.response,
           fetchingData: false
         });
       }
@@ -65,13 +65,13 @@ export function registerInDiscipline(token, idStudent, idDiscipline) {
       if (!error.response) {
         dispatch({
           type: 'REGISTER_DISCIPLINE_ERROR',
-          payload: 'Error: Network Error',
+          requestError: 'Error: Network Error',
           registeringDiscipline: false
         });
       } else {
         dispatch({
           type: 'REGISTER_DISCIPLINE_ERROR',
-          payload: error.response,
+          requestError: error.response,
           registeringDiscipline: false
         });
       }
