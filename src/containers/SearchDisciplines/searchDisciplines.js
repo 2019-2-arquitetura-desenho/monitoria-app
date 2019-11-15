@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateProfile, getProfile, restartUpdateProfile } from '../../store/actions';
+import { getProfile, getStudent, restartUpdateProfile } from '../../store/actions';
 import { withRouter } from 'react-router-dom';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -24,6 +24,8 @@ class SearchDisciplines extends React.Component {
     super(props);
 
     this.state = {
+      disciplines: [],
+
       dialogOpen: false,
       dialogTitle: '',
       dialogText: '',
@@ -35,6 +37,25 @@ class SearchDisciplines extends React.Component {
     this.handleDialogClose = this.handleDialogClose.bind(this);
     this.handleDialogOpen = this.handleDialogOpen.bind(this);
     this.nextPathDialog = this.nextPathDialog.bind(this);
+  }
+
+  componentDidMount() {
+    const {
+      profileData
+    } = this.props;
+
+    if (profileData && profileData.student) {
+      let disciplines = profileData.student.academic_record
+
+      this.props.getStudent(this.props.token);
+      this.setState({ disciplines: disciplines })
+    }
+
+  }
+
+  componentDidUpdate() {
+    console.log("update")
+    console.log(this.state.disciplines)
   }
 
   nextPathDialog() {
@@ -49,7 +70,7 @@ class SearchDisciplines extends React.Component {
     console.log("open modal: ", dialogText)
     this.setState({ dialogTitle: dialogTitle })
     this.setState({ dialogText: dialogText })
-    this.setState({ dialogType: dialogType })
+    this.setState({ dialogType: 'warning' })
     if (dialogType == "success")
       this.setState({ dialogConfirmPath: '/results' })
     this.setState({ dialogOpen: true })
@@ -102,11 +123,13 @@ class SearchDisciplines extends React.Component {
                 <MainError error={mainError} />
               </Box>
             </Box>
-
-            <DisciplineCard
-              discipline={disciplines[0]}
-              onPress={this.handleDialogOpen}
-            />
+            {this.state.disciplines.map((discipline, index) => (
+              <DisciplineCard
+                key={index}
+                discipline={discipline}
+                onPress={this.handleDialogOpen}
+              />
+            ))}
           </Container>
         </MuiThemeProvider>
       </div >
@@ -187,7 +210,7 @@ function mapStateToProps(state) {
 
 export const SearchDisciplinesContainer = connect(
   mapStateToProps,
-  { updateProfile, getProfile, restartUpdateProfile },
+  { getProfile, getStudent, restartUpdateProfile },
 )(withStyles(styles, { withTheme: true })(SearchDisciplines))
 
 export default SearchDisciplinesContainer;

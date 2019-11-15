@@ -13,6 +13,8 @@ import ClassContent from './classContent';
 const styles = {
   root: {
     backgroundColor: "#267CC1",
+    marginTop: 10,
+    marginBottom: 20
   },
   card: {
     display: "flex",
@@ -40,20 +42,23 @@ const styles = {
 
 const DisciplineCard = ({ classes, discipline, onPress }) => {
 
+  const title = discipline[1];
+  const code = discipline[0];
+
   return (
     <Paper className={classes.root}>
       <Card className={classes.card}>
         <CardContent className={classes.header}>
           <Typography>
-            {"Nome: " + (discipline.title ? discipline.title : "Disciplina")}
+            {"Nome: " + (title ? title : "Disciplina")}
           </Typography>
           <Typography>
-            {"Código: " + (discipline.code ? discipline.code : "000")}
+            {"Código: " + (code ? code : "000")}
           </Typography>
         </CardContent>
         <Divider className={classes.divider} />
         <CardContent className={classes.content}>
-          {discipline.classrooms.map((classroom, index) => (
+          {discipline.classrooms && discipline.classrooms.map((classroom, index) => (
             <ClassContent key={index}
               classroom={classroom.title}
               period={classroom.period}

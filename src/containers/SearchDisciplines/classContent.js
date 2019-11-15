@@ -80,7 +80,7 @@ const ClassContent = ({
   }
 
   const handleEventModal = () => {
-    onPress('Sucesso', textSuccessSubscribe(), 'success')
+    onPress('Aviso', textWarningSubscribe(), 'success')
   }
 
   return (

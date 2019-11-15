@@ -32,6 +32,34 @@ const UserProfile = (state = {}, action) => {
         ...state,
         requisitionError: action.payload
       };
+    case 'GET_STUDENT_REQUEST':
+      return {
+        ...state,
+        profileData: {
+          ...state.profileData, student: {
+            ...state.profileData.student, fetchingStudent: action.fetchingStudent
+          }
+        },
+      }
+    case 'GET_STUDENT_SUCCESS':
+      return {
+        ...state,
+        profileData: {
+          ...state.profileData, student: {
+            ...action.payload, fetchingStudent: action.fetchingStudent
+          }
+        },
+      }
+    case 'GET_STUDENT_ERROR':
+      return {
+        ...state,
+        requisitionError: action.requestError,
+        profileData: {
+          ...state.profileData, student: {
+            ...state.profileData.student, fetchingStudent: action.fetchingStudent
+          }
+        }
+      };
     default:
       return state;
   }
