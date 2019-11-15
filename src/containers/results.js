@@ -127,19 +127,19 @@ class Results extends React.Component {
                         <Table>
                         <TableHead>
                             <TableRow>
-                            <TableCell align="right">nome</TableCell>
-                            <TableCell align="right">matricula</TableCell>
-                            <TableCell align="right">pontuacao</TableCell>
+                            <TableCell align="center">nome</TableCell>
+                            <TableCell align="center">matrícula</TableCell>
+                            <TableCell align="center">pontuação</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {this.state.dataChoice.map(element => (
-                            <TableRow key={element[0]}>
-                                <TableCell component="th" scope="row">
+                            <TableRow key={element[1]}>
+                                <TableCell align ="center" scope="row">
                                     {element[0]}
                                 </TableCell>
-                                <TableCell align="right">{element[1]}</TableCell>
-                                <TableCell align="right">{element[2]}</TableCell>
+                                <TableCell align="center">{element[1]}</TableCell>
+                                <TableCell align="center">{element[2]}</TableCell>
                             </TableRow>
                             ))}
                         </TableBody>
