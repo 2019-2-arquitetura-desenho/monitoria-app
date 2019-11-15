@@ -267,7 +267,7 @@ class Register extends React.Component {
                 const file_id = response.data.file;
                 const file_url = "https://ucarecdn.com/" + file_id + "/" + file.name
 
-                console.log(file_url);
+                //console.log(file_url);
                 
                 this.props.register(name, email, password, file_url)
 

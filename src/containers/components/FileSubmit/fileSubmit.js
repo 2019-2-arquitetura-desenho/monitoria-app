@@ -28,7 +28,8 @@ class FileSubmit extends React.Component {
     switchButtonFile() {
         const {
             isConfirmFileSubmit, onButtonUploadClick, fileName,
-            onClickViewFileUpload, onClickDeleteFileUpload
+            onClickViewFileUpload, onClickDeleteFileUpload,
+            label
         } = this.props
 
         if (!isConfirmFileSubmit){

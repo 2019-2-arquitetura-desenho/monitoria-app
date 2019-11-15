@@ -11,7 +11,7 @@ export function register(name, email, password, file_url) {
         name: name,
         email: email,
         password: password,
-        // pdf_url: file_url
+        pdf_url: file_url
       }
     ).then(response => {
       dispatch({
