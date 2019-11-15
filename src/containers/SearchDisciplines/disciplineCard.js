@@ -38,10 +38,7 @@ const styles = {
   }
 };
 
-const DisciplineCard = (props) => {
-  const {
-    classes, discipline
-  } = props;
+const DisciplineCard = ({ classes, discipline, onPress }) => {
 
   return (
     <Paper className={classes.root}>
@@ -62,6 +59,7 @@ const DisciplineCard = (props) => {
               period={classroom.period}
               shedules={classroom.shedules}
               professors={classroom.professors}
+              onPress={onPress}
             />
           ))}
         </CardContent>

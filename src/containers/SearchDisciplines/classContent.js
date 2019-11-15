@@ -64,10 +64,7 @@ const styles = {
   },
 }
 
-const ClassContent = (props) => {
-  const {
-    classes, classroom, period, shedules, professors, onPress
-  } = props;
+const ClassContent = ({ classes, classroom, period, shedules, professors, onPress }) => {
 
   return (
     <Grid container className={classes.root} justify="center">

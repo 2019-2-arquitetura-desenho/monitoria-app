@@ -111,7 +111,7 @@ class NavigationMenu extends React.Component {
               </Hidden>
               <Button style={{ color: "white" }}>
                 Sair
-          </Button>
+              </Button>
             </Toolbar>
           </AppBar>
         </div>

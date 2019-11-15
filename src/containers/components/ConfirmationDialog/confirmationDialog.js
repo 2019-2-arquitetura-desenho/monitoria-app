@@ -51,24 +51,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function ConfirmationDialog({ classes }) {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+function ConfirmationDialog({ classes, isOpen, handleClose }) {
 
   return (
     <div >
-      <Button color="secondary" onClick={handleClickOpen}>
-        Slide in alert dialog
-      </Button>
       <Dialog classes={{ paper: classes.dialogPaper }}
-        open={true}
+        open={isOpen}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
@@ -82,7 +70,9 @@ function ConfirmationDialog({ classes }) {
             <Typography variant="h6" className={classes.flexColumnCenter}>
               Sucesso
             </Typography>
-            <CancelIcon width={30} height={30} />
+            <Button onClick={handleClose}>
+              <CancelIcon width={30} height={30} />
+            </Button>
           </Typography>
         </DialogTitle>
         <DialogContent>
@@ -96,7 +86,7 @@ function ConfirmationDialog({ classes }) {
             <CardButton
               titleButton="Acessar Ranking"
               buttonColor="secondary"
-            // onClickSubmitButton={}
+              onClickSubmitButton={handleClose}
             />
           </Box>
         </DialogActions>

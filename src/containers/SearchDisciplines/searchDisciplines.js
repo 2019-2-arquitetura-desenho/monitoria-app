@@ -23,8 +23,21 @@ class SearchDisciplines extends React.Component {
     super(props);
 
     this.state = {
+      dialogOpen: false,
       mainError: ''
     }
+
+    this.handleDialogClose = this.handleDialogClose.bind(this);
+    this.handleDialogOpen = this.handleDialogOpen.bind(this);
+  }
+
+  handleDialogClose() {
+    this.setState({ dialogOpen: false })
+  }
+
+  handleDialogOpen() {
+    console.log("OPEN")
+    this.setState({ dialogOpen: true })
   }
 
   render() {
@@ -52,7 +65,10 @@ class SearchDisciplines extends React.Component {
       <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
           <Container component="div" maxWidth="md" className={classes.container}>
-            <ConfirmationDialog />
+            <ConfirmationDialog
+              isOpen={this.state.dialogOpen}
+              handleClose={this.handleDialogClose}
+            />
             <Grid container justify="center">
               <Typography
                 variant="h5"
@@ -69,6 +85,7 @@ class SearchDisciplines extends React.Component {
 
             <DisciplineCard
               discipline={disciplines[0]}
+              onPress={this.handleDialogOpen}
             />
           </Container>
         </MuiThemeProvider>
