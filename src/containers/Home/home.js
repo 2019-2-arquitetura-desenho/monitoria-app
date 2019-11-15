@@ -14,12 +14,34 @@ class Home extends React.Component {
 		this.state = {};
 	}
 
-	async componentDidMount() {
-		await this.props.getProfile(this.props.token);
+
+	content(){
+		if(!this.props.profileData){
+			this.props.getProfile(this.props.token);
+			return <div></div>
+		}
+		else{
+			if (this.props.profileData.is_professor){
+				return (
+						 <React.Fragment>
+							<GradeDescription />
+							<RequerimentsDescription />
+						</React.Fragment>
+				);
+			}
+			else{
+				return (
+					<React.Fragment>
+						<RequerimentsDescription />
+						<GradeDescription />
+					</React.Fragment>
+				);
+			}
+		}
 	}
 
 	render() {
-		const { isAuthenticated, profileData } = this.props;
+		const { isAuthenticated } = this.props;
 
 		if (!isAuthenticated){
 			return (
@@ -30,33 +52,23 @@ class Home extends React.Component {
 				</React.Fragment>
 			);
 		} else {
-			// Esperando a Atualização do Back-End
-			// 
-			// if (profileData.is_professor){
-			//   return (
-			// 		 <React.Fragment>
-			// 			 <GradeDescription />
-			// 			 <RequerimentsDescription />
-			//		 </React.Fragment>
-			// 	 );
-			// } else {
-				return (
-					<React.Fragment>
-						<RegisterHome isAuthenticated = {true} />
-						<RequerimentsDescription />
-						<GradeDescription />
-					</React.Fragment>
-				);
-			// }
+			return(
+				<React.Fragment>
+					<RegisterHome isAuthenticated = {true} />
+					{this.content()}
+				</React.Fragment>
+			)
 		}
 	}
+
+	
+
 }
 
 function mapStateToProps(state) {
 	return {
 		isAuthenticated: state.authentication.isAuthenticated,
 		profileData: state.userProfile.profileData,
-
 		token: state.authentication.token,
 	};
 }
