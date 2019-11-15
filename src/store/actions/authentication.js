@@ -1,4 +1,6 @@
 import axios from 'axios';
+
+
 const host_api = process.env.REACT_APP_URL_API;
 
 export function register(name, email, password, document) {
@@ -54,7 +56,6 @@ export function login(email, password) {
         type: 'LOGIN_SUCCESS',
         payload: response.data.token
       });
-
     }).catch(error => {
       if (!error.response) {
         dispatch({

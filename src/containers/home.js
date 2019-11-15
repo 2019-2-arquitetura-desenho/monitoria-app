@@ -2,9 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { getProfile, logout } from "../store/actions";
 
+import RegisterHome from "./HomePage/registerHome";
 import GradeDescription from "./HomePage/gradeDescription";
 import RequerimentsDescription from "./HomePage/requirementsDescription";
-import RegisterHome from "./HomePage/registerHome";
+
 
 class Home extends React.Component {
 	constructor(props) {
@@ -17,26 +18,47 @@ class Home extends React.Component {
 	}
 
 	render() {
-		return (
-			<React.Fragment>
-				<RegisterHome />
-				<RequerimentsDescription />
-				<GradeDescription />
-			</React.Fragment>
-		);
+		const { isAuthenticated, profileData } = this.props;
+
+		if (!isAuthenticated){
+			return (
+				<React.Fragment>
+					<RegisterHome />
+					<RequerimentsDescription />
+					<GradeDescription />
+				</React.Fragment>
+			);
+		} else {
+			// Esperando a Atualização do Back-End
+			// 
+			// if (profileData.is_professor){
+			//   return (
+			// 		 <React.Fragment>
+			// 			 <GradeDescription />
+			// 			 <RequerimentsDescription />
+			//		 </React.Fragment>
+			// 	 );
+			// } else {
+				return (
+					<React.Fragment>
+						<RequerimentsDescription />
+						<GradeDescription />
+					</React.Fragment>
+				);
+			// }
+		}
 	}
 }
 
 function mapStateToProps(state) {
 	return {
-		userData: state.authentication.userData,
-		token: state.authentication.token,
+		isAuthenticated: state.authentication.isAuthenticated,
 		profileData: state.userProfile.profileData,
+
+		token: state.authentication.token,
 	};
 }
 
-export const homeContainer = connect(mapStateToProps, { getProfile, logout })(
-	Home,
-);
+export const homeContainer = connect(mapStateToProps, { getProfile, logout })(Home);
 
 export default homeContainer;
