@@ -10,7 +10,8 @@ import {
   Divider,
   MuiThemeProvider,
   createMuiTheme,
-  Box
+  Box,
+  CircularProgress
 } from '@material-ui/core';
 import MainError from '../components/MainError/mainError';
 import InputSearch from '../components/InputSearch/inputSearch';
@@ -23,7 +24,7 @@ class SearchDisciplines extends React.Component {
     super(props);
 
     this.state = {
-      disciplines: [],
+      disciplines: undefined,
 
       dialogOpen: false,
       dialogTitle: '',
@@ -39,8 +40,14 @@ class SearchDisciplines extends React.Component {
   }
 
   componentDidMount() {
-    // this.props.getStudent(this.props.token);
+    const {
+      disciplines
+    } = this.props;
     this.props.getDisciplines(this.props.token);
+    if (disciplines == undefined || disciplines.length == 0) {
+    } else {
+      // this.getSnapshotBeforeUpdate()
+    }
   }
 
   componentDidUpdate() {
@@ -50,10 +57,8 @@ class SearchDisciplines extends React.Component {
     const {
       disciplines
     } = this.props;
-
     if (disciplines &&
       this.state.disciplines != disciplines) {
-
       this.setState({ disciplines: disciplines })
     }
     return null;
@@ -75,6 +80,32 @@ class SearchDisciplines extends React.Component {
       this.setState({ dialogConfirmPath: '/results' })
     this.setState({ dialogOpen: true })
   }
+
+  renderDisciplines() {
+    if (this.state.disciplines != undefined)
+      return (
+        <div>
+          {
+            this.state.disciplines && this.state.disciplines.map((discipline, index) => (
+              <DisciplineCard
+                key={index}
+                title={discipline.name}
+                code={discipline.code}
+                classrooms={discipline.discipline_class}
+                onPress={this.handleDialogOpen}
+              />
+            ))
+          }
+        </div>
+      );
+    else {
+      return (
+        <CircularProgress color="secondary" align='center' />
+      );
+    }
+  }
+
+
 
 
   render() {
@@ -108,15 +139,9 @@ class SearchDisciplines extends React.Component {
                 <MainError error={mainError} />
               </Box>
             </Box>
-            {this.state.disciplines && this.state.disciplines.map((discipline, index) => (
-              <DisciplineCard
-                key={index}
-                title={discipline.name}
-                code={discipline.code}
-                classrooms={discipline.discipline_class}
-                onPress={this.handleDialogOpen}
-              />
-            ))}
+            <Grid container className={classes.disciplinesContainer} alignItems='center'>
+              {this.renderDisciplines()}
+            </Grid>
           </Container>
         </MuiThemeProvider>
       </div >
@@ -149,7 +174,7 @@ const styles = {
   container: {
     paddingTop: 20,
     backgroundColor: '#fff',
-    minHeight: '80%',
+    minHeight: '80vh',
     paddingBottom: 20,
   },
   title: {
@@ -178,6 +203,13 @@ const styles = {
   divider: {
     size: 30,
     color: "black"
+  },
+  disciplinesContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    height: '80%',
+    width: '100%'
   }
 };
 

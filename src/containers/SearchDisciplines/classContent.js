@@ -48,18 +48,22 @@ const styles = {
   meeting: {
     fontSize: 12
   },
-  buttonBox: {
+  cardFooterColumn: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'flex-end',
     height: 40,
     width: "100%"
   },
-  buttonBoxRow: {
+  cardFooterRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  buttonBox: {
     marginRight: 10,
     width: 300
-  },
+  }
 }
 
 const ClassContent = ({
@@ -151,13 +155,15 @@ const ClassContent = ({
           </TableRow>
         </TableBody>
       </Table>
-      <Box className={classes.buttonBox} >
-        <Box className={classes.buttonBoxRow}>
-          <CardButton
-            titleButton="Inscrever-se para a Monitoria"
-            buttonColor="secondary"
-            onClickSubmitButton={handleEventModal}
-          />
+      <Box className={classes.cardFooterColumn} >
+        <Box className={classes.cardFooterRow}>
+          <Box className={classes.buttonBox}>
+            <CardButton
+              titleButton="Inscrever-se para a Monitoria"
+              buttonColor="secondary"
+              onClickSubmitButton={handleEventModal}
+            />
+          </Box>
         </Box>
       </Box>
     </Grid >
