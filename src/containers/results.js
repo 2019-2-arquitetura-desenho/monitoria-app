@@ -35,7 +35,8 @@ class Results extends React.Component {
             isRanked: true,
 
             dataTables:[],
-            dataChoice:[]
+            dataChoice:[],
+            
             
 
         }
@@ -60,6 +61,7 @@ class Results extends React.Component {
 
     ranking() {
         
+
         axios.post(
             'http://localhost:8000/home',
             {
@@ -110,6 +112,7 @@ class Results extends React.Component {
             return <div>To com sono</div>
         }
         else{
+            var count = 1;
             return(
                 <React.Fragment>
                     <FormControl style = {{marginTop:'2%',width: "84%",marginLeft: "8%",marginRight: "8%"}}>
@@ -129,21 +132,24 @@ class Results extends React.Component {
                             }
                         </Select>
                     </FormControl>
-                    <Paper>
+                    <Paper style = {{marginTop:'1%',marginBottom:'2%',width: "84%",marginLeft: "8%",marginRight: "8%"}}>
                         <Table>
                         <TableHead>
                             <TableRow>
+                            <TableCell align="center">posicao</TableCell>
                             <TableCell align="center">nome</TableCell>
                             <TableCell align="center">matrícula</TableCell>
                             <TableCell align="center">pontuação</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
+                            
                             {this.state.dataChoice.map(element => (
                             <TableRow key={element[1]}>
-                                <TableCell align ="center" scope="row">
-                                    {element[0]}
+                                <TableCell align = "center" scope="row">
+                                    {count++}
                                 </TableCell>
+                                <TableCell align ="center" >{element[0]}</TableCell>
                                 <TableCell align="center">{element[1]}</TableCell>
                                 <TableCell align="center">{element[2]}</TableCell>
                             </TableRow>
