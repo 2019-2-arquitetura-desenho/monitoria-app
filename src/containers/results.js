@@ -7,7 +7,7 @@ import {
         InputLabel,
         Select,
         MenuItem,
-        Container,
+        CircularProgress,
         CssBaseline,
         Grid,
         Typography,
@@ -98,7 +98,13 @@ class Results extends React.Component {
     showData(){
         if(!this.state.isData){
             this.ranking();
-            return <div>loading</div>;
+            return (
+               
+                    <div style={styles.progress}>
+                        <CircularProgress color="secondary" />
+                    </div>
+                
+            );
         }
         else if(!this.state.isRanked){
             return <div>To com sono</div>
@@ -191,7 +197,7 @@ const theme = createMuiTheme({
     }
 });
 
-const styles = theme => ({
+const styles = {
     root: {
         backgroundColor: '#42a0ed',
         height: '100vh',
@@ -204,9 +210,17 @@ const styles = theme => ({
         height: '100%',
         width: '100%',
 
+    },
+    progress:{
+        textAlign: "center", 
+        marginRight:"8%",
+        marginLeft:"8%",
+        marginTop:"20%",
+        marginBottom:"20%"
+       
+        
     }
-    
-});
+};
 
 function mapStateToProps(state) {
     return {
