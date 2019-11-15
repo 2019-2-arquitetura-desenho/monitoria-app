@@ -4,6 +4,29 @@ import clsx from "clsx";
 import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+function RegisterLayout(props) {
+	const { backgroundClassName, children, classes } = props;
+
+	return (
+		<section className={classes.root}>
+			<Container className={classes.container}>
+				{children}
+				<div className={classes.backdrop} />
+				<div
+					className={clsx(classes.background, backgroundClassName)}
+				/>
+				<img
+					src={require("../../assets/arrow-down.png")}
+					className={classes.arrowDown}
+					height="16"
+					width="12"
+					alt="arrow down"
+				/>
+			</Container>
+		</section>
+	);
+}
+
 const styles = theme => ({
 	root: {
 		color: theme.palette.common.white,
@@ -30,7 +53,7 @@ const styles = theme => ({
 		top: 0,
 		bottom: 0,
 		backgroundColor: theme.palette.common.black,
-		opacity: 0.5,
+		opacity: 0.3,
 		zIndex: -1,
 	},
 	background: {
@@ -48,29 +71,6 @@ const styles = theme => ({
 		bottom: theme.spacing(4),
 	},
 });
-
-function RegisterLayout(props) {
-	const { backgroundClassName, children, classes } = props;
-
-	return (
-		<section className={classes.root}>
-			<Container className={classes.container}>
-				{children}
-				<div className={classes.backdrop} />
-				<div
-					className={clsx(classes.background, backgroundClassName)}
-				/>
-				<img
-					src={require("../../assets/arrow-down.png")}
-					className={classes.arrowDown}
-					height="16"
-					width="12"
-					alt="arrow down"
-				/>
-			</Container>
-		</section>
-	);
-}
 
 RegisterLayout.propTypes = {
 	backgroundClassName: PropTypes.string.isRequired,
