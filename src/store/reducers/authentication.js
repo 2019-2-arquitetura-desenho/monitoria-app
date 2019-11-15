@@ -28,7 +28,7 @@ const Authentication = (state = {}, action) => {
         ...state,
         isAuthenticated: true,
         token: action.payload
-      }
+      };
     case 'LOGIN_ERROR':
       return {
         ...state,

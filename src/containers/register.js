@@ -382,7 +382,7 @@ const styles = {
     progress: {
         marginTop: "25%",
         marginBottom: "25%",
-        textAlign: "center", 
+        textAlign: "center",
     }
 }
 
@@ -395,7 +395,7 @@ function mapStateToProps(state) {
 
 export const registerContainer = connect(
     mapStateToProps,
-    { register, restartRegister },
+    { register, restartRegister }
 )(Register)
 
 export default registerContainer;

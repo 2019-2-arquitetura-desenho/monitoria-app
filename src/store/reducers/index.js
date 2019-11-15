@@ -6,7 +6,7 @@ import UserProfile from './userProfile';
 
 const reducers = combineReducers({
     authentication: Authentication,
-    userProfile: UserProfile
+    userProfile: UserProfile,
 });
 
 const rootReducer = (state, action) => {

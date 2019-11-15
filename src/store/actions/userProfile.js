@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const host_api = process.env.REACT_APP_URL_API;
 
 export function updateProfile(props) {
@@ -15,7 +16,6 @@ export function updateProfile(props) {
     password,
     document
   };
-
 
   return function (dispatch) {
     dispatch({
@@ -65,7 +65,8 @@ export function getProfile(token) {
   let dataToSend = {
     token
   };
-  return function (dispatch) {
+  
+  return async function (dispatch) {
     axios.post(
       url,
       dataToSend

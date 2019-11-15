@@ -1,17 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+import Menu from '../containers/NavigationMenu/navigationMenu';
 import PublicRoute from './especials/publicRoute';
 import PrivateRoute from './especials/privateRoute';
+import PageShell from '../containers/components/PageShell/pageShell';
 import Register from '../containers/register';
 import Login from '../containers/Login/login';
 import RecoveryPassword from '../containers/recoveryPassword';
-import PageShell from '../containers/components/PageShell/pageShell';
-import Home from '../containers/home';
+import Home from '../containers/Home/home';
 import PersonalInfos from '../containers/PersonalInfos/personalInfos';
 import SearchDisciplines from '../containers/SearchDisciplines/searchDisciplines';
 import Results from '../containers/results';
-import Menu from '../containers/NavigationMenu/navigationMenu';
 
 
 export default class App extends React.Component {
@@ -31,7 +31,7 @@ export default class App extends React.Component {
                     exact path="/recuperar-senha"
                     component={PageShell(RecoveryPassword)}
                 />
-                <PrivateRoute
+                <Route
                     exact path="/"
                     component={PageShell(Home)}
                 />
