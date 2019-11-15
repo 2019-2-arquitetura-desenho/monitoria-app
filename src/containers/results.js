@@ -11,7 +11,14 @@ import {
         CssBaseline,
         Grid,
         Typography,
-        createMuiTheme} 
+        createMuiTheme,
+        Paper,
+        Table,    
+        TableHead,
+        TableRow,
+        TableCell,    
+        TableBody,
+    } 
 from '@material-ui/core';
 
 class Results extends React.Component {
@@ -23,14 +30,12 @@ class Results extends React.Component {
             loading: true,
             isData: false,
 
-            studentName: '',
-            matricula: '',
-            points:'',
             materialList:[],
-            disciplineName: '',
             material:'',
-            isRanked: true
+            isRanked: true,
 
+            dataTables:[],
+            dataChoice:[]
             
 
         }
@@ -41,7 +46,16 @@ class Results extends React.Component {
     }
 
     handleChange(event){
-        this.setState({material:event.target.value})
+        let dataChoice = []
+        this.state.dataTables.forEach(element =>{
+            if(element.materia === event.target.value){
+                dataChoice = element.ranking;
+            }
+        })
+        this.setState({
+            material:event.target.value,
+            dataChoice:dataChoice    
+        })
     }
 
     ranking() {
@@ -55,6 +69,7 @@ class Results extends React.Component {
 
             console.log(response);
             const data = response.data.data;
+            
             var materialList = []; 
             
             if(data.length === 0){
@@ -65,10 +80,12 @@ class Results extends React.Component {
             data.forEach(element => {
                 materialList.push(element.materia);
             });
+
             console.log(materialList);
             this.setState({
                 materialList:materialList,
-                isData:true
+                isData:true,
+                dataTables:data
             }
             )
 
@@ -88,23 +105,47 @@ class Results extends React.Component {
         }
         else{
             return(
-                <FormControl style = {{marginTop:'2%',width: "84%",marginLeft: "8%",marginRight: "8%"}}>
-                    <InputLabel id="demo-simple-select-label">Escolha a matéria</InputLabel>
-                    <Select 
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={this.state.material}
-                        onChange={this.handleChange}
-                        
-                    >   
-                        {this.state.materialList.map((element)=>{
-                            return <MenuItem value = {element}>
-                                {element}
-                            </MenuItem>
-                        })
-                        }
-                    </Select>
-                </FormControl>
+                <React.Fragment>
+                    <FormControl style = {{marginTop:'2%',width: "84%",marginLeft: "8%",marginRight: "8%"}}>
+                        <InputLabel id="demo-simple-select-label">Escolha a matéria</InputLabel>
+                        <Select 
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={this.state.material}
+                            onChange={this.handleChange}
+                            
+                        >   
+                            {this.state.materialList.map((element)=>{
+                                return <MenuItem value = {element}>
+                                    {element}
+                                </MenuItem>
+                            })
+                            }
+                        </Select>
+                    </FormControl>
+                    <Paper>
+                        <Table>
+                        <TableHead>
+                            <TableRow>
+                            <TableCell align="right">nome</TableCell>
+                            <TableCell align="right">matricula</TableCell>
+                            <TableCell align="right">pontuacao</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.state.dataChoice.map(element => (
+                            <TableRow key={element[0]}>
+                                <TableCell component="th" scope="row">
+                                    {element[0]}
+                                </TableCell>
+                                <TableCell align="right">{element[1]}</TableCell>
+                                <TableCell align="right">{element[2]}</TableCell>
+                            </TableRow>
+                            ))}
+                        </TableBody>
+                        </Table>
+                    </Paper>
+                </React.Fragment>
             )
         }
     }
