@@ -14,6 +14,7 @@ import {
 
 import { ReactComponent as CheckedIcon } from '../../assets/checked.svg';
 import { ReactComponent as CancelIcon } from '../../assets/cancel.svg';
+import { ReactComponent as WarningIcon } from '../../assets/warning.svg';
 import CardButton from '../CardButton/cardButton';
 
 const styles = {
@@ -51,7 +52,31 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function ConfirmationDialog({ classes, isOpen, handleClose }) {
+function ConfirmationDialog({ classes, isOpen, handleClose, type = "success" }) {
+
+  const renderStatusIcon = () => {
+    if (type === "success")
+      return <CheckedIcon width={50} height={50} />;
+    else if (type === "warning")
+      return <WarningIcon width={50} height={50} />;
+    else
+      return <div></div>
+  }
+
+  const renderConfirmButton = () => {
+    if (type === "success")
+      return (
+        <CardButton
+          titleButton="Acessar Ranking"
+          buttonColor="secondary"
+          onClickSubmitButton={handleClose}
+        />
+      );
+    else
+      return (
+        <div></div>
+      );
+  }
 
   return (
     <div >
@@ -66,7 +91,7 @@ function ConfirmationDialog({ classes, isOpen, handleClose }) {
         <DialogTitle id="alert-dialog-slide-title" align="center"
           classes={{ root: classes.title }}>
           <Typography component='div' className={classes.flexRowBetween}>
-            <CheckedIcon width={50} height={50} />
+            {renderStatusIcon()}
             <Typography variant="h6" className={classes.flexColumnCenter}>
               Sucesso
             </Typography>
@@ -83,11 +108,7 @@ function ConfirmationDialog({ classes, isOpen, handleClose }) {
         </DialogContent>
         <DialogActions className={classes.dialogActions}>
           <Box width="50" alignSelf="center">
-            <CardButton
-              titleButton="Acessar Ranking"
-              buttonColor="secondary"
-              onClickSubmitButton={handleClose}
-            />
+            {renderConfirmButton()}
           </Box>
         </DialogActions>
       </Dialog>

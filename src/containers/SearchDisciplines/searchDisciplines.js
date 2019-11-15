@@ -24,6 +24,9 @@ class SearchDisciplines extends React.Component {
 
     this.state = {
       dialogOpen: false,
+      dialogTitle: '',
+      dialogText: '',
+      dialogType: '',
       mainError: ''
     }
 
@@ -35,8 +38,10 @@ class SearchDisciplines extends React.Component {
     this.setState({ dialogOpen: false })
   }
 
-  handleDialogOpen() {
-    console.log("OPEN")
+  handleDialogOpen(dialogTitle = '', dialogText = '', dialogType = '') {
+    this.setState({ dialogTitle: dialogTitle })
+    this.setState({ dialogText: dialogText })
+    this.setState({ dialogType: dialogType })
     this.setState({ dialogOpen: true })
   }
 
@@ -68,6 +73,9 @@ class SearchDisciplines extends React.Component {
             <ConfirmationDialog
               isOpen={this.state.dialogOpen}
               handleClose={this.handleDialogClose}
+              title={this.state.dialogTitle}
+              description={this.state.dialogText}
+              type={this.state.dialogType}
             />
             <Grid container justify="center">
               <Typography

@@ -64,7 +64,24 @@ const styles = {
   },
 }
 
-const ClassContent = ({ classes, classroom, period, shedules, professors, onPress }) => {
+const ClassContent = ({
+  classes, classroom, period, shedules, professors,
+  onPress, discipline
+}) => {
+
+  const textSuccessSubscribe = () => {
+    return `Você não tem os requisitos necessários para se
+      increver nessa monitoria. `;
+  }
+
+  const textWarningSubscribe = () => {
+    return `Você foi inscrito na seleção para a monitoria de
+    ${discipline} tuma ${classroom}`;
+  }
+
+  const handleEventModal = () => {
+    onPress('Sucesso', textSuccessSubscribe(), 'success')
+  }
 
   return (
     <Grid container className={classes.root} justify="center">
@@ -138,7 +155,7 @@ const ClassContent = ({ classes, classroom, period, shedules, professors, onPres
           <CardButton
             titleButton="Inscrever-se para a Monitoria"
             buttonColor="secondary"
-            onClickSubmitButton={onPress}
+            onClickSubmitButton={handleEventModal}
           />
         </Box>
       </Box>

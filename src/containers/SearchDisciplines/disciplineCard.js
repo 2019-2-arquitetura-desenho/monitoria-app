@@ -59,6 +59,7 @@ const DisciplineCard = ({ classes, discipline, onPress }) => {
               period={classroom.period}
               shedules={classroom.shedules}
               professors={classroom.professors}
+              discipline={discipline}
               onPress={onPress}
             />
           ))}
