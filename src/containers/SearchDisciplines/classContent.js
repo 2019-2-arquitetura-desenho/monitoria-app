@@ -45,10 +45,8 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center'
   },
-  shedules: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start'
+  meeting: {
+    fontSize: 12
   },
   buttonBox: {
     display: 'flex',
@@ -65,13 +63,13 @@ const styles = {
 }
 
 const ClassContent = ({
-  classes, classroom, period, shedules, professors,
+  classes, classroom, period, meetings, professors,
   onPress, discipline
 }) => {
 
   const textSuccessSubscribe = () => {
     return `Você foi inscrito na seleção para a monitoria de
-    ${discipline.title} tuma ${classroom}`;
+    ${discipline} tuma ${classroom}`;
   }
 
   const textWarningSubscribe = () => {
@@ -132,17 +130,20 @@ const ClassContent = ({
               </Typography>
             </TableCell>
             <TableCell >
-              {shedules.map((shedule, index) => (
-                < Typography key={index} >
-                  {shedule}
-                </Typography>
-              ))}
+              {
+                meetings && meetings.map((meeting, index) => (
+                  < Typography key={index} className={classes.meeting}>
+                    {`${meeting.day}-${meeting.init_hour}/${meeting.final_hour} 
+                      (${meeting.room})`}
+                  </Typography>
+                ))
+              }
             </TableCell>
             <TableCell>
               {
-                professors.map((professor, index) => (
-                  <Typography key={index}>
-                    {professor}
+                professors && professors.map((professor, index) => (
+                  <Typography key={index} variant="subtitle2">
+                    {professor.name}
                   </Typography>
                 ))
               }

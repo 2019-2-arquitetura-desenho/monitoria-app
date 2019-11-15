@@ -40,10 +40,7 @@ const styles = {
   }
 };
 
-const DisciplineCard = ({ classes, discipline, onPress }) => {
-
-  const title = discipline[1];
-  const code = discipline[0];
+const DisciplineCard = ({ classes, title, code, classrooms, onPress }) => {
 
 
   return (
@@ -59,13 +56,13 @@ const DisciplineCard = ({ classes, discipline, onPress }) => {
         </CardContent>
         <Divider className={classes.divider} />
         <CardContent className={classes.content}>
-          {discipline.classrooms && discipline.classrooms.map((classroom, index) => (
+          {classrooms && classrooms.map((classroom, index) => (
             <ClassContent key={index}
-              classroom={classroom.title}
-              period={classroom.period}
-              shedules={classroom.shedules}
-              professors={classroom.professors}
-              discipline={discipline}
+              classroom={classroom.name}
+              period={classroom.shift}
+              meetings={classroom.meetings}
+              professors={classroom.teachers}
+              discipline={title}
               onPress={onPress}
             />
           ))}

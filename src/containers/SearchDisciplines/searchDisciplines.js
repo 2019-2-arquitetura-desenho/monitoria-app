@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getProfile, getStudent, restartUpdateProfile } from '../../store/actions';
+import { getProfile, getStudent, getDisciplines } from '../../store/actions';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -38,8 +38,9 @@ class SearchDisciplines extends React.Component {
     this.nextPathDialog = this.nextPathDialog.bind(this);
   }
 
-  async componentDidMount() {
-    await this.props.getStudent(this.props.token);
+  componentDidMount() {
+    // this.props.getStudent(this.props.token);
+    this.props.getDisciplines(this.props.token);
   }
 
   componentDidUpdate() {
@@ -47,13 +48,13 @@ class SearchDisciplines extends React.Component {
 
   getSnapshotBeforeUpdate() {
     const {
-      profileData
+      disciplines
     } = this.props;
 
-    if (profileData && profileData.student &&
-      this.state.disciplines != profileData.student.academic_record) {
+    if (disciplines &&
+      this.state.disciplines != disciplines) {
 
-      this.setState({ disciplines: profileData.student.academic_record })
+      this.setState({ disciplines: disciplines })
     }
     return null;
   }
@@ -81,21 +82,6 @@ class SearchDisciplines extends React.Component {
     const {
       mainError
     } = this.state;
-
-    let disciplines = [['113042', 'Cálculo 2']]
-
-    let classrooms = [
-      {
-        title: 'AA', period: 'Diurno', shedules: ['Segunda - 8:00/9:50'],
-        professors: ['Luiza Yoko Taneguti']
-      },
-      {
-        title: 'BB', period: 'Diurno', shedules: ['Terca - 14:00/15:50', 'Quinta - 14:00/15:50'],
-        professors: ['Lindomar Bomfim de Carvallho', 'Wesley Ferreira Lopes', 'Yevsey Yehoshua']
-      }
-    ]
-
-    // disciplines[0].classrooms = classrooms
 
     return (
       <div className={classes.root}>
@@ -125,7 +111,9 @@ class SearchDisciplines extends React.Component {
             {this.state.disciplines && this.state.disciplines.map((discipline, index) => (
               <DisciplineCard
                 key={index}
-                discipline={discipline}
+                title={discipline.name}
+                code={discipline.code}
+                classrooms={discipline.discipline_class}
                 onPress={this.handleDialogOpen}
               />
             ))}
@@ -203,13 +191,14 @@ function mapStateToProps(state) {
     isAuthenticated: state.authentication.isAuthenticated,
     token: state.authentication.token,
     requisitionError: state.userProfile.requisitionError,
-    profileData: state.userProfile.profileData
+    profileData: state.userProfile.profileData,
+    disciplines: state.disciplines.disciplines
   }
 }
 
 export const SearchDisciplinesContainer = connect(
   mapStateToProps,
-  { getProfile, getStudent, restartUpdateProfile },
+  { getProfile, getStudent, getDisciplines },
 )(withStyles(styles, { withTheme: true })(SearchDisciplines))
 
 export default SearchDisciplinesContainer;

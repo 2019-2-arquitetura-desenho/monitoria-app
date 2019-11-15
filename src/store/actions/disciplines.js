@@ -2,7 +2,7 @@ import axios from 'axios';
 const host_api = process.env.REACT_APP_URL_API;
 
 export function getDisciplines(token, idStudent) {
-  let url = host_api + `/students/${idStudent}/disciplines/`;
+  let url = host_api + `/get_disciplines/`;
   let dataToSend = { token };
 
   return function (dispatch) {
@@ -11,7 +11,7 @@ export function getDisciplines(token, idStudent) {
       fetchingData: true
     });
 
-    axios.get(
+    axios.post(
       url,
       dataToSend
     ).then(response => {
