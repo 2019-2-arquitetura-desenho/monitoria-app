@@ -72,12 +72,17 @@ class Register extends React.Component {
                     isRegisterLoading: false
                 });
             } else {
+                let f_inputErrors = 0;
                 let inputErrors = {}
+                let mainError = ''
+
                 if (this.props.requisitionError.data.name) {
                     inputErrors['name'] = this.props.requisitionError.data.name
+                    f_inputErrors = 1
                 }
                 if (this.props.requisitionError.data.email) {
                     inputErrors['email'] = this.props.requisitionError.data.email
+                    f_inputErrors = 1
                 }
                 if (this.props.requisitionError.data.password1) {
 
@@ -91,9 +96,18 @@ class Register extends React.Component {
                             inputErrors['password'] += " " + passwordError[1]
                         }
                     }
+
+                    f_inputErrors = 1
+                }
+                if (this.props.requisitionError.data.error === "PDF Invalido"){
+                    mainError = "Erro! Envie um histórico escolar válido."
                 }
 
-                this.setState({ inputErrors: inputErrors, isRegisterLoading: false });
+                if (mainError === '' && f_inputErrors === 0){
+                    this.setState({ mainError: 'Erro! Tente novamente.', isRegisterLoading: false });
+                } else {
+                    this.setState({ mainError: mainError, inputErrors: inputErrors, isRegisterLoading: false });
+                }
             }
         }
 
