@@ -1,16 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { register, restartRegister } from '../store/actions';
+import axios from 'axios';
 
-import {
-    createMuiTheme,
-    MuiThemeProvider,
-    CssBaseline,
-    Grid,
-    CircularProgress,
-    Typography,
-    Box
-} from '@material-ui/core';
+import { createMuiTheme, MuiThemeProvider, CssBaseline, Grid, CircularProgress, Typography, Box } from '@material-ui/core';
+
+import { register, restartRegister } from '../store/actions';
 
 import doubtIcon from './assets/doubtIcon.svg';
 
@@ -26,7 +20,7 @@ class Register extends React.Component {
         super(props);
 
         this.state = {
-            loading: false,
+            isRegisterLoading: false,
 
             name: '',
             email: '',
@@ -35,13 +29,20 @@ class Register extends React.Component {
             showPassword: false,
             confirmPassword: '',
             showConfirmPassword: false,
-
+            
             isUploadDialogOpen: false,
+            isUploadFileLoading: false,
+            file: undefined,
             isFileSubmit: false,
-            fileSubmit: [],
+            fileName: '',
+            isViewDialogOpen: false,
+
+            fileDeleteToken: '',
+            isConfirmFileSubmit: false,
 
             mainError: '',
             inputErrors: {},
+            errorFileUpload: '',
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -51,22 +52,24 @@ class Register extends React.Component {
         this.handleMouseDownConfirmPassword = this.handleMouseDownConfirmPassword.bind(this);
         this.handleClickOpenUploadDialog = this.handleClickOpenUploadDialog.bind(this);
         this.handleCloseUploadDialog = this.handleCloseUploadDialog.bind(this);
-        this.onUpdateFileUploadDialog = this.onUpdateFileDialog.bind(this);
-        this.handleCancelUploadDialog = this.handleCancelUploadDialog.bind(this);
+        this.handleUploadFile = this.handleUploadFile.bind(this);
+        this.handleDeleteFileUpload = this.handleDeleteFileUpload.bind(this);
         this.handleConfirmUploadDialog = this.handleConfirmUploadDialog.bind(this);
-        this.onUpdateFileUploadScreen = this.onUpdateFileUploadScreen.bind(this);
+        this.handleClickViewFileUpload = this.handleClickViewFileUpload.bind(this);
+        this.handleCloseViewFileUpload = this.handleCloseViewFileUpload.bind(this);
+
         this.onPressSubmit = this.onPressSubmit.bind(this);
     }
 
     componentDidUpdate() {
-        if (this.props.requisitionError !== undefined && this.state.loading === true) {
+        if (this.props.requisitionError !== undefined && this.state.isRegisterLoading === true) {
             this.props.restartRegister();
 
             if (this.props.requisitionError === "Error: Network Error") {
 
                 this.setState({
                     mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
-                    loading: false
+                    isRegisterLoading: false
                 });
             } else {
                 let inputErrors = {}
@@ -90,10 +93,7 @@ class Register extends React.Component {
                     }
                 }
 
-                this.setState({
-                    inputErrors: inputErrors,
-                    loading: false
-                })
+                this.setState({ inputErrors: inputErrors, isRegisterLoading: false });
             }
         }
 
@@ -127,45 +127,81 @@ class Register extends React.Component {
     }
 
     handleCloseUploadDialog() {
-        this.setState({ isUploadDialogOpen: false, isFileSubmit: false });
+        this.setState({ isUploadDialogOpen: false });
     }
 
-    onUpdateFileDialog(fileItems) {
-        this.setState({ fileSubmit: fileItems.map(fileItem => fileItem.file) });
+    handleUploadFile(files) {
+        this.setState({ isUploadFileLoading: true });
+
+        // console.log(this.state.fileUploadAttempt);
+        // console.log(files);
+        
+        const file = files[0]
+
+        // console.log(files)
+        // console.log(file.size)
+
+        clearTimeout();
+        setTimeout(
+            function () {
+                // console.log(file.name)
+                
+                if (file.size > 1000000){
+                    this.setState({
+                        errorFileUpload: "O arquivo enviado excedeu o tamanho limite. Por favor, envie um arquivo de até 1 MB.",
+                        isUploadFileLoading: false,
+                    });
+                } else {
+                    this.setState({ 
+                        file: file,
+                        errorFileUpload: "",
+                        isFileSubmit: true,
+                        fileName: file.name,
+                        isUploadFileLoading: false,
+                    });
+                }
+
+            }.bind(this),
+            1000
+        );
     }
 
-    handleCancelUploadDialog() {
-        this.setState({ isUploadDialogOpen: false, isFileSubmit: false });
+    handleDeleteFileUpload() {
+        this.setState({
+            file: undefined,
+            isFileSubmit: false,
+            isConfirmFileSubmit: false,
+            fileName: '',
+        });
     }
 
     handleConfirmUploadDialog() {
-        if (this.state.fileSubmit === undefined) {
-            this.setState({ isUploadDialogOpen: false });
-        } else if (this.state.fileSubmit === 0) {
-            this.setState({ isUploadDialogOpen: false });
-        } else {
-            this.setState({ isUploadDialogOpen: false, isFileSubmit: true });
-        }
+        this.setState({ isConfirmFileSubmit: true, isUploadDialogOpen: false });
     }
 
-    onUpdateFileUploadScreen(fileItems) {
-        if (this.state.fileSubmit.length !== fileItems.map(fileItem => fileItem.file).length) {
-            this.setState({ fileSubmit: fileItems.map(fileItem => fileItem.file) });
-        }
+    handleClickViewFileUpload() {
+        this.setState({ isViewDialogOpen: true });
+    }
+
+    handleCloseViewFileUpload() {
+        this.setState({ isViewDialogOpen: false });
     }
 
     onPressSubmit() {
         var inputErrors = {};
+        var mainError = '';
 
         let f_errorName = false;
         let f_errorEmail = false;
         let f_errorPassword = false;
         let f_errorConfirmPassword = false;
+        let f_errorFile = false
 
         let name = this.state.name;
         let email = this.state.email;
         let password = this.state.password;
         let confirmPassword = this.state.confirmPassword;
+        let file = this.state.file;
 
         if (!name) {
             inputErrors['name'] = "Digite o nome";
@@ -203,28 +239,100 @@ class Register extends React.Component {
             }
         }
 
-        this.setState({ inputErrors: inputErrors });
+        if (!file){
+            mainError = "Adicione o seu histórico escolar universitário.";
+            f_errorFile = true;
+        }
 
-        if (!f_errorName && !f_errorEmail && !f_errorPassword && !f_errorConfirmPassword) {
-            this.setState({ loading: true, mainError: "" });
+        this.setState({ mainError: mainError, inputErrors: inputErrors });
 
-            clearTimeout();
-            setTimeout(
-                function () {
-                    this.props.register(name, email, password, this.state.fileSubmit)
-                }.bind(this),
-                1000
-            );
+
+        if (!f_errorName && !f_errorEmail && !f_errorPassword && !f_errorConfirmPassword && !f_errorFile) {
+            this.setState({ isRegisterLoading: true, mainError: "" });
+
+            // Uploadcare File Upload
+
+            const formData = new FormData();
+
+            formData.append("file", file);
+            formData.append("UPLOADCARE_PUB_KEY", "2283d78f30fdf4fec719");
+            formData.append("UPLOADCARE_STORE", "1");
+            
+            axios.post(
+                "https://upload.uploadcare.com/base/",
+                formData
+            ).then(response => {
+                // console.log("Uploadcare", response);
+
+                const file_id = response.data.file;
+                const file_url = "https://ucarecdn.com/" + file_id + "/" + file.name
+
+                //console.log(file_url);
+                
+                this.props.register(name, email, password, file_url)
+
+            }).catch(error => {
+                console.log("Uploadcare", error);
+                
+                clearTimeout();
+                setTimeout(
+                    function () {
+                        
+                        this.setState({
+                            mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
+                            isRegisterLoading: false
+                        });
+
+                    }.bind(this),
+                    1000
+                );
+            });
+
+
+            // Cloudinary File Upload
+
+            // const formData = new FormData();
+        
+            // console.log("submit", file);
+    
+            // formData.append("file", file);
+            // formData.append("tags", 'histórico escolar');
+            // formData.append("upload_preset", "fuuwagxl");
+            // formData.append("api_key", "845594749864499");
+            // formData.append("timestamp", (Date.now() / 1000) | 0);
+    
+            // axios.post(
+            //     "https://api.cloudinary.com/v1_1/dstgmoevd/auto/upload/",
+            //     formData,
+            //     {
+            //         headers: {
+            //             "X-Requested-With": "XMLHttpRequest"
+            //         }    
+            //     }
+            // ).then(response => {
+            //     // console.log(response);
+
+            //    this.props.register(name, email, password, response.data.secure_url)
+
+            // }).catch(error => {
+            //     console.log("Error Upload File", error);
+
+            //     this.setState({
+            //         mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
+            //         isRegisterLoading: false
+            //    });
+            // });
         }
     }
 
     registerForm() {
         const {
-            mainError, name, email, password, showPassword, confirmPassword, showConfirmPassword,
-            fileSubmit, isFileSubmit, isUploadDialogOpen, inputErrors, loading
+            isRegisterLoading, mainError, name, inputErrors, email, showPassword, password, showConfirmPassword,
+            confirmPassword, isConfirmFileSubmit, isUploadDialogOpen, isUploadFileLoading, isFileSubmit, errorFileUpload,
+            fileName, isViewDialogOpen, file 
         } = this.state;
 
-        if (loading) {
+        if (isRegisterLoading) {
             return (
                 <Grid item xs={12} sm={6}>
                     <div style={styles.progress}>
@@ -276,21 +384,23 @@ class Register extends React.Component {
                     />
                     <FileSubmit
                         label={"Enviar Histórico Escolar"}
-                        isFileSubmit={isFileSubmit}
-                        fileSubmit={fileSubmit}
+                        isConfirmFileSubmit={isConfirmFileSubmit}
                         onButtonUploadClick={this.handleClickOpenUploadDialog}
                         isUploadDialogOpen={isUploadDialogOpen}
                         onCloseUploadDialog={this.handleCloseUploadDialog}
-                        onUpdateFileUploadDialog={this.onUpdateFileUploadDialog}
-                        onClickCancelUploadDialog={this.handleCancelUploadDialog}
+                        onFileUpload={this.handleUploadFile}
+                        isUploadFileLoading={isUploadFileLoading}
+                        isFileSubmit={isFileSubmit}
+                        error={errorFileUpload}
+                        fileName={fileName}
+                        onClickDeleteFileUpload={this.handleDeleteFileUpload}
                         onClickConfirmUploadDialog={this.handleConfirmUploadDialog}
-                        onUpdateFileUploadScreen={this.onUpdateFileUploadScreen}
+                        onClickViewFileUpload={this.handleClickViewFileUpload}
+                        isViewDialogOpen={isViewDialogOpen}
+                        onCloseViewFileUpload={this.handleCloseViewFileUpload}
+                        file={file}
                     />
-                    <SubmitButton
-                        titleButton="Criar Conta"
-                        buttonColor="secondary"
-                        onClickSubmitButton={this.onPressSubmit}
-                    />
+                    <SubmitButton titleButton="Criar Conta" buttonColor="secondary" onClickSubmitButton={this.onPressSubmit} />
                 </Grid>
             );
         }
