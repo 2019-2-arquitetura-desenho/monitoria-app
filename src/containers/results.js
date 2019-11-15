@@ -35,7 +35,7 @@ class Results extends React.Component {
         }
         
         this.ranking = this.ranking.bind(this);
-        //this.handleChange = this.handleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
 
     }
 
@@ -80,7 +80,23 @@ class Results extends React.Component {
             return(
                 <FormControl style = {{marginTop:'2%',width: "84%",marginLeft: "8%",marginRight: "8%"}}>
                                     <InputLabel id="demo-simple-select-label">Escolha a matéria</InputLabel>
-                                    
+                                    <Select 
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={this.state.material}
+                                        onChange={this.handleChange}
+                                        
+                                    >   
+                                        {this.state.materialList.map((element)=>{
+                                            return <MenuItem value = {element}>
+                                                {element}
+                                            </MenuItem>
+                                        })
+                                        }
+                                        <MenuItem value={10}>Ten</MenuItem>
+                                        <MenuItem value={20}>Twenty</MenuItem>
+                                        <MenuItem value={30}>Thirty</MenuItem>
+                                    </Select>
                 </FormControl>
             )
         }
