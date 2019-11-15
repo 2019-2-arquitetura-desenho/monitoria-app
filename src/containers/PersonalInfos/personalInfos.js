@@ -12,7 +12,6 @@ import {
   createMuiTheme,
   Box
 } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
 import HelpIcon from '@material-ui/icons/Help';
 import FormStudent from './formStudent';
 import FormProfessor from './formProfessor';

@@ -1,7 +1,9 @@
 import axios from 'axios';
+
+
 const host_api = process.env.REACT_APP_URL_API;
 
-export function register(name, email, password, document) {
+export function register(name, email, password, file_url) {
   return function (dispatch) {
     axios.post(
       host_api + '/registration/',
@@ -9,7 +11,7 @@ export function register(name, email, password, document) {
         name: name,
         email: email,
         password: password,
-        // document: document
+        pdf_url: file_url
       }
     ).then(response => {
       dispatch({
@@ -54,7 +56,6 @@ export function login(email, password) {
         type: 'LOGIN_SUCCESS',
         payload: response.data.token
       });
-
     }).catch(error => {
       if (!error.response) {
         dispatch({

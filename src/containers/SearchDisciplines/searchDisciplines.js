@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getProfile, getStudent, restartUpdateProfile } from '../../store/actions';
-import { withRouter } from 'react-router-dom';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -39,15 +38,17 @@ class SearchDisciplines extends React.Component {
     this.nextPathDialog = this.nextPathDialog.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const {
       profileData
     } = this.props;
 
+    await this.props.getStudent(this.props.token);
+
     if (profileData && profileData.student) {
+      console.log("mount");
       let disciplines = profileData.student.academic_record
 
-      this.props.getStudent(this.props.token);
       this.setState({ disciplines: disciplines })
     }
 
@@ -71,7 +72,7 @@ class SearchDisciplines extends React.Component {
     this.setState({ dialogTitle: dialogTitle })
     this.setState({ dialogText: dialogText })
     this.setState({ dialogType: 'warning' })
-    if (dialogType == "success")
+    if (dialogType === "success")
       this.setState({ dialogConfirmPath: '/results' })
     this.setState({ dialogOpen: true })
   }
@@ -83,7 +84,7 @@ class SearchDisciplines extends React.Component {
       mainError
     } = this.state;
 
-    let disciplines = [{ title: 'Cálculo 2', code: 113042 }]
+    let disciplines = [['113042', 'Cálculo 2']]
 
     let classrooms = [
       {
@@ -96,7 +97,7 @@ class SearchDisciplines extends React.Component {
       }
     ]
 
-    disciplines[0].classrooms = classrooms
+    // disciplines[0].classrooms = classrooms
 
     return (
       <div className={classes.root}>

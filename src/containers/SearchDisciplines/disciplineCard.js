@@ -45,6 +45,7 @@ const DisciplineCard = ({ classes, discipline, onPress }) => {
   const title = discipline[1];
   const code = discipline[0];
 
+
   return (
     <Paper className={classes.root}>
       <Card className={classes.card}>

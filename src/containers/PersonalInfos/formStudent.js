@@ -31,7 +31,7 @@ const FormStudent = (props) => {
 
   const classes = useStyles();
   const { onChange, setStatusFileSubmit, setFileSubmit, onSubmitName,
- updatingProfile } = props;
+    updatingProfile } = props;
   const [openDialog, setOpen] = React.useState(null);
 
   const handleClickOpenUploadDialog = event => {
