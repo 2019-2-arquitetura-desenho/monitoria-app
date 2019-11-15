@@ -1,10 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import { withStyles } from "@material-ui/core/styles";
+
+import Link from '@material-ui/core/Link';
+
+import SendIcon from '@material-ui/icons/Send';
+
 import Button from "../components/SubmitButton/registerButton";
 import Typography from "../components/Typography/Typography";
 import RegisterLayout from "../components/LandingLayout/registerLayout";
-import SendIcon from '@material-ui/icons/Send';
+
 
 const backgroundImage = require("../assets/background-home.jpg");
 
@@ -46,13 +52,13 @@ function RegisterHome(props) {
 			>
 				Registrar-se
 			</Button>
-			<Typography
-				variant="body2"
+			<Link
+				href="/entrar"
 				color="inherit"
 				className={classes.more}
 			>
 				Possui conta? Faça login
-			</Typography>
+			</Link>
 		</RegisterLayout>
 	);
 }
@@ -65,7 +71,8 @@ const styles = theme => ({
 	},
 	button: {
 		minWidth: 200,
-		color: "#141414"
+		backgroundColor: "#267cc1",
+		color: "#eeeeee"
 	},
 	h5: {
 		marginBottom: theme.spacing(4),

@@ -1,10 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getProfile, logout } from "../store/actions";
 
-import RegisterHome from "./HomePage/registerHome";
-import GradeDescription from "./HomePage/gradeDescription";
-import RequerimentsDescription from "./HomePage/requirementsDescription";
+import { getProfile, logout } from "../../store/actions";
+
+import RegisterHome from "./registerHome";
+import GradeDescription from "./gradeDescription";
+import RequerimentsDescription from "./requirementsDescription";
 
 
 class Home extends React.Component {

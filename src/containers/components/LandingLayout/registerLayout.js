@@ -53,7 +53,7 @@ const styles = theme => ({
 		top: 0,
 		bottom: 0,
 		backgroundColor: theme.palette.common.black,
-		opacity: 0.9,
+		opacity: 0.8,
 		zIndex: -1,
 	},
 	background: {

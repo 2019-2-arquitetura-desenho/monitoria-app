@@ -8,7 +8,7 @@ import PageShell from '../containers/components/PageShell/pageShell';
 import Register from '../containers/register';
 import Login from '../containers/Login/login';
 import RecoveryPassword from '../containers/recoveryPassword';
-import Home from '../containers/home';
+import Home from '../containers/Home/home';
 import PersonalInfos from '../containers/PersonalInfos/personalInfos';
 import SearchDisciplines from '../containers/SearchDisciplines/searchDisciplines';
 import Results from '../containers/results';
