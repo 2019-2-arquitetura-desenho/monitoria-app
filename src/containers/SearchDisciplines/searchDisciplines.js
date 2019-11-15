@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { updateProfile, getProfile, restartUpdateProfile } from '../../store/actions';
+import { withRouter } from 'react-router-dom';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -27,11 +28,17 @@ class SearchDisciplines extends React.Component {
       dialogTitle: '',
       dialogText: '',
       dialogType: '',
+      dialogConfirmPath: '',
       mainError: ''
     }
 
     this.handleDialogClose = this.handleDialogClose.bind(this);
     this.handleDialogOpen = this.handleDialogOpen.bind(this);
+    this.nextPathDialog = this.nextPathDialog.bind(this);
+  }
+
+  nextPathDialog() {
+    this.props.history.push(this.state.dialogConfirmPath);
   }
 
   handleDialogClose() {
@@ -42,8 +49,11 @@ class SearchDisciplines extends React.Component {
     this.setState({ dialogTitle: dialogTitle })
     this.setState({ dialogText: dialogText })
     this.setState({ dialogType: dialogType })
+    if (dialogType == "success")
+      this.setState({ dialogConfirmPath: '/results' })
     this.setState({ dialogOpen: true })
   }
+
 
   render() {
     const { classes } = this.props;
@@ -76,6 +86,7 @@ class SearchDisciplines extends React.Component {
               title={this.state.dialogTitle}
               description={this.state.dialogText}
               type={this.state.dialogType}
+              handleConfirmNextPath={this.nextPathDialog}
             />
             <Grid container justify="center">
               <Typography

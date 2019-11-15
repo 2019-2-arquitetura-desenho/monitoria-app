@@ -52,7 +52,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function ConfirmationDialog({ classes, isOpen, handleClose, type = "success" }) {
+function ConfirmationDialog({ classes, isOpen, handleClose, type, handleConfirmNextPath }) {
 
   const renderStatusIcon = () => {
     if (type === "success")
@@ -69,7 +69,7 @@ function ConfirmationDialog({ classes, isOpen, handleClose, type = "success" }) 
         <CardButton
           titleButton="Acessar Ranking"
           buttonColor="secondary"
-          onClickSubmitButton={handleClose}
+          onClickSubmitButton={handleConfirmNextPath}
         />
       );
     else
