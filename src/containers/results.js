@@ -39,7 +39,9 @@ class Results extends React.Component {
 
     }
 
-   
+    handleChange(event){
+        this.setState({material:event.target.value})
+    }
 
     ranking() {
         
