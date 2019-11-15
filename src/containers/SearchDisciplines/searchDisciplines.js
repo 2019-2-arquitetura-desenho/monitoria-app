@@ -39,24 +39,23 @@ class SearchDisciplines extends React.Component {
   }
 
   async componentDidMount() {
+    await this.props.getStudent(this.props.token);
+  }
+
+  componentDidUpdate() {
+  }
+
+  getSnapshotBeforeUpdate() {
     const {
       profileData
     } = this.props;
 
-    await this.props.getStudent(this.props.token);
+    if (profileData && profileData.student &&
+      this.state.disciplines != profileData.student.academic_record) {
 
-    if (profileData && profileData.student) {
-      console.log("mount");
-      let disciplines = profileData.student.academic_record
-
-      this.setState({ disciplines: disciplines })
+      this.setState({ disciplines: profileData.student.academic_record })
     }
-
-  }
-
-  componentDidUpdate() {
-    console.log("update")
-    console.log(this.state.disciplines)
+    return null;
   }
 
   nextPathDialog() {
@@ -68,7 +67,6 @@ class SearchDisciplines extends React.Component {
   }
 
   handleDialogOpen(dialogTitle = '', dialogText = '', dialogType = '') {
-    console.log("open modal: ", dialogText)
     this.setState({ dialogTitle: dialogTitle })
     this.setState({ dialogText: dialogText })
     this.setState({ dialogType: 'warning' })
@@ -124,7 +122,7 @@ class SearchDisciplines extends React.Component {
                 <MainError error={mainError} />
               </Box>
             </Box>
-            {this.state.disciplines.map((discipline, index) => (
+            {this.state.disciplines && this.state.disciplines.map((discipline, index) => (
               <DisciplineCard
                 key={index}
                 discipline={discipline}
