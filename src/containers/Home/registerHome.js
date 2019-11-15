@@ -16,6 +16,38 @@ const backgroundImage = require("../assets/background-home.jpg");
 
 function RegisterHome(props) {
 	const { classes } = props;
+	const {isAuthenticated} = props;
+
+	const buttonView = ()=>{
+		
+		if(!isAuthenticated){
+			return(
+				<React.Fragment>
+					<Button
+						variant="contained"
+						size="large"
+						className={classes.button}
+						component="a"
+						href="/cadastro"
+						startIcon={<SendIcon/>}
+						>
+						Registrar-se
+					</Button>
+					<Link
+						href="/entrar"
+						color="inherit"
+						className={classes.more}
+					>
+						Possui conta? Faça login
+					</Link>
+				</React.Fragment>
+			)
+		}	
+		else{
+			return <div></div>
+		}
+}
+
 
 	return (
 		<RegisterLayout backgroundClassName={classes.background}>
@@ -42,26 +74,16 @@ function RegisterHome(props) {
 				<br />
 				Término das inscrições: 26/08/2019 às 23h55
 			</Typography>
-			<Button
-				variant="contained"
-				size="large"
-				className={classes.button}
-				component="a"
-				href="/cadastro"
-				startIcon={<SendIcon/>}
-			>
-				Registrar-se
-			</Button>
-			<Link
-				href="/entrar"
-				color="inherit"
-				className={classes.more}
-			>
-				Possui conta? Faça login
-			</Link>
+			
+			{buttonView()}
+
+			
 		</RegisterLayout>
 	);
 }
+
+
+
 
 const styles = theme => ({
 	background: {

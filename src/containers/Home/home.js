@@ -24,7 +24,7 @@ class Home extends React.Component {
 		if (!isAuthenticated){
 			return (
 				<React.Fragment>
-					<RegisterHome />
+					<RegisterHome isAuthenticated = {false}/>
 					<RequerimentsDescription />
 					<GradeDescription />
 				</React.Fragment>
@@ -42,6 +42,7 @@ class Home extends React.Component {
 			// } else {
 				return (
 					<React.Fragment>
+						<RegisterHome isAuthenticated = {true} />
 						<RequerimentsDescription />
 						<GradeDescription />
 					</React.Fragment>
