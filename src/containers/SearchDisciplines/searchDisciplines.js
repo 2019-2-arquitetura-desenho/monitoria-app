@@ -46,6 +46,7 @@ class SearchDisciplines extends React.Component {
   }
 
   handleDialogOpen(dialogTitle = '', dialogText = '', dialogType = '') {
+    console.log("open modal: ", dialogText)
     this.setState({ dialogTitle: dialogTitle })
     this.setState({ dialogText: dialogText })
     this.setState({ dialogType: dialogType })

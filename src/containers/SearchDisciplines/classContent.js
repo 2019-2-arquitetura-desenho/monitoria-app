@@ -70,13 +70,13 @@ const ClassContent = ({
 }) => {
 
   const textSuccessSubscribe = () => {
-    return `Você não tem os requisitos necessários para se
-      increver nessa monitoria. `;
+    return `Você foi inscrito na seleção para a monitoria de
+    ${discipline.title} tuma ${classroom}`;
   }
 
   const textWarningSubscribe = () => {
-    return `Você foi inscrito na seleção para a monitoria de
-    ${discipline} tuma ${classroom}`;
+    return `Você não tem os requisitos necessários para se
+      increver nessa monitoria. `;
   }
 
   const handleEventModal = () => {

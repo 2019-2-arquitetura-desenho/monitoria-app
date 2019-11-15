@@ -52,7 +52,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function ConfirmationDialog({ classes, isOpen, handleClose, type, handleConfirmNextPath }) {
+function ConfirmationDialog({
+  classes, isOpen, handleClose, title, description,
+  type, handleConfirmNextPath,
+}) {
 
   const renderStatusIcon = () => {
     if (type === "success")
@@ -93,7 +96,7 @@ function ConfirmationDialog({ classes, isOpen, handleClose, type, handleConfirmN
           <Typography component='div' className={classes.flexRowBetween}>
             {renderStatusIcon()}
             <Typography variant="h6" className={classes.flexColumnCenter}>
-              Sucesso
+              {title}
             </Typography>
             <Button onClick={handleClose}>
               <CancelIcon width={30} height={30} />
@@ -102,8 +105,7 @@ function ConfirmationDialog({ classes, isOpen, handleClose, type, handleConfirmN
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description" align="center" color="primary">
-            Você foi inscrito na seleção para a monitoria de
-              DESENHO INDUSTRIAL ASSISTIDO POR COMPUTADOR tuma B
+            {description}
           </DialogContentText>
         </DialogContent>
         <DialogActions className={classes.dialogActions}>
