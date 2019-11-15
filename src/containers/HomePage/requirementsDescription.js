@@ -19,7 +19,7 @@ function RequirementsDescription(props) {
 				<Grid container spacing={5}>
 					<Grid item xs={12} md={12}>
 						<div className={classes.item}>
-							<Typography variant="h2" className={classes.title}>
+							<Typography variant="h2" className={classes.title} align="center" marked="center">
 								Requisitos do Processo de Monitoria
 							</Typography>
 							<Typography variant="h6">

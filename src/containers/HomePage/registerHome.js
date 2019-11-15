@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "../components/SubmitButton/registerButton";
 import Typography from "../components/Typography/Typography";
 import RegisterLayout from "../components/LandingLayout/registerLayout";
+import SendIcon from '@material-ui/icons/Send';
 
 const backgroundImage = require("../assets/background-home.jpg");
 
@@ -36,12 +37,12 @@ function RegisterHome(props) {
 				Término das inscrições: 26/08/2019 às 23h55
 			</Typography>
 			<Button
-				color="secondary"
 				variant="contained"
 				size="large"
 				className={classes.button}
 				component="a"
 				href="/cadastro"
+				startIcon={<SendIcon/>}
 			>
 				Registrar-se
 			</Button>
@@ -59,11 +60,12 @@ function RegisterHome(props) {
 const styles = theme => ({
 	background: {
 		backgroundImage: `url(${backgroundImage})`,
-		backgroundColor: "#66ff99",
+		backgroundColor: "#141414",
 		backgroundPosition: "center",
 	},
 	button: {
 		minWidth: 200,
+		color: "#141414"
 	},
 	h5: {
 		marginBottom: theme.spacing(4),

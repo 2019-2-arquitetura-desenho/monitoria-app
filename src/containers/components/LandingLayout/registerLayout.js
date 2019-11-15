@@ -18,8 +18,8 @@ function RegisterLayout(props) {
 				<img
 					src={require("../../assets/arrow-down.png")}
 					className={classes.arrowDown}
-					height="16"
-					width="12"
+					height="24"
+					width="18"
 					alt="arrow down"
 				/>
 			</Container>
@@ -53,7 +53,7 @@ const styles = theme => ({
 		top: 0,
 		bottom: 0,
 		backgroundColor: theme.palette.common.black,
-		opacity: 0.3,
+		opacity: 0.9,
 		zIndex: -1,
 	},
 	background: {
