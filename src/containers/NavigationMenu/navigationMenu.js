@@ -94,7 +94,7 @@ class NavigationMenu extends React.Component {
   rebuildMenu() {
     let menuList = this.menuList();
     let indicatorValue = this.handleIndicator(menuList);
-    if (indicatorValue != this.state.indicatorValue)
+    if (indicatorValue !== this.state.indicatorValue)
       this.setState({
         indicatorValue: indicatorValue
       })
@@ -125,13 +125,13 @@ class NavigationMenu extends React.Component {
       location
     } = this.props;
     let indicatorValue = null;
-    if (location.pathname == '/' || menuList.length == 0)
+    if (location.pathname === '/' || menuList.length === 0)
       indicatorValue = 0;
     else
       indicatorValue = menuList.map(pathMenu =>
         (pathMenu.path)
       ).indexOf(location.pathname);
-    if (indicatorValue == -1) indicatorValue = 0;
+    if (indicatorValue === -1) indicatorValue = 0;
     return indicatorValue;
   }
 
@@ -160,7 +160,7 @@ class NavigationMenu extends React.Component {
 
   renderButton() {
     const {
-      isAuthenticated, classes, logout
+      isAuthenticated, logout
     } = this.props;
     if (isAuthenticated) {
       return (
@@ -178,7 +178,7 @@ class NavigationMenu extends React.Component {
   }
 
   render() {
-    const { classes, logout } = this.props
+    const { classes } = this.props
 
     return (
       <div className={classes.root}>
