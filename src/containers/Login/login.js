@@ -51,6 +51,11 @@ class Login extends Component {
     document.body.scroll = "no";
   }
 
+  componentWillUnmount(){
+    document.documentElement.style.overflow = 'auto';
+    document.body.scroll = "yes";
+  }
+
   componentDidUpdate() {
     this.requisitionErrorHandler();
 
