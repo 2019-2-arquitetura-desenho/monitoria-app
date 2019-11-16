@@ -2,16 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
   Grid,
-  CircularProgress,
-  Link
+  CircularProgress 
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import FileSubmit from '../components/FileSubmit/fileSubmit';
-import SubmitButton from '../components/SubmitButton/submitButton';
 import InputText from '../components/InputText/inputText';
 import UpdateButton from './updateButton';
-
-const host_api = process.env.REACT_APP_URL_API;
 
 
 const useStyles = makeStyles(theme => ({
@@ -22,44 +17,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
-
 const FormStudent = (props) => {
   const {
-    name, email, matricula, ira, inputErrors, fileSubmit, isFileSubmit
+    name, email, matricula, ira, inputErrors
   } = props.stateParent;
 
   const classes = useStyles();
-  const { onChange, setStatusFileSubmit, setFileSubmit, onSubmitName,
-    updatingProfile } = props;
-  const [openDialog, setOpen] = React.useState(null);
+  const { 
+    onChange, onSubmitName, updatingProfile,
+  } = props;
 
-  const handleClickOpenUploadDialog = event => {
-    setOpen(event.currentTarget);
-  }
 
-  const handleCloseUploadDialog = () => {
-    setOpen(null);
-    setStatusFileSubmit(false);
-    setFileSubmit(undefined);
-  }
-
-  const onUpdateFileDialog = (fileItems) => {
-    setFileSubmit(fileItems.map(fileItem => fileItem.file));
-  }
-
-  const handleConfirmUploadDialog = () => {
-    if (fileSubmit === undefined || fileSubmit === 0) {
-      setFileSubmit(undefined);
-    } else {
-      setStatusFileSubmit(true);
-    }
-    setOpen(null);
-  }
-
-  const onPressChangePassword = () => {
-
-  }
+  const onPressChangePassword = () => {}
 
   const handleClickBtnName = (event) => {
     onSubmitName()
@@ -68,7 +37,6 @@ const FormStudent = (props) => {
   // const handleClickBtnEmail = (event) => {
   //   onSubmitEmail()
   // }
-
 
   function changeNameComp() {
     if (updatingProfile && updatingProfile.name)
@@ -84,101 +52,81 @@ const FormStudent = (props) => {
       );
   }
 
-
-  const open = Boolean(openDialog);
-
   return (
-    <Grid item xs={10} >
-      <Grid container justify="center">
-        <Grid item xs={10}
-          className={classes.gridFormButtons}>
-          <Grid item xs={9}>
-            <InputText
-              id="name"
-              type="text"
-              label="Nome*"
-              value={name}
-              onChange={onChange}
-              error={inputErrors.name}
-            />
+      <Grid item xs={12} sm={6}>
+        <Grid container justify="center">
+          <Grid 
+            item
+            xs={12}
+            className={classes.gridFormButtons}
+          >
+            <Grid item xs={9}>
+              <InputText
+                id="name"
+                type="text"
+                label="Nome*"
+                value={name}
+                onChange={onChange}
+                error={inputErrors.name}
+              />
+            </Grid>
+            <Grid item xs={1}>
+              {changeNameComp()}
+            </Grid>
           </Grid>
-          <Grid item xs={1}>
-            {changeNameComp()}
+          <Grid 
+            item
+            xs={12}
+            className={classes.gridFormButtons}
+          >
+            <Grid item xs={9}>
+              <InputText
+                id="email"
+                type="email"
+                label="Email*"
+                value={email}
+                onChange={onChange}
+                error={inputErrors.email}
+                disable={true}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-
-        <Grid item xs={10}
-          className={classes.gridFormButtons}>
-          <Grid item xs={9}>
-            <InputText
-              id="email"
-              type="email"
-              label="Email*"
-              value={email}
-              onChange={onChange}
-              error={inputErrors.email}
-              disable={true}
-            />
+          <Grid
+            item
+            xs={12}
+            className={classes.gridFormButtons}
+          >
+            <Grid item xs={9}>
+              <InputText
+                id="registration"
+                type="text"
+                label="Matrícula*"
+                value={matricula ? matricula : "000000000"}
+                onChange={onChange}
+                error={inputErrors.matricula}
+                disable={true}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-
-        <Grid item xs={10}
-          className={classes.gridFormButtons}>
-          <Grid item xs={9}>
-            <InputText
-              id="registration"
-              type="number"
-              label="Matrícula*"
-              value={matricula ? matricula : "000000000"}
-              onChange={onChange}
-              error={inputErrors.matricula}
-              disable={true}
-            />
+          <Grid 
+            item
+            xs={12}
+            className={classes.gridFormButtons}
+          >
+            <Grid item xs={9}>
+              <InputText
+                id="ira"
+                type="number"
+                label="IRA*"
+                value={ira ? ira : 0.0}
+                onChange={onChange}
+                error={inputErrors.ira}
+                disable={true}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-
-        <Grid item xs={10}
-          className={classes.gridFormButtons}>
-          <Grid item xs={9}>
-            <InputText
-              id="ira"
-              type="number"
-              label="IRA*"
-              value={ira ? ira : 0.0}
-              onChange={onChange}
-              error={inputErrors.ira}
-              disable={true}
-            />
-          </Grid>
-        </Grid>
-
-
-      </Grid>
-      <Grid container justify="center"
-        className={classes.gridFormButtons}>
-        <Grid item xs={5}>
-          <FileSubmit
-            label={"Reenviar Histórico"}
-            isFileSubmit={isFileSubmit}
-            fileSubmit={fileSubmit}
-            onButtonUploadClick={handleClickOpenUploadDialog}
-            isUploadDialogOpen={open}
-            onCloseUploadDialog={handleCloseUploadDialog}
-            onUpdateFileUploadDialog={onUpdateFileDialog}
-            onClickCancelUploadDialog={handleCloseUploadDialog}
-            onClickConfirmUploadDialog={handleConfirmUploadDialog}
-          />
-        </Grid>
-        <Grid item xs={5} >
-          <Link href={host_api + "/password_reset/"}>
-            <SubmitButton titleButton="Alterar Senha"
-              onClickSubmitButton={onPressChangePassword}
-              buttonColor="secondary"
-            />
-          </Link>
         </Grid>
       </Grid>
-    </Grid >
   );
 }
 

@@ -206,7 +206,7 @@ class FileSubmit extends React.Component {
 const styles = {
     buttonUpload: {
         width: "86%",
-        marginTop: "%",
+        marginTop: "2%",
         marginRight: "8%",
         marginLeft: "8%"
     },
@@ -225,7 +225,7 @@ const styles = {
     },
     fileScreen: {
         width: "86%",
-        marginTop: "4%",
+        marginTop: "2%",
         marginRight: "8%",
         marginLeft: "8%"
     }
