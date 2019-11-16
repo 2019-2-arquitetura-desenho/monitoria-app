@@ -83,9 +83,6 @@ class NavigationMenu extends React.Component {
     this.rebuildMenu()
   }
 
-  componentDidUpdate() {
-  }
-
   getSnapshotBeforeUpdate() {
     this.rebuildMenu();
     return null;
