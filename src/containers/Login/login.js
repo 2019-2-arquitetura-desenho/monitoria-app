@@ -223,10 +223,12 @@ class Login extends Component {
         <div className="container">
           <div className="content">
             <div className="presentationPanel">
-              <div className="title">
-                <h1 id="titlePart1">Monitoria</h1>
-                <h1 id="titlePart2">FGA</h1>
-              </div>
+              <Link href={"/"}>
+                <div className="title">
+                  <h1 id="titlePart1">Monitoria</h1>
+                  <h1 id="titlePart2">FGA</h1>
+                </div>
+              </Link>
               <div className="descApp">
                 <h2 style={{ textAlign: "center" }}>
                   Inscreva-se e acompanhe os resultados on-line
@@ -237,9 +239,11 @@ class Login extends Component {
               </div>
             </div>
             <div className="loginPanel">
-              <div className="logoContent">
-                <img alt="logo" id="logo" src={logo} />
-              </div>
+              <Link href={"/"}>
+                <div className="logoContent">
+                  <img alt="logo" id="logo" src={logo} />
+                </div>
+              </Link>
               {this.loginForm()}
             </div>
           </div>
