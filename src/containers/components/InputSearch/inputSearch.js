@@ -41,19 +41,26 @@ const styles = theme => ({
 
 });
 
-class ValidField extends React.Component {
-  state = {
-    name: '',
-  };
+class InputSearch extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: '',
+    };
 
-  handleChange = name => event => {
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange = (event) => {
+    const { onChange } = this.props;
     this.setState({
-      [name]: event.target.value,
+      ['value']: event.target.value,
     });
+    onChange(this.state.value);
   };
 
   render() {
-    const { classes, onPress } = this.props;
+    const { classes, onPress, onChange, value } = this.props;
     let icon = <SearchIcon fill="#42a0ed" width="20" height="20" onClick={onPress} />;
 
     return (
@@ -62,8 +69,8 @@ class ValidField extends React.Component {
           id="input-search"
           placeholder="Insira o nome ou código da disciplina"
           className={classes.textField}
-          value={this.state.name}
-          onChange={this.handleChange('name')}
+          value={this.state.value}
+          onChange={this.handleChange}
           margin="normal"
           variant="outlined"
           InputProps={{
@@ -81,8 +88,8 @@ class ValidField extends React.Component {
   }
 }
 
-ValidField.propTypes = {
+InputSearch.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ValidField);
+export default withStyles(styles)(InputSearch);

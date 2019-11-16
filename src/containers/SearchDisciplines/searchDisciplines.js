@@ -26,6 +26,8 @@ class SearchDisciplines extends React.Component {
 
     this.state = {
       disciplines: undefined,
+      showDisciplines: undefined,
+      filterDisciplines: false,
 
       dialogOpen: false,
       dialogTitle: '',
@@ -38,6 +40,7 @@ class SearchDisciplines extends React.Component {
     this.handleDialogClose = this.handleDialogClose.bind(this);
     this.handleDialogOpen = this.handleDialogOpen.bind(this);
     this.nextPathDialog = this.nextPathDialog.bind(this);
+    this.searchDisciplines = this.searchDisciplines.bind(this)
   }
 
   async componentDidMount() {
@@ -46,10 +49,6 @@ class SearchDisciplines extends React.Component {
   }
 
   componentDidUpdate() {
-  }
-
-  getSnapshotBeforeUpdate() {
-    return null;
   }
 
   nextPathDialog() {
@@ -69,32 +68,58 @@ class SearchDisciplines extends React.Component {
     this.setState({ dialogOpen: true })
   }
 
+  searchDisciplines(textValue) {
+    let showDisciplines = this.state.disciplines.filter(discipline => (
+      discipline.name.toLowerCase().includes(textValue)
+    ));
+    this.state.showDisciplines = showDisciplines;
+    this.forceUpdate();
+  }
+
   renderDisciplines() {
-    if (this.state.disciplines != undefined)
-      return (
-        <div>
-          {
-            this.state.disciplines && this.state.disciplines.map((discipline, index) => (
-              <DisciplineCard
-                key={index}
-                title={discipline.name}
-                code={discipline.code}
-                classrooms={discipline.discipline_class}
-                onPress={this.handleDialogOpen}
-              />
-            ))
-          }
-        </div>
-      );
+    if (this.state.disciplines != undefined) {
+      if (this.state.showDisciplines) {
+
+        return (
+          <div style={{ width: '100%' }}>
+            {
+              this.state.showDisciplines.map((discipline, index) => (
+                <DisciplineCard
+                  key={index}
+                  title={discipline.name}
+                  code={discipline.code}
+                  classrooms={discipline.discipline_class}
+                  onPress={this.handleDialogOpen}
+                />
+              ))
+            }
+          </div>
+        );
+      }
+      else {
+        return (
+          <div>
+            {
+              this.state.disciplines && this.state.disciplines.map((discipline, index) => (
+                <DisciplineCard
+                  key={index}
+                  title={discipline.name}
+                  code={discipline.code}
+                  classrooms={discipline.discipline_class}
+                  onPress={this.handleDialogOpen}
+                />
+              ))
+            }
+          </div>
+        )
+      }
+    }
     else {
       return (
         <CircularProgress color="secondary" align='center' />
       );
     }
   }
-
-
-
 
   render() {
     const { classes } = this.props;
@@ -118,7 +143,9 @@ class SearchDisciplines extends React.Component {
               <Typography
                 variant="h5"
                 className={classes.title}>
-                <InputSearch />
+                <InputSearch
+                  onChange={this.searchDisciplines}
+                />
               </Typography>
             </Grid>
             <Divider className={classes.divider} />
