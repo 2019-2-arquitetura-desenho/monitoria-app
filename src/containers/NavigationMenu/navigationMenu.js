@@ -61,8 +61,8 @@ class NavigationMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0,
-      pathsMenuList: []
+      indicatorValue: 0,
+      pathsMenuList: undefined
     };
     this.handleChange = this.handleChange.bind(this);
     this.menuList = this.menuList.bind(this);
@@ -71,54 +71,61 @@ class NavigationMenu extends React.Component {
     this.renderButton = this.renderButton.bind(this);
   }
 
-  handleChange = (event, value) => {
-    this.setState({ value });
+  handleChange(event, indicatorValue) {
+    this.setState({ indicatorValue });
   };
 
-  handleChangeDrawer = (value) => {
-    this.setState({ value });
+  handleChangeDrawer(indicatorValue) {
+    this.setState({ indicatorValue });
   };
 
-  componentDidMount = () => {
-    this.menuList();
+  componentDidMount() {
+    this.rebuildMenu()
   }
 
-  componentDidUpdate = () => {
+  componentDidUpdate() {
   }
 
-  menuList = () => {
+  getSnapshotBeforeUpdate() {
+    this.rebuildMenu();
+    return null;
+  }
+
+  rebuildMenu() {
+    let menuList = this.menuList();
+    let indicatorValue = this.handleIndicator(menuList);
+    if (indicatorValue != this.state.indicatorValue)
+      this.setState({
+        indicatorValue: indicatorValue
+      })
+  }
+
+  menuList() {
     let list = [
       { label: 'Página Inicial', path: '/home', value: 0 },
       { label: 'Informações Pessoais', path: '/personal-infos', value: 1 },
       { label: 'Procurar Monitoria', path: '/search-disciplines', value: 2 },
       { label: 'Acompanhar Resultados', path: '/results', value: 3 },
     ]
-    this.setState({
-      pathsMenuList: list
-    });
-    this.handleIndicator(list);
+    if (!this.state.pathsMenuList)
+      this.setState({
+        pathsMenuList: list
+      });
+    return list;
   }
 
-  handleIndicator = (list = []) => {
+  handleIndicator(menuList = []) {
     const {
       location
     } = this.props;
-    let currentIndicatorValue = null;
-    if (location.pathname == '/' || list.length == 0)
-      currentIndicatorValue = 0;
+    let indicatorValue = null;
+    if (location.pathname == '/' || menuList.length == 0)
+      indicatorValue = 0;
     else
-      currentIndicatorValue = list.map(pathMenu =>
+      indicatorValue = menuList.map(pathMenu =>
         (pathMenu.path)
       ).indexOf(location.pathname);
-    this.setState({
-      value: currentIndicatorValue
-    })
-  }
-
-  handlebuttonToHome = (event) => {
-    this.setState({
-      value: 0
-    })
+    return indicatorValue;
   }
 
   renderTab() {
@@ -133,9 +140,9 @@ class NavigationMenu extends React.Component {
             indicator: classes.indicator
           }}
           className={classes.tabs}
-          value={this.state.value}
+          value={this.state.indicatorValue}
           onChange={this.handleChange}>
-          {this.state.pathsMenuList.map(pathMenu => (
+          {this.state.pathsMenuList && this.state.pathsMenuList.map(pathMenu => (
             <Tab key={pathMenu.value} className={classes.tab} label={pathMenu.label} component={Link} to={pathMenu.path}
             />
           ))}
@@ -176,7 +183,7 @@ class NavigationMenu extends React.Component {
                   changeIndicator={this.handleChangeDrawer}
                 />
               </Hidden>
-              <Button component={Link} to="/" onClick={this.handlebuttonToHome}>
+              <Button component={Link} to="/home">
                 <img alt="logo" id="logo" src={logo} style={{ width: '30px', height: '30px' }} />
                 <Typography style={{ marginLeft: '10px' }} variant="h6" id="titlePart1">Monitoria</Typography>
                 <Typography variant="h6" id="titlePart2">FGA</Typography>
