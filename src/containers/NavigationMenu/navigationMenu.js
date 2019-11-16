@@ -101,10 +101,16 @@ class NavigationMenu extends React.Component {
   }
 
   menuList() {
+    const {
+      profileData
+    } = this.props;
+
+    let is_professor = profileData ? profileData.is_professor : false;
+
     let list = [
       { label: 'Página Inicial', path: '/home', value: 0 },
       { label: 'Informações Pessoais', path: '/personal-infos', value: 1 },
-      { label: 'Procurar Monitoria', path: '/search-disciplines', value: 2 },
+      { label: is_professor ? 'Disciplinas' : 'Procurar Monitoria', path: '/search-disciplines', value: 2 },
       { label: 'Acompanhar Resultados', path: '/results', value: 3 },
     ]
     if (!this.state.pathsMenuList)
@@ -125,6 +131,7 @@ class NavigationMenu extends React.Component {
       indicatorValue = menuList.map(pathMenu =>
         (pathMenu.path)
       ).indexOf(location.pathname);
+    if (indicatorValue == -1) indicatorValue = 0;
     return indicatorValue;
   }
 
@@ -207,6 +214,7 @@ NavigationMenu.propTypes = {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.authentication.isAuthenticated,
+  profileData: state.userProfile.profileData,
 });
 
 export const navigationMenuContainer = connect(
