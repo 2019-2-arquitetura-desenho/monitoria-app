@@ -426,19 +426,19 @@ class Register extends React.Component {
                 <CssBaseline />
                 <Grid container style={styles.screenBackground}>
                     <Typography component="div" style={styles.screenContent}>
-                        <Grid container spacing={1}>
+                        <Grid container >
                             <MainTitle title="Criar Conta" />
                             {this.registerForm()}
                             <Grid item xs={12} sm={6}>
-                                <Typography variant="h4">
+                                <Typography variant="h5">
                                     <Box style={styles.boxSubTitle}>
-                                        Por que nós precisamos da suas informações?
+                                        Por que nós precisamos das suas informações?
                                     </Box>
                                 </Typography>
                                 <Box textAlign="center">
                                     <img src={doubtIcon} alt="Doubt Icon" width="20%" height="20%" />
                                 </Box>
-                                <Typography variant="h5">
+                                <Typography variant="h6">
                                     <Box style={styles.boxText}>
                                         Para validarmos sua conta, comparamos as informações presentes no
                                         documento enviado com as presentes no sistema da UnB.
@@ -456,7 +456,7 @@ class Register extends React.Component {
 const theme = createMuiTheme({
     palette: {
         background: {
-            default: "#42a0ed"
+            default: "#ffffff"
         },
         primary: {
             main: "#42a0ed",
@@ -472,7 +472,7 @@ const styles = {
     screenBackground: {
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: '85%',
         // minHeight: "500px"
     },
     screenContent: {

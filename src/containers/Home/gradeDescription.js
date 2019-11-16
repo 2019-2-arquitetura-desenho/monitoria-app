@@ -12,6 +12,11 @@ function GradeDescription(props) {
 	return (
 		<section className={classes.root}>
 			<Container className={classes.container}>
+			<img
+					src={require("../assets/curvy-lines.png")}
+					className={classes.curvyLines}
+					alt="curvy lines"
+				/>
 				<Grid container spacing={5}>
 					<Grid item xs={12} md={12}>
 						<div className={classes.item}>
@@ -47,7 +52,9 @@ function GradeDescription(props) {
 								{"A3: Avaliação do Professor"}
 								<br />
 								<br />
-								{"0 ≤ A1, A2, A3 ≤ 5"}
+							</Typography>
+							<Typography variant="h5">
+								{"0 ≤ A1, A2 ≤ 5"}
 							</Typography>
 						</div>
 					</Grid>
@@ -71,6 +78,8 @@ function GradeDescription(props) {
 								<br />
 								<br />
 								<br />
+							</Typography>
+							<Typography variant="h5">
 								{"0 ≤ A1, A2 ≤ 5"}
 							</Typography>
 						</div>
@@ -85,7 +94,7 @@ const styles = theme => ({
 	root: {
 		display: "flex",
 		overflow: "hidden",
-		backgroundColor: "#42a0ed",
+		backgroundColor: "#FFFFFF",
 	},
 	container: {
 		marginBottom: theme.spacing(5),

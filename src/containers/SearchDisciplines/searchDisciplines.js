@@ -4,7 +4,6 @@ import { updateProfile, getProfile, restartUpdateProfile } from '../../store/act
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import {
-  Grid,
   Typography,
   Container,
   Divider,
@@ -12,7 +11,6 @@ import {
   createMuiTheme,
   Box
 } from '@material-ui/core';
-import HelpIcon from '@material-ui/icons/Help';
 import MainError from '../components/MainError/mainError';
 
 

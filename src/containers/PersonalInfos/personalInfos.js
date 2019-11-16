@@ -12,7 +12,6 @@ import {
   createMuiTheme,
   Box
 } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
 import HelpIcon from '@material-ui/icons/Help';
 import FormStudent from './formStudent';
 import FormProfessor from './formProfessor';
@@ -251,7 +250,7 @@ PersonalInfos.propTypes = {
 const styles = theme => ({
   root: {
     backgroundColor: '#42a0ed',
-    height: '100vh',
+    minHeight: '100vh',
     paddingTop: theme.spacing(3),
   },
   container: {
