@@ -8,6 +8,7 @@ import {
   Divider
 } from '@material-ui/core';
 import ClassContent from './classContent';
+import PageShell from '../components/PageShell/pageShell';
 
 
 const styles = {
@@ -72,4 +73,4 @@ const DisciplineCard = ({ classes, title, code, classrooms, onPress }) => {
   );
 }
 
-export default withStyles(styles)(DisciplineCard);
+export default PageShell(withStyles(styles)(DisciplineCard), 'slideInUp');
