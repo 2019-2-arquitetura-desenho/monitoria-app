@@ -37,6 +37,7 @@ class Results extends React.Component {
             dataTables:[],
             dataChoice:[],
             
+            matricula:'170013278'
             
 
         }
@@ -53,6 +54,7 @@ class Results extends React.Component {
                 dataChoice = element.ranking;
             }
         })
+        console.log(dataChoice)
         this.setState({
             material:event.target.value,
             dataChoice:dataChoice    
@@ -68,7 +70,7 @@ class Results extends React.Component {
             }
         ).then(response => {
 
-            console.log(response);
+            //console.log(response);
             const data = response.data.data;
             
             var materialList = []; 
@@ -82,7 +84,7 @@ class Results extends React.Component {
                 materialList.push(element.materia);
             });
 
-            console.log(materialList);
+            //console.log(materialList);
             this.setState({
                 materialList:materialList,
                 isData:true,
@@ -95,6 +97,32 @@ class Results extends React.Component {
         });
     }
 
+    tableContent(count,nome,matr,pontu){
+        if(matr !== this.state.matricula){
+            return(
+                <TableRow key={nome}>
+                    <TableCell align="center" scope="row">
+                        {count++}
+                    </TableCell>
+                    <TableCell align="center" >{nome}</TableCell>
+                    <TableCell align="center">{matr}</TableCell>
+                    <TableCell align="center">{pontu}</TableCell>
+                </TableRow>
+            )
+        }
+        else{
+            return (
+                <TableRow key={nome}>
+                    <TableCell align="center" scope="row">
+                        <b>{count++}</b>
+                    </TableCell>
+                    <TableCell align="center" ><b>{nome}</b></TableCell>
+                    <TableCell align="center"><b>{matr}</b></TableCell>
+                    <TableCell align="center"><b>{pontu}</b></TableCell>
+                </TableRow>
+            )
+        }
+    }
     
     showData(){
         if(!this.state.isData){
@@ -111,7 +139,7 @@ class Results extends React.Component {
             return <div>To com sono</div>
         }
         else{
-            var count = 1;
+            var count = 0;
             return(
                 <React.Fragment>
                     <FormControl style = {{marginTop:'2%',width: "84%",marginLeft: "8%",marginRight: "8%"}}>
@@ -135,23 +163,16 @@ class Results extends React.Component {
                         <Table>
                         <TableHead>
                             <TableRow>
-                            <TableCell align="center">posicao</TableCell>
+                            <TableCell align="center">posição</TableCell>
                             <TableCell align="center">nome</TableCell>
                             <TableCell align="center">matrícula</TableCell>
                             <TableCell align="center">pontuação</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            
                             {this.state.dataChoice.map(element => (
-                            <TableRow key={element[1]}>
-                                <TableCell align = "center" scope="row">
-                                    {count++}
-                                </TableCell>
-                                <TableCell align ="center" >{element[0]}</TableCell>
-                                <TableCell align="center">{element[1]}</TableCell>
-                                <TableCell align="center">{element[2]}</TableCell>
-                            </TableRow>
+                                count++,
+                                this.tableContent(count, element[0],element[1],element[2])
                             ))}
                         </TableBody>
                         </Table>
