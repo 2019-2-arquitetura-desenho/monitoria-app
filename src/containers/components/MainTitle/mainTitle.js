@@ -23,8 +23,8 @@ class MainTitle extends React.Component {
 
 const styles = {
     mainTitle: {
-        marginTop: "2%",
-        marginBottom: "1%",
+        // marginTop: "2%",
+        // marginBottom: "1%",
         textAlign: "center",
         color: "#267cc1",
         fontWeight: "bold",
