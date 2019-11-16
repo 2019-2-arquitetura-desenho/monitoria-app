@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getProfile, getStudent, getDisciplines } from '../../store/actions';
+import { getProfile, getStudent } from '../../store/actions';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -17,6 +17,7 @@ import MainError from '../components/MainError/mainError';
 import InputSearch from '../components/InputSearch/inputSearch';
 import DisciplineCard from './disciplineCard';
 import ConfirmationDialog from '../components/ConfirmationDialog/confirmationDialog';
+import { getDisciplines } from './requestDisciplines';
 
 
 class SearchDisciplines extends React.Component {
@@ -39,28 +40,15 @@ class SearchDisciplines extends React.Component {
     this.nextPathDialog = this.nextPathDialog.bind(this);
   }
 
-  componentDidMount() {
-    const {
-      disciplines
-    } = this.props;
-    this.props.getDisciplines(this.props.token);
-    if (disciplines == undefined || disciplines.length == 0) {
-    } else {
-      // this.getSnapshotBeforeUpdate()
-    }
+  async componentDidMount() {
+    let disciplines = await getDisciplines(this.props.token);
+    this.setState({ disciplines: disciplines });
   }
 
   componentDidUpdate() {
   }
 
   getSnapshotBeforeUpdate() {
-    const {
-      disciplines
-    } = this.props;
-    if (disciplines &&
-      this.state.disciplines != disciplines) {
-      this.setState({ disciplines: disciplines })
-    }
     return null;
   }
 
@@ -224,7 +212,6 @@ function mapStateToProps(state) {
     token: state.authentication.token,
     requisitionError: state.userProfile.requisitionError,
     profileData: state.userProfile.profileData,
-    disciplines: state.disciplines.disciplines
   }
 }
 
