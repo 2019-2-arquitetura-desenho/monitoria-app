@@ -66,7 +66,7 @@ class PersonalInfos extends React.Component {
         email: this.props.profileData.user.email,
         matricula: this.props.profileData.matricula,
         ira: this.props.profileData.ira,
-        user: this.props.profileData.user
+        user: this.props.profileData.is_professor
       })
     }
   }
@@ -162,7 +162,7 @@ class PersonalInfos extends React.Component {
   }
 
   formInfos() {
-    if (this.state.user.is_superuser) {
+    if (this.state.user) {
       return (
         <Grid container justify="center"  >
           <FormProfessor
@@ -206,7 +206,7 @@ class PersonalInfos extends React.Component {
                   <Typography
                     variant="h5" align="center"
                     className={classes.title}>
-                    Suas Informações - {this.state.user.is_superuser ? "Professor" : "Aluno"}
+                    Suas Informações - {this.state.user ? "Professor" : "Aluno"}
                   </Typography>
                   <Divider className={classes.divider} />
                   <Box className={classes.boxHelpLabel}>
