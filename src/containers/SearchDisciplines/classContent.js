@@ -82,7 +82,9 @@ const ClassContent = ({
   }
 
   const handleEventModal = () => {
-    onPress('Aviso', textWarningSubscribe(), 'success')
+    let title = 'Sucesso';
+    let description = textSuccessSubscribe();
+    onPress(title, description, 'success')
   }
 
   return (

@@ -62,7 +62,7 @@ class SearchDisciplines extends React.Component {
   handleDialogOpen(dialogTitle = '', dialogText = '', dialogType = '') {
     this.setState({ dialogTitle: dialogTitle })
     this.setState({ dialogText: dialogText })
-    this.setState({ dialogType: 'warning' })
+    this.setState({ dialogType: dialogType })
     if (dialogType === "success")
       this.setState({ dialogConfirmPath: '/results' })
     this.setState({ dialogOpen: true })
