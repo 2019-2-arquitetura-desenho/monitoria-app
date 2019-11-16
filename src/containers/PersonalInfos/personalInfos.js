@@ -10,6 +10,7 @@ import {
   Divider,
   MuiThemeProvider,
   createMuiTheme,
+  CssBaseline,
   Box
 } from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
@@ -194,35 +195,41 @@ class PersonalInfos extends React.Component {
       mainError
     } = this.state;
     return (
-      <div className={classes.root}>
 
-        <MuiThemeProvider theme={theme}>
-          <Container component="div" maxWidth="md" className={classes.container}>
-            <Typography
-              variant="h5" align="center"
-              className={classes.title}>
-              Suas Informações - {this.state.user.is_superuser ? "Professor" : "Aluno"}
-            </Typography>
-            <Divider className={classes.divider} />
-            <Box className={classes.boxHelpLabel}>
-              <Typography
-                variant="subtitle1"
-                className={classes.helpLabel}
-              >
-                <HelpIcon style={{ paddingRight: '5px' }} />
-                As Informações aqui presentes não estão disponíveis para
-                a visualização dos alunos, exceto o nome
-              </Typography>
-              <Box className={classes.mainErrorBox}>
-                <MainError error={mainError} />
-              </Box>
-            </Box>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <Grid container style={{ justifyContent: "center", alignItems: "center", height: "90vh" }}>
+          <Typography component='div' style={{ width: "92%", marginTop: "1%", marginBottom: "1%", backgroundColor: "#ffffff", minHeight: "85%" }}>
+            <Grid container spacing={1}>
+              <Grid item xs={12}>
+                <Container component="div" maxWidth="md" className={classes.container}>
+                  <Typography
+                    variant="h5" align="center"
+                    className={classes.title}>
+                    Suas Informações - {this.state.user.is_superuser ? "Professor" : "Aluno"}
+                  </Typography>
+                  <Divider className={classes.divider} />
+                  <Box className={classes.boxHelpLabel}>
+                    <Typography
+                      variant="subtitle1"
+                      className={classes.helpLabel}
+                    >
+                      <HelpIcon style={{ paddingRight: '5px' }} />
+                      As Informações aqui presentes não estão disponíveis para
+                      a visualização dos alunos, exceto o nome
+                      </Typography>
+                    <Box className={classes.mainErrorBox}>
+                      <MainError error={mainError} />
+                    </Box>
+                  </Box>
+                  {this.formInfos()}
+                </Container>
+              </Grid>
+            </Grid>
+          </Typography>
+        </Grid>
+      </MuiThemeProvider>
 
-            {this.formInfos()}
-
-          </Container>
-        </MuiThemeProvider>
-      </div>
     );
   }
 }
@@ -250,7 +257,7 @@ PersonalInfos.propTypes = {
 const styles = theme => ({
   root: {
     backgroundColor: '#42a0ed',
-    minHeight: '100vh',
+    height: '85vh',
     paddingTop: theme.spacing(3),
   },
   container: {

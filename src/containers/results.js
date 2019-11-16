@@ -61,7 +61,6 @@ class Results extends React.Component {
 
     ranking() {
         
-
         axios.post(
             'http://localhost:8000/home',
             {
