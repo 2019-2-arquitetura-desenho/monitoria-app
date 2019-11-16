@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import MainError from '../components/MainError/mainError';
 import InputSearch from '../components/InputSearch/inputSearch';
-import DisciplineCard from './disciplineCard';
+import DisciplinesList from './disciplinesList';
 import ConfirmationDialog from '../components/ConfirmationDialog/confirmationDialog';
 import { getDisciplines } from './requestDisciplines';
 
@@ -26,8 +26,7 @@ class SearchDisciplines extends React.Component {
 
     this.state = {
       disciplines: undefined,
-      showDisciplines: undefined,
-      filterDisciplines: false,
+      searchDisciplines: '',
 
       dialogOpen: false,
       dialogTitle: '',
@@ -40,7 +39,8 @@ class SearchDisciplines extends React.Component {
     this.handleDialogClose = this.handleDialogClose.bind(this);
     this.handleDialogOpen = this.handleDialogOpen.bind(this);
     this.nextPathDialog = this.nextPathDialog.bind(this);
-    this.searchDisciplines = this.searchDisciplines.bind(this)
+    this.handleInputSearch = this.handleInputSearch.bind(this);
+    this.searchDisciplines = this.searchDisciplines.bind(this);
   }
 
   async componentDidMount() {
@@ -68,56 +68,32 @@ class SearchDisciplines extends React.Component {
     this.setState({ dialogOpen: true })
   }
 
-  searchDisciplines(textValue) {
-    let showDisciplines;
-    if (this.state.disciplines) {
-      showDisciplines = this.state.disciplines.filter(discipline => (
-        discipline.name.normalize('NFD').
-          replace(/[\u0300-\u036f]/g, "").
-          toLowerCase().includes(textValue)
-      ));
-    }
-    this.state.showDisciplines = showDisciplines;
+  handleInputSearch(textValue) {
+    this.state.searchDisciplines = textValue;
+    this.renderDisciplines();
+  }
+
+  searchDisciplines() {
     this.forceUpdate();
   }
 
   renderDisciplines() {
-    if (this.state.disciplines != undefined) {
-      if (this.state.showDisciplines) {
+    let filteredDisciplines;
+    if (this.state.disciplines) {
+      filteredDisciplines = this.state.disciplines.filter(discipline => (
+        discipline.name.normalize('NFD').
+          replace(/[\u0300-\u036f]/g, "").
+          toLowerCase().includes(this.state.searchDisciplines)
+      ));
+    }
 
-        return (
-          <div style={{ width: '100%' }}>
-            {
-              this.state.showDisciplines.map((discipline, index) => (
-                <DisciplineCard
-                  key={index}
-                  title={discipline.name}
-                  code={discipline.code}
-                  classrooms={discipline.discipline_class}
-                  onPress={this.handleDialogOpen}
-                />
-              ))
-            }
-          </div>
-        );
-      }
-      else {
-        return (
-          <div>
-            {
-              this.state.disciplines && this.state.disciplines.map((discipline, index) => (
-                <DisciplineCard
-                  key={index}
-                  title={discipline.name}
-                  code={discipline.code}
-                  classrooms={discipline.discipline_class}
-                  onPress={this.handleDialogOpen}
-                />
-              ))
-            }
-          </div>
-        )
-      }
+    if (filteredDisciplines) {
+      return (
+        <DisciplinesList
+          disciplines={filteredDisciplines}
+          onPress={this.handleDialogOpen}
+        />
+      );
     }
     else {
       return (
@@ -149,7 +125,8 @@ class SearchDisciplines extends React.Component {
                 variant="h5"
                 className={classes.title}>
                 <InputSearch
-                  onChange={this.searchDisciplines}
+                  onChange={this.handleInputSearch}
+                  onPress={this.searchDisciplines}
                 />
               </Typography>
             </Grid>

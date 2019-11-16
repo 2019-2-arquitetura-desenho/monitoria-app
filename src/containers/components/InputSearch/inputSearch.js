@@ -49,19 +49,29 @@ class InputSearch extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.keyPress = this.keyPress.bind(this);
   }
 
   handleChange = (event) => {
     const { onChange } = this.props;
+
     this.setState({
       ['value']: event.target.value,
     });
     onChange(this.state.value);
   };
 
+  keyPress(event) {
+    const { onPress } = this.props
+    if (event.key === "Enter") {
+      event.preventDefault();
+      onPress();
+    }
+  }
+
   render() {
-    const { classes, onPress } = this.props;
-    let icon = <SearchIcon fill="#42a0ed" width="20" height="20" onClick={onPress} />;
+    const { classes } = this.props;
+    let icon = <SearchIcon fill="#42a0ed" width="20" height="20" />;
 
     return (
       <form className={classes.container} noValidate autoComplete="off">
@@ -70,6 +80,7 @@ class InputSearch extends React.Component {
           placeholder="Insira o nome ou código da disciplina"
           className={classes.textField}
           value={this.state.value}
+          onKeyDown={this.keyPress}
           onChange={this.handleChange}
           margin="normal"
           variant="outlined"
