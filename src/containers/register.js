@@ -62,6 +62,12 @@ class Register extends React.Component {
 
         this.onPressSubmit = this.onPressSubmit.bind(this);
     }
+    
+    componentWillUnmount(){
+        document.documentElement.style.overflow = 'auto';  // firefox, chrome
+        document.body.scroll = "yes"; // ie only
+    }
+    
     componentDidUpdate() {
         if (this.props.requisitionError !== undefined && this.state.isRegisterLoading === true) {
             this.props.restartRegister();
