@@ -60,6 +60,12 @@ const UserProfile = (state = {}, action) => {
           }
         }
       };
+
+    case 'RESTART_GET_PROFILE':
+      return {
+        ...state,
+        requisitionError: undefined
+      };
     default:
       return state;
   }

@@ -92,6 +92,13 @@ export function getProfile(token) {
   }
 }
 
+export function restartGetProfile() {
+  return function (dispatch) {
+    dispatch({ type: 'RESTART_GET_PROFILE' });
+  }
+}
+
+
 export function getStudent(token) {
   let url = host_api + '/get_student/';
   let dataToSend = {

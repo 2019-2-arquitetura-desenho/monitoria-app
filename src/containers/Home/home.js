@@ -1,35 +1,57 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { getProfile, logout } from "../../store/actions";
+import { getProfile, restartGetProfile } from "../../store/actions";
 
 import RegisterHome from "./registerHome";
 import GradeDescription from "./gradeDescription";
 import RequerimentsDescription from "./requirementsDescription";
 
+import { Grid } from '@material-ui/core';
+
 
 class Home extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
-	}
 
+		this.state = {
+			isRequestDone: false,
+		};
+	}
 
 	content(){
 		if(!this.props.profileData){
-			this.props.getProfile(this.props.token);
-			return <div></div>
-		}
-		else{
+
+			if (this.props.requisitionError){
+				this.props.restartGetProfile();
+			}
+
+			if (!this.state.isRequestDone){
+				this.props.getProfile(this.props.token);
+
+				this.setState({
+					isRequestDone: true
+				});
+			}
+
+			return (
+				<Grid container>
+					<Grid item xs={12}>
+						<h2 style={{color:"#ff0000", textAlign: "center", marginTop: "4%"}}>
+							Erro! Verifique sua conexão com a internet.
+						</h2>
+					</Grid>
+				</Grid>
+			);
+		} else {
 			if (this.props.profileData.is_professor){
 				return (
-						 <React.Fragment>
-							<GradeDescription />
-							<RequerimentsDescription />
-						</React.Fragment>
+					<React.Fragment>
+						<GradeDescription />
+						<RequerimentsDescription />
+					</React.Fragment>
 				);
-			}
-			else{
+			} else {
 				return (
 					<React.Fragment>
 						<RequerimentsDescription />
@@ -60,19 +82,20 @@ class Home extends React.Component {
 			)
 		}
 	}
-
-	
-
 }
 
 function mapStateToProps(state) {
 	return {
+		token: state.authentication.token,
 		isAuthenticated: state.authentication.isAuthenticated,
 		profileData: state.userProfile.profileData,
-		token: state.authentication.token,
+		requisitionError: state.userProfile.requisitionError
 	};
 }
 
-export const homeContainer = connect(mapStateToProps, { getProfile, logout })(Home);
+export const homeContainer = connect(
+	mapStateToProps,
+	{ getProfile, restartGetProfile }
+)(Home);
 
 export default homeContainer;
