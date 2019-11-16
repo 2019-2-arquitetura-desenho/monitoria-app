@@ -431,7 +431,6 @@ class Register extends React.Component {
     }
 
     render() {
-        this.removescroll()
         return (
             <MuiThemeProvider theme={theme}>
                 <CssBaseline />
