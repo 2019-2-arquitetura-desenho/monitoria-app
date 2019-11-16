@@ -14,8 +14,6 @@ import FileSubmit from './components/FileSubmit/fileSubmit';
 import SubmitButton from './components/SubmitButton/submitButton';
 import MainError from './components/MainError/mainError';
 
-import './register.css';
-
 
 class Register extends React.Component {
     constructor(props) {
@@ -67,7 +65,7 @@ class Register extends React.Component {
         document.documentElement.style.overflow = 'auto';  // firefox, chrome
         document.body.scroll = "yes"; // ie only
     }
-    
+
     componentDidUpdate() {
         if (this.props.requisitionError !== undefined && this.state.isRegisterLoading === true) {
             this.props.restartRegister();
