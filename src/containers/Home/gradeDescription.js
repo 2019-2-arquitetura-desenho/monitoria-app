@@ -12,6 +12,11 @@ function GradeDescription(props) {
 	return (
 		<section className={classes.root}>
 			<Container className={classes.container}>
+			<img
+					src={require("../assets/curvy-lines.png")}
+					className={classes.curvyLines}
+					alt="curvy lines"
+				/>
 				<Grid container spacing={5}>
 					<Grid item xs={12} md={12}>
 						<div className={classes.item}>
@@ -89,7 +94,7 @@ const styles = theme => ({
 	root: {
 		display: "flex",
 		overflow: "hidden",
-		backgroundColor: "#42a0ed",
+		backgroundColor: "#FFFFFF",
 	},
 	container: {
 		marginBottom: theme.spacing(5),
