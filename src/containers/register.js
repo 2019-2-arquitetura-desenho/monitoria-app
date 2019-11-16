@@ -62,7 +62,6 @@ class Register extends React.Component {
 
         this.onPressSubmit = this.onPressSubmit.bind(this);
     }
-
     componentDidUpdate() {
         if (this.props.requisitionError !== undefined && this.state.isRegisterLoading === true) {
             this.props.restartRegister();
@@ -421,8 +420,12 @@ class Register extends React.Component {
             );
         }
     }
-
+    removescroll = () => {
+        document.documentElement.style.overflow = 'hidden';  // firefox, chrome
+        document.body.scroll = "no"; // ie only
+    }
     render() {
+        this.removescroll()
         return (
             <MuiThemeProvider theme={theme}>
                 <CssBaseline />
