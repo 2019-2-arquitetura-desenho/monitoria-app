@@ -472,7 +472,7 @@ const styles = {
     screenBackground: {
         justifyContent: "center",
         alignItems: "center",
-        height: "93vh",
+        // height: "93vh",
         // minHeight: "500px"
     },
     screenContent: {
