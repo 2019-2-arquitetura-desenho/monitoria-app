@@ -69,9 +69,14 @@ class SearchDisciplines extends React.Component {
   }
 
   searchDisciplines(textValue) {
-    let showDisciplines = this.state.disciplines.filter(discipline => (
-      discipline.name.toLowerCase().includes(textValue)
-    ));
+    let showDisciplines;
+    if (this.state.disciplines) {
+      showDisciplines = this.state.disciplines.filter(discipline => (
+        discipline.name.normalize('NFD').
+          replace(/[\u0300-\u036f]/g, "").
+          toLowerCase().includes(textValue)
+      ));
+    }
     this.state.showDisciplines = showDisciplines;
     this.forceUpdate();
   }

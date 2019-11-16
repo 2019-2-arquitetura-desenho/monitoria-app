@@ -60,7 +60,7 @@ class InputSearch extends React.Component {
   };
 
   render() {
-    const { classes, onPress, onChange, value } = this.props;
+    const { classes, onPress } = this.props;
     let icon = <SearchIcon fill="#42a0ed" width="20" height="20" onClick={onPress} />;
 
     return (
