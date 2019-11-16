@@ -22,7 +22,7 @@ const styles = theme => ({
   root: {
     ...theme.mixins.toolbar,
     flexGrow: 1,
-    backgroundColor: '#42a0ed'
+    backgroundColor: '#267cc1'
   },
   appBar: {
     background: 'transparent',
@@ -35,7 +35,7 @@ const styles = theme => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingTop: theme.spacing(1),
-    backgroundColor: '#42a0ed'
+    backgroundColor: '#267cc1'
   },
   title: {
     display: 'flex',
@@ -45,7 +45,7 @@ const styles = theme => ({
   },
   tabs: {
     minHeight: 0,
-    backgroundColor: '#42a0ed'
+    backgroundColor: '#267cc1'
   },
   tab: {
     minWidth: 100,

@@ -47,7 +47,9 @@ function GradeDescription(props) {
 								{"A3: Avaliação do Professor"}
 								<br />
 								<br />
-								{"0 ≤ A1, A2, A3 ≤ 5"}
+							</Typography>
+							<Typography variant="h5">
+								{"0 ≤ A1, A2 ≤ 5"}
 							</Typography>
 						</div>
 					</Grid>
@@ -71,6 +73,8 @@ function GradeDescription(props) {
 								<br />
 								<br />
 								<br />
+							</Typography>
+							<Typography variant="h5">
 								{"0 ≤ A1, A2 ≤ 5"}
 							</Typography>
 						</div>
