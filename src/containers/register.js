@@ -14,6 +14,8 @@ import FileSubmit from './components/FileSubmit/fileSubmit';
 import SubmitButton from './components/SubmitButton/submitButton';
 import MainError from './components/MainError/mainError';
 
+import './register.css';
+
 
 class Register extends React.Component {
     constructor(props) {
@@ -472,7 +474,7 @@ const styles = {
     screenBackground: {
         justifyContent: "center",
         alignItems: "center",
-        // height: "93vh",
+        height: "93vh",
         // minHeight: "500px"
     },
     screenContent: {
