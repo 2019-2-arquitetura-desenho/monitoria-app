@@ -61,17 +61,17 @@ class Register extends React.Component {
         this.onPressSubmit = this.onPressSubmit.bind(this);
     }
 
-    componentDidMount(){
-        if (window.screen.availWidth > 768){
-            document.documentElement.style.overflow = 'hidden';
-            document.body.scroll = "no";
-        }
-    }
+    // componentDidMount(){
+    //     if (window.screen.availWidth > 768){
+    //         document.documentElement.style.overflow = 'hidden';
+    //         document.body.scroll = "no";
+    //     }
+    // }
     
-    componentWillUnmount(){
-        document.documentElement.style.overflow = 'auto';
-        document.body.scroll = "yes";
-    }
+    // componentWillUnmount(){
+    //     document.documentElement.style.overflow = 'auto';
+    //     document.body.scroll = "yes";
+    // }
 
     componentDidUpdate() {
         if (this.props.requisitionError !== undefined && this.state.isRegisterLoading === true) {
@@ -438,11 +438,11 @@ class Register extends React.Component {
                 <CssBaseline />
                 <Grid container style={styles.screenBackground}>
                     <Typography component="div" style={styles.screenContent}>
-                        <Grid container spacing={1}>
+                        <Grid container >
                             <MainTitle title="Criar Conta" />
                             {this.registerForm()}
                             <Grid item xs={12} sm={6}>
-                                <Typography variant="h4">
+                                <Typography variant="h5">
                                     <Box style={styles.boxSubTitle}>
                                         Por que nós precisamos das suas informações?
                                     </Box>
@@ -450,7 +450,7 @@ class Register extends React.Component {
                                 <Box textAlign="center">
                                     <img src={doubtIcon} alt="Doubt Icon" width="20%" height="20%" />
                                 </Box>
-                                <Typography variant="h5">
+                                <Typography variant="h6">
                                     <Box style={styles.boxText}>
                                         Para validarmos sua conta, comparamos as informações presentes no
                                         documento enviado com as presentes no sistema da UnB.
@@ -484,7 +484,7 @@ const styles = {
     screenBackground: {
         justifyContent: "center",
         alignItems: "center",
-        height: "93vh",
+        height: '85%',
         // minHeight: "500px"
     },
     screenContent: {
