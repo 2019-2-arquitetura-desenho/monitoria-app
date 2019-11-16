@@ -190,7 +190,7 @@ class NavigationMenu extends React.Component {
                   changeIndicator={this.handleChangeDrawer}
                 />
               </Hidden>
-              <Button component={Link} to="/home">
+              <Button component={Link} to="/">
                 <img alt="logo" id="logo" src={logo} style={{ width: '30px', height: '30px' }} />
                 <Typography style={{ marginLeft: '10px' }} variant="h6" id="titlePart1">Monitoria</Typography>
                 <Typography variant="h6" id="titlePart2">FGA</Typography>
