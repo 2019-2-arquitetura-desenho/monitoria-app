@@ -46,18 +46,6 @@ class Login extends Component {
     this.submitSignUp = this.submitSignUp.bind(this);
   }
 
-  // componentDidMount(){
-  //   if (window.screen.availWidth > 768){
-  //     document.documentElement.style.overflow = 'hidden';
-  //     document.body.scroll = "no";
-  //   }
-  // }
-
-  // componentWillUnmount(){
-  //   document.documentElement.style.overflow = 'auto';
-  //   document.body.scroll = "yes";
-  // }
-
   componentDidUpdate() {
     this.requisitionErrorHandler();
 
