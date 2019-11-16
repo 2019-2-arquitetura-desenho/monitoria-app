@@ -46,6 +46,11 @@ class Login extends Component {
     this.submitSignUp = this.submitSignUp.bind(this);
   }
 
+  componentDidMount(){
+    document.documentElement.style.overflow = 'hidden';
+    document.body.scroll = "no";
+  }
+
   componentDidUpdate() {
     this.requisitionErrorHandler();
 
