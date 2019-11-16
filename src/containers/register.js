@@ -60,6 +60,11 @@ class Register extends React.Component {
 
         this.onPressSubmit = this.onPressSubmit.bind(this);
     }
+
+    componentDidMount(){
+        document.documentElement.style.overflow = 'hidden';  // firefox, chrome
+        document.body.scroll = "no"; // ie only
+    }
     
     componentWillUnmount(){
         document.documentElement.style.overflow = 'auto';  // firefox, chrome
@@ -424,10 +429,7 @@ class Register extends React.Component {
             );
         }
     }
-    removescroll = () => {
-        document.documentElement.style.overflow = 'hidden';  // firefox, chrome
-        document.body.scroll = "no"; // ie only
-    }
+    
     render() {
         this.removescroll()
         return (
