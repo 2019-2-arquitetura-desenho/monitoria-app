@@ -47,8 +47,10 @@ class Login extends Component {
   }
 
   componentDidMount(){
-    document.documentElement.style.overflow = 'hidden';
-    document.body.scroll = "no";
+    if (window.screen.availWidth > 768){
+      document.documentElement.style.overflow = 'hidden';
+      document.body.scroll = "no";
+    }
   }
 
   componentWillUnmount(){
