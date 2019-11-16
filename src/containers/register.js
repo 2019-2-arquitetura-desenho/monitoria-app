@@ -432,7 +432,7 @@ class Register extends React.Component {
                             <Grid item xs={12} sm={6}>
                                 <Typography variant="h4">
                                     <Box style={styles.boxSubTitle}>
-                                        Por que nós precisamos da suas informações?
+                                        Por que nós precisamos das suas informações?
                                     </Box>
                                 </Typography>
                                 <Box textAlign="center">
@@ -456,7 +456,7 @@ class Register extends React.Component {
 const theme = createMuiTheme({
     palette: {
         background: {
-            default: "#42a0ed"
+            default: "#ffffff"
         },
         primary: {
             main: "#42a0ed",
@@ -472,7 +472,7 @@ const styles = {
     screenBackground: {
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: "93vh",
         // minHeight: "500px"
     },
     screenContent: {
