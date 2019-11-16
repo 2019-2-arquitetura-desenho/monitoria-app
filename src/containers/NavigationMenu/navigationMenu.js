@@ -65,8 +65,10 @@ class NavigationMenu extends React.Component {
       pathsMenuList: []
     };
     this.handleChange = this.handleChange.bind(this);
-    this.startPathsMenuList = this.startPathsMenuList.bind(this);
+    this.menuList = this.menuList.bind(this);
     this.handleIndicator = this.handleIndicator.bind(this);
+    this.renderTab = this.renderTab.bind(this);
+    this.renderButton = this.renderButton.bind(this);
   }
 
   handleChange = (event, value) => {
@@ -78,13 +80,13 @@ class NavigationMenu extends React.Component {
   };
 
   componentDidMount = () => {
-    this.startPathsMenuList();
+    this.menuList();
   }
 
   componentDidUpdate = () => {
   }
 
-  startPathsMenuList = () => {
+  menuList = () => {
     let list = [
       { label: 'Página Inicial', path: '/home', value: 0 },
       { label: 'Informações Pessoais', path: '/personal-infos', value: 1 },
@@ -119,55 +121,75 @@ class NavigationMenu extends React.Component {
     })
   }
 
-  render() {
-    const { classes, theme, isAuthenticated, logout } = this.props
-
+  renderTab() {
+    const {
+      isAuthenticated, classes
+    } = this.props;
     if (isAuthenticated) {
       return (
-        <div className={classes.root}>
-          <AppBar position="fixed" className={classes.appBar}>
-            <Toolbar className={classes.toolbar}>
-              <Box className={classes.title}>
-                <Hidden mdUp implementation="css">
-
-                  <ResponsiveDrawer changeIndicator={this.handleChangeDrawer}
-                  />
-                </Hidden>
-
-                <Button component={Link} to="/home" onClick={this.handlebuttonToHome}>
-                  <img alt="logo" id="logo" src={logo} style={{ width: '30px', height: '30px' }} />
-                  <Typography style={{ marginLeft: '10px' }} variant="h6" id="titlePart1">Monitoria</Typography>
-                  <Typography variant="h6" id="titlePart2">FGA</Typography>
-                </Button>
-              </Box>
-              <Hidden smDown implementation="css">
-                <Tabs aria-label="simple tabs example"
-                  centered
-                  classes={{
-                    indicator: classes.indicator
-                  }}
-                  className={classes.tabs}
-                  value={this.state.value}
-                  onChange={this.handleChange}>
-                  {this.state.pathsMenuList.map(pathMenu => (
-                    <Tab key={pathMenu.value} className={classes.tab} label={pathMenu.label} component={Link} to={pathMenu.path}
-                    />
-                  ))}
-                </Tabs>
-              </Hidden>
-              <Button style={{ color: "white" }} onClick={logout}>
-                Sair
-              </Button>
-            </Toolbar>
-          </AppBar>
-        </div>
+        <Tabs aria-label="simple tabs example"
+          centered
+          classes={{
+            indicator: classes.indicator
+          }}
+          className={classes.tabs}
+          value={this.state.value}
+          onChange={this.handleChange}>
+          {this.state.pathsMenuList.map(pathMenu => (
+            <Tab key={pathMenu.value} className={classes.tab} label={pathMenu.label} component={Link} to={pathMenu.path}
+            />
+          ))}
+        </Tabs>
       );
     }
-    else {
+  }
+
+  renderButton() {
+    const {
+      isAuthenticated, classes, logout
+    } = this.props;
+    if (isAuthenticated) {
       return (
-        <div></div>
+        <Button style={{ color: "white" }} onClick={logout}>
+          Sair
+        </Button>
+      );
+    } else {
+      return (
+        <Button style={{ color: "white" }} component={Link} to={'/entrar'}>
+          Entrar
+        </Button>
       );
     }
+  }
+
+  render() {
+    const { classes, logout } = this.props
+
+    return (
+      <div className={classes.root}>
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar className={classes.toolbar}>
+            <Box className={classes.title}>
+              <Hidden mdUp implementation="css">
+                <ResponsiveDrawer
+                  changeIndicator={this.handleChangeDrawer}
+                />
+              </Hidden>
+              <Button component={Link} to="/" onClick={this.handlebuttonToHome}>
+                <img alt="logo" id="logo" src={logo} style={{ width: '30px', height: '30px' }} />
+                <Typography style={{ marginLeft: '10px' }} variant="h6" id="titlePart1">Monitoria</Typography>
+                <Typography variant="h6" id="titlePart2">FGA</Typography>
+              </Button>
+            </Box>
+            <Hidden smDown implementation="css">
+              {this.renderTab()}
+            </Hidden>
+            {this.renderButton()}
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
   }
 }
 
