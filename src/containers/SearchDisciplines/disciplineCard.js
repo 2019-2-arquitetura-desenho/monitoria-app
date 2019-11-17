@@ -62,7 +62,7 @@ const DisciplineCard = ({ classes, title, code, classrooms, labelButtonAction, a
               period={classroom.shift}
               meetings={classroom.meetings}
               professors={classroom.professors}
-              discipline={title}
+              discipline={{ title, code }}
               labelButtonAction={labelButtonAction}
               action={action}
             />

@@ -9,6 +9,10 @@ import {
   DialogTitle,
   Slide,
   Typography,
+  FormControl,
+  Select,
+  InputLabel,
+  MenuItem,
   Box
 } from '@material-ui/core';
 
@@ -43,6 +47,9 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'center'
   },
+  formControl: {
+    minWidth: 120,
+  },
 }
 
 
@@ -52,10 +59,40 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+
 function ConfirmationDialog({
   classes, isOpen, handleClose, title, description,
-  type, handleConfirmNextPath,
+  type, handlePressButton, hasSelect, rangeSelect
 }) {
+
+  const [age, setAge] = React.useState('');
+
+  const handleChangeSelect = event => {
+    setAge(event.target.value);
+  };
+
+  const renderSelect = () => {
+    let options = [];
+    for (let i = 1; i <= rangeSelect; i++) {
+      options.push(i);
+    }
+
+    return (
+      <FormControl className={classes.formControl}>
+        <Select
+          id="demo-simple-select"
+          value={age}
+          onChange={handleChangeSelect}
+        >
+          {
+            options.map((option, index) => (
+              <MenuItem key={index} value={option}>{option}</MenuItem>
+            ))
+          }
+        </Select>
+      </FormControl>
+    );
+  }
 
   const renderStatusIcon = () => {
     if (type === "success")
@@ -66,13 +103,14 @@ function ConfirmationDialog({
       return <div></div>
   }
 
+
   const renderConfirmButton = () => {
     if (type === "success")
       return (
         <CardButton
           titleButton="Acessar Ranking"
           buttonColor="secondary"
-          onClickSubmitButton={handleConfirmNextPath}
+          onClickSubmitButton={handlePressButton}
         />
       );
     else
@@ -103,10 +141,11 @@ function ConfirmationDialog({
             </Button>
           </Typography>
         </DialogTitle>
-        <DialogContent>
+        <DialogContent align="center">
           <DialogContentText id="alert-dialog-slide-description" align="center" color="primary">
             {description}
           </DialogContentText>
+          {renderSelect()}
         </DialogContent>
         <DialogActions className={classes.dialogActions}>
           <Box width="50" alignSelf="center">

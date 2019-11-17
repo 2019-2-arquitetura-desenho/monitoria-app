@@ -24,18 +24,33 @@ export async function getDisciplines(token, idStudent) {
   return { responseData, responseError };
 }
 
-export function registerInDiscipline(token, idStudent, idDiscipline) {
-  let url = host_api +
-    `/students/${idStudent}/disciplines/${idDiscipline}/registration`;
+export async function registerInDiscipline(token, codeDiscipline, nameClassroom, priority = 1) {
+  let url = host_api + `/register_discipline/`;
 
   let dataToSend = {
-    token
+    token,
+    discipline_code: codeDiscipline,
+    class_name: nameClassroom,
+    priority
   };
 
-  axios.post(
+  let responseData;
+  let status;
+  let responseError;
+
+  await axios.post(
     url,
     dataToSend
   ).then(response => {
+    status = response.status
+    responseData = response.data
   }).catch(error => {
+    if (!error.response) {
+      responseError = 'Error: Network Error'
+    } else {
+      responseError = error.response ? error.response.data : error;
+    }
   })
+  console.log(responseData)
+  return { status, responseData, responseError };
 }

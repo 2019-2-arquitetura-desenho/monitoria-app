@@ -66,10 +66,15 @@ const styles = {
   }
 }
 
+
 const ClassContent = ({
   classes, classroom, period, meetings, professors,
   discipline, labelButtonAction, action
 }) => {
+
+  function dispatchAction() {
+    action(discipline, classroom);
+  }
 
   return (
     <Grid container className={classes.root} justify="center">
@@ -147,7 +152,7 @@ const ClassContent = ({
             <CardButton
               titleButton={labelButtonAction}
               buttonColor="secondary"
-              onClickSubmitButton={action}
+              onClickSubmitButton={dispatchAction}
             />
           </Box>
         </Box>
