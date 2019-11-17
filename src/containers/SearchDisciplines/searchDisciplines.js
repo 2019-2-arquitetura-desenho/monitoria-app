@@ -6,7 +6,6 @@ import { withStyles } from "@material-ui/core/styles";
 import {
   Typography,
   Container,
-  Divider,
   MuiThemeProvider,
   createMuiTheme,
   Box,
@@ -49,8 +48,23 @@ class SearchDisciplines extends React.Component {
     } = this.props;
 
     if (!profileData.is_professor) {
-      let disciplines = await getDisciplines(this.props.token);
+      let response = await getDisciplines(this.props.token);
+      let disciplines = response.responseData;
+      let error = response.responseError;
+
       this.setState({ disciplines: disciplines });
+
+      if (error === 'Error: Network Error') {
+        this.setState({
+          mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
+          loading: false
+        });
+      } else if (error != undefined) {
+        this.setState({
+          mainError: "Erro Interno ou conexão expirada. Refaça o Login.",
+          loading: false
+        });
+      }
     }
   }
 
@@ -82,6 +96,25 @@ class SearchDisciplines extends React.Component {
     this.forceUpdate();
   }
 
+  testListDisciplines() {
+    let classrooms = [
+      {
+        name: 'E',
+        shift: 'Diurno',
+        discipline: {
+          name: 'Pratica de Eletronica Digital 1',
+          code: '11111000'
+        },
+        professors: [
+          "Guilhermo Alvares"
+        ],
+        period: {
+          initial_time: '201'
+        }
+      }
+    ]
+  }
+
   renderDisciplines() {
     const {
       profileData
@@ -97,9 +130,6 @@ class SearchDisciplines extends React.Component {
         ));
       }
 
-
-      console.log("text search: ", this.state.searchDisciplines)
-      console.log("filtered: ", filteredDisciplines)
       if (filteredDisciplines) {
         return (
           <DisciplinesList
@@ -141,13 +171,14 @@ class SearchDisciplines extends React.Component {
                 <Typography
                   variant="h5"
                   className={classes.title}>
+                  {/* <MainError error={this.state.mainError} /> */}
                   <InputSearch
                     onChange={this.handleInputSearch}
                     onPress={this.searchDisciplines}
                   />
                 </Typography>
               </Grid>
-              <Box className={classes.boxHelpLabel}>
+              <Box className={classes.boxHelpLabel} align="center">
                 <Box className={classes.mainErrorBox}>
                   <MainError error={mainError} />
                 </Box>
@@ -198,8 +229,9 @@ const styles = {
   },
   boxHelpLabel: {
     display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center'
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%'
   },
   mainErrorBox: {
     display: 'flex',

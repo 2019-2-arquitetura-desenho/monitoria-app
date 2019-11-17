@@ -5,8 +5,8 @@ export async function getDisciplines(token, idStudent) {
   let url = host_api + `/get_disciplines/`;
   let dataToSend = { token };
 
-
   let responseData;
+  let responseError;
 
   await axios.post(
     url,
@@ -15,13 +15,14 @@ export async function getDisciplines(token, idStudent) {
     responseData = response.data
   }).catch(error => {
     if (!error.response) {
-      responseData = 'Error: Network Error'
+      responseError = 'Error: Network Error'
     } else {
-      responseData = error.response;
+      responseError = error.response;
     }
   });
 
-  return responseData;
+  console.log("error fetch return: ", responseError)
+  return { responseData, responseError };
 }
 
 export function registerInDiscipline(token, idStudent, idDiscipline) {
