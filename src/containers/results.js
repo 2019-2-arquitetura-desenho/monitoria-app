@@ -2,7 +2,14 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import MainError from './components/MainError/mainError';
-import { 
+import SubmitButton from './components/SubmitButton/submitButton';
+ 
+import {
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    DialogActions,
+    DialogContentText, 
     MuiThemeProvider,
     FormControl,
     InputLabel,
@@ -18,6 +25,7 @@ import {
     TableRow,
     TableCell,    
     TableBody,
+    Button,
 } from '@material-ui/core';
 
 import {
@@ -43,11 +51,20 @@ class Results extends React.Component {
             dataTables: [],
 
             material:'',
+            inscrito:'',
             dataChoice:[],
+            nota:'',
+            listaNotas:[0,1,2,3,4,5],
+
+            isDialogConfirmOpen: false
         }
         
         //this.ranking = this.ranking.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeInscrito = this.handleChangeInscrito.bind(this);
+        this.handleChangeNota = this.handleChangeNota.bind(this);
+        this.onSubmitConfirm = this.onSubmitConfirm.bind(this);
+        this.onCloseDialogConfirm = this.onCloseDialogConfirm.bind(this);
     }
 
     componentDidMount() {
@@ -76,7 +93,7 @@ class Results extends React.Component {
                     });
                 } else {
                     data.forEach(element => {
-                        materialList.push(element.materia);
+                        materialList.push(element.materia + ' - ' + element.turma);
                     });
                     
                     this.setState({
@@ -99,14 +116,38 @@ class Results extends React.Component {
             console.log(error);
 
             this.props.getProfile(this.props.token);
-            
             if (this.props.profileData){
                 if (this.props.profileData.is_professor){
-                    this.setState({
-                        isStudent: false,
-                    });
-    
                     // Requisição
+                    axios.post(
+                        'http://localhost:9000/home',
+                        // host_api, '/get_rankings',
+                        {
+                            token: this.props.token
+                        }
+                    ).then(response => {
+                        const data = response.data.data;
+
+                        var materialList = [];
+
+                         
+                        data.forEach(element => {
+                            materialList.push(element.materia + ' - ' + element.turma);
+                        });
+
+                        this.setState({
+                            materialList: materialList,
+                            dataTables: data,
+                            isStudent: false,
+                        });
+                        
+                    }).catch(error => {
+                        console.log(error)
+
+                        this.setState({
+                            mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde."
+                        })
+                    });
                 } else {
                     this.setState({
                         mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde."
@@ -130,8 +171,13 @@ class Results extends React.Component {
     handleChange(event) {
         let dataChoice = []
         this.state.dataTables.forEach(element =>{
-            if(element.materia === event.target.value){
-                dataChoice = element.ranking;
+            if((element.materia + ' - ' + element.turma) === event.target.value){
+                if(this.state.isStudent === true){
+                    dataChoice = element.ranking;
+                }
+                else{
+                    dataChoice = element.inscritos;
+                }
             }
         })
 
@@ -141,10 +187,23 @@ class Results extends React.Component {
         })
     }
 
+    handleChangeInscrito(event){
+        
+        this.setState({
+            inscrito: event.target.value
+        })
+    }
+    handleChangeNota(event){
+
+        this.setState({
+            nota:event.target.value
+        })
+    }
+
     tableContent(count,nome,matr,pontu) {
         if(matr !== this.state.matricula){
             return (
-                <TableRow key={matr}>
+                <TableRow key={count}>
                     <TableCell align="center" scope="row">
                         {count++}
                     </TableCell>
@@ -156,7 +215,7 @@ class Results extends React.Component {
         }
         else {
             return (
-                <TableRow key={matr}>
+                <TableRow key={count}>
                     <TableCell align="center" scope="row">
                         <b>{count++}</b>
                     </TableCell>
@@ -165,6 +224,89 @@ class Results extends React.Component {
                     <TableCell align="center"><b>{pontu}</b></TableCell>
                 </TableRow>
             );
+        }
+    }
+
+
+    onCloseDialogConfirm(){
+
+        this.setState({
+            isDialogConfirmOpen:false
+        })
+    }
+
+    onSubmitConfirm(){
+        
+        this.setState({
+            isDialogConfirmOpen:true
+        });
+
+    }
+
+    confirmButton(){
+        if(this.state.nota !==''){
+            
+            return (
+                <SubmitButton
+                onClickSubmitButton = {this.onSubmitConfirm}
+                buttonColor='secondary'
+                titleButton = 'Confirmar'
+                ></SubmitButton>
+            )
+        }
+        else{
+            return <div></div>
+        }
+    }
+    selectGrade(){
+        if(this.state.inscrito !==''){
+            return(
+                <FormControl style={{ marginTop: '2%', width: "84%", marginLeft: "8%", marginRight: "8%" }}>
+                    <InputLabel id="demo-simple-select-label">Escolha a nota</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={this.state.nota}
+                        onChange={this.handleChangeNota}
+                    >
+                        {this.state.listaNotas.map((element) => {
+                            return <MenuItem value={element}>
+                                {element}
+                            </MenuItem>
+                        })
+                        }
+                    </Select>
+                </FormControl>
+            )
+        }
+        else{
+            return <div></div>
+        }
+    }
+
+    selectStudent(){
+        if(this.state.material!==''){
+            return (
+                <FormControl style={{ marginTop: '2%', width: "84%", marginLeft: "8%", marginRight: "8%" }}>
+                    <InputLabel id="demo-simple-select-label">Escolha o aluno</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={this.state.inscrito}
+                        onChange={this.handleChangeInscrito}
+                    >
+                        {this.state.dataChoice.map((element) => {
+                            return <MenuItem value= {element[0] + ' - ' + element[1]}>
+                                {element[0]} - {element[1]}
+                            </MenuItem>
+                        })
+                        }
+                    </Select>
+                </FormControl>
+                )
+        }
+        else{
+            return <div></div>
         }
     }
     
@@ -218,8 +360,72 @@ class Results extends React.Component {
                     </React.Fragment>
                 );
             }
+            
         } else if (this.state.isStudent === false){
-            return <div>Tela professor</div>
+            //tela professor
+            
+            return (
+                <React.Fragment>
+                    <FormControl style={{ marginTop: '2%', width: "84%", marginLeft: "8%", marginRight: "8%" }}>
+                        <InputLabel id="demo-simple-select-label">Escolha a matéria</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={this.state.material}
+                            onChange={this.handleChange}
+                        >
+                            {this.state.materialList.map((element) => {
+                                return <MenuItem value={element}>
+                                    {element}
+                                </MenuItem>
+                            })
+                            }
+                        </Select>
+                        
+                    </FormControl>
+                    {this.selectStudent()}
+                    {this.selectGrade()}
+                    {this.confirmButton()}
+                    <Dialog
+                        fullWidth={true}
+                        maxWidth="sm"
+                        open={this.state.isDialogConfirmOpen}
+                        onClose={this.onCloseDialogConfirm}
+                        aria-labelledby="max-width-dialog-title"
+                        aria-describedby="max-width-dialog-description"
+                    >
+                        <DialogTitle id="max-width-dialog-title">
+                            Confirmar Indicação
+                                    </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText
+                                id="max-width-dialog-description"
+                            >   
+                                <b>Atenção! Essa indicação é irreversível.</b><br></br>
+                                Disciplina: {this.state.material}<br></br>
+                                Aluno: {this.state.inscrito}<br></br>
+                                Nota: {this.state.nota}<br></br>
+                            </DialogContentText>
+
+                            <DialogActions>
+                                <Button
+                                    onClick={this.onCloseDialogConfirm}
+                                    color="primary"
+                                >
+                                    Cancelar
+                                            </Button>
+
+                                <Button
+                                    onClick={this.onClickConfirm}
+                                    color="secondary"
+                                >
+                                    Confirmar
+                                            </Button>
+                            </DialogActions>
+                        </DialogContent>
+                    </Dialog>
+                </React.Fragment>
+            );
         } else {
             return <div></div>
         }
