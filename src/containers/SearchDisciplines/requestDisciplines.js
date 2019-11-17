@@ -21,7 +21,6 @@ export async function getDisciplines(token, idStudent) {
     }
   });
 
-  console.log("error fetch return: ", responseError)
   return { responseData, responseError };
 }
 

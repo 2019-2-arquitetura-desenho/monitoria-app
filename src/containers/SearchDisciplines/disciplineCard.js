@@ -62,7 +62,7 @@ const DisciplineCard = ({ classes, title, code, classrooms, onPress }) => {
               classroom={classroom.name}
               period={classroom.shift}
               meetings={classroom.meetings}
-              professors={classroom.teachers}
+              professors={classroom.professors}
               discipline={title}
               onPress={onPress}
             />

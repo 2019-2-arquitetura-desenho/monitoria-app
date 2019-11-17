@@ -48,16 +48,14 @@ class SearchDisciplines extends React.Component {
       profileData, logout, token
     } = this.props;
 
-    if (!profileData.is_professor) {
-      const tokenExpiredTest = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3RlNyIsImV4cCI6MTU3NDAwMDE1MSwiZW1haWwiOiJ0ZXN0ZTdAZ21haWwuY29tIn0.pXyu-VRACjgNQ267EsCdrPfoKnTvJEqKnNvf2db489s`
-      let response = await getDisciplines(token);
-      let disciplines = response.responseData;
-      let error = response.responseError;
+    const tokenExpiredTest = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3RlNyIsImV4cCI6MTU3NDAwMDE1MSwiZW1haWwiOiJ0ZXN0ZTdAZ21haWwuY29tIn0.pXyu-VRACjgNQ267EsCdrPfoKnTvJEqKnNvf2db489s`
+    let response = await getDisciplines(token);
+    let disciplines = response.responseData;
+    let error = response.responseError;
 
-      this.setState({ disciplines: disciplines });
+    this.setState({ disciplines: disciplines });
 
-      this.verifyErrors(error)
-    }
+    this.verifyErrors(error)
   }
 
   verifyErrors(error) {
@@ -70,7 +68,6 @@ class SearchDisciplines extends React.Component {
         mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
         loading: false
       });
-      console.log("ERROR: ", error.non_field_errors[0])
     } else if (error && error.non_field_errors[0] === "Signature has expired.") {
       this.setState({
         mainError: error.non_field_errors,
@@ -114,41 +111,29 @@ class SearchDisciplines extends React.Component {
     this.forceUpdate();
   }
 
-  testListDisciplines() {
-    let classrooms = [
-      {
-        name: 'E',
-        shift: 'Diurno',
-        discipline: {
-          name: 'Pratica de Eletronica Digital 1',
-          code: '11111000'
-        },
-        professors: [
-          "Guilhermo Alvares"
-        ],
-        period: {
-          initial_time: '201'
-        }
-      }
-    ]
-  }
-
   renderDisciplines() {
     const {
       profileData
     } = this.props;
 
-    if (!profileData.is_professor) {
-      let filteredDisciplines;
-      if (this.state.disciplines) {
-        filteredDisciplines = this.state.disciplines.disciplines.filter(discipline => (
-          discipline.name.normalize('NFD').
-            replace(/[\u0300-\u036f]/g, "").
-            toLowerCase().includes(this.state.searchDisciplines)
-        ));
+    let filteredDisciplines;
+    if (this.state.disciplines) {
+      filteredDisciplines = this.state.disciplines.filter(discipline => (
+        discipline.name.normalize('NFD').
+          replace(/[\u0300-\u036f]/g, "").
+          toLowerCase().includes(this.state.searchDisciplines)
+      ));
+      if (!this.state.disciplines.length) {
+        const textStudent = `O Estudante não possui nenhuma disciplina em que pode se matricular`;
+        const textProfessor = `O Professor não possui nenhuma disciplina ministrada no semestre`;
+        return (
+          <Typography color="secondary">{profileData.is_professor ? textProfessor : textStudent}</Typography>
+        );
       }
+    }
 
-      if (filteredDisciplines) {
+    if (filteredDisciplines) {
+      if (filteredDisciplines.length > 0) {
         return (
           <DisciplinesList
             disciplines={filteredDisciplines}
@@ -158,11 +143,15 @@ class SearchDisciplines extends React.Component {
       }
       else {
         return (
-          <div>
-            <CircularProgress color="secondary" align='center' />
-          </div>
+          <Typography color="secondary">Nenhuma Disciplina Encontrada</Typography>
         );
       }
+    } else {
+      return (
+        <div>
+          <CircularProgress color="secondary" align='center' />
+        </div>
+      );
     }
   }
 
@@ -189,7 +178,6 @@ class SearchDisciplines extends React.Component {
                 <Typography
                   variant="h5"
                   className={classes.title}>
-                  {/* <MainError error={this.state.mainError} /> */}
                   <InputSearch
                     onChange={this.handleInputSearch}
                     onPress={this.searchDisciplines}

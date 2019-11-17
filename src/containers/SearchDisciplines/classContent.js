@@ -149,7 +149,7 @@ const ClassContent = ({
               {
                 professors && professors.map((professor, index) => (
                   <Typography key={index} variant="subtitle2">
-                    {professor.name}
+                    {professor}
                   </Typography>
                 ))
               }

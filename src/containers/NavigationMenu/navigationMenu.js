@@ -76,10 +76,6 @@ class NavigationMenu extends React.Component {
     this.setState({ indicatorValue });
   };
 
-  // handleChangeDrawer(indicatorValue) {
-  //   this.setState({ indicatorValue });
-  // };
-
   componentDidMount() {
     this.rebuildMenu()
   }
