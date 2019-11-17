@@ -16,10 +16,10 @@ import {
   Box
 } from '@material-ui/core';
 
-import { ReactComponent as CheckedIcon } from '../../assets/checked.svg';
-import { ReactComponent as CancelIcon } from '../../assets/cancel.svg';
-import { ReactComponent as WarningIcon } from '../../assets/warning.svg';
-import CardButton from '../CardButton/cardButton';
+import { ReactComponent as CheckedIcon } from '../assets/checked.svg';
+import { ReactComponent as CancelIcon } from '../assets/cancel.svg';
+import { ReactComponent as WarningIcon } from '../assets/warning.svg';
+import CardButton from '../components/CardButton/cardButton';
 
 const styles = {
   dialogPaper: {

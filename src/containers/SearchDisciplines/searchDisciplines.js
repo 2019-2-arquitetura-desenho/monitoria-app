@@ -15,7 +15,7 @@ import {
 import MainError from '../components/MainError/mainError';
 import InputSearch from '../components/InputSearch/inputSearch';
 import DisciplinesList from './disciplinesList';
-import ConfirmationDialog from '../components/ConfirmationDialog/confirmationDialog';
+import ConfirmationDialog from './confirmationDialog';
 import { getDisciplines, registerInDiscipline } from './requestDisciplines';
 
 
