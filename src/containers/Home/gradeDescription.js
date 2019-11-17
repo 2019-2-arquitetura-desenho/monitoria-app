@@ -54,7 +54,7 @@ function GradeDescription(props) {
 								<br />
 							</Typography>
 							<Typography variant="h5">
-								{"0 ≤ A1, A2 ≤ 5"}
+								{"0 ≤ A1, A2 , A3 ≤ 5"}
 							</Typography>
 						</div>
 					</Grid>
