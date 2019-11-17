@@ -68,25 +68,8 @@ const styles = {
 
 const ClassContent = ({
   classes, classroom, period, meetings, professors,
-  onPress, discipline, labelButtonAction
+  discipline, labelButtonAction, action
 }) => {
-
-
-  const textSuccessSubscribe = () => {
-    return `Você foi inscrito na seleção para a monitoria de
-    ${discipline} tuma ${classroom}`;
-  }
-
-  const textWarningSubscribe = () => {
-    return `Você não tem os requisitos necessários para se
-      increver nessa monitoria. `;
-  }
-
-  const handleEventModal = () => {
-    let title = 'Sucesso';
-    let description = textSuccessSubscribe();
-    onPress(title, description, 'success')
-  }
 
   return (
     <Grid container className={classes.root} justify="center">
@@ -164,7 +147,7 @@ const ClassContent = ({
             <CardButton
               titleButton={labelButtonAction}
               buttonColor="secondary"
-              onClickSubmitButton={handleEventModal}
+              onClickSubmitButton={action}
             />
           </Box>
         </Box>

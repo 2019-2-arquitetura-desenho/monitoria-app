@@ -41,7 +41,7 @@ const styles = {
   }
 };
 
-const DisciplineCard = ({ classes, title, code, classrooms, onPress, labelButtonAction }) => {
+const DisciplineCard = ({ classes, title, code, classrooms, labelButtonAction, action }) => {
 
   return (
     <Paper className={classes.root}>
@@ -63,8 +63,8 @@ const DisciplineCard = ({ classes, title, code, classrooms, onPress, labelButton
               meetings={classroom.meetings}
               professors={classroom.professors}
               discipline={title}
-              onPress={onPress}
               labelButtonAction={labelButtonAction}
+              action={action}
             />
           ))}
         </CardContent>

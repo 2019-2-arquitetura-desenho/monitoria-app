@@ -38,7 +38,6 @@ class SearchDisciplines extends React.Component {
 
     this.handleDialogClose = this.handleDialogClose.bind(this);
     this.handleActionInClassroom = this.handleActionInClassroom.bind(this);
-    this.handleDialogOpen = this.handleDialogOpen.bind(this);
     this.nextPathDialog = this.nextPathDialog.bind(this);
     this.handleInputSearch = this.handleInputSearch.bind(this);
     this.searchDisciplines = this.searchDisciplines.bind(this);
@@ -98,21 +97,30 @@ class SearchDisciplines extends React.Component {
     this.props.history.push(this.state.dialogConfirmPath);
   }
 
+  // textSuccessSubscribe() {
+  //   return `Você foi inscrito na seleção para a monitoria de
+  //   ${discipline} tuma ${classroom}`;
+  // }
+
+  textWarningSubscribe() {
+    return `Você não tem os requisitos necessários para se
+      increver nessa monitoria. `;
+  }
+
   handleActionInClassroom() {
-    const { profileData } = this.props;
-  }
-
-  handleDialogClose() {
-    this.setState({ dialogOpen: false })
-  }
-
-  handleDialogOpen(dialogTitle = '', dialogText = '', dialogType = '') {
+    const dialogText = this.textWarningSubscribe();
+    const dialogType = "success";
+    const dialogTitle = "Sucesso";
     this.setState({ dialogTitle: dialogTitle })
     this.setState({ dialogText: dialogText })
     this.setState({ dialogType: dialogType })
     if (dialogType === "success")
       this.setState({ dialogConfirmPath: '/results' })
-    this.setState({ dialogOpen: true })
+    this.setState({ dialogOpen: true });
+  }
+
+  handleDialogClose() {
+    this.setState({ dialogOpen: false })
   }
 
   handleInputSearch(textValue) {
@@ -149,8 +157,8 @@ class SearchDisciplines extends React.Component {
         return (
           <DisciplinesList
             disciplines={filteredDisciplines}
-            onPress={this.handleDialogOpen}
             labelButtonAction={this.state.textButtonClass}
+            action={this.handleActionInClassroom}
           />
         );
       }
