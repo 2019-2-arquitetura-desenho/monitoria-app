@@ -27,9 +27,6 @@ const FormStudent = (props) => {
     onChange, onSubmitName, updatingProfile,
   } = props;
 
-
-  const onPressChangePassword = () => {}
-
   const handleClickBtnName = (event) => {
     onSubmitName()
   }

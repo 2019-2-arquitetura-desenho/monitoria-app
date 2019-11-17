@@ -14,7 +14,6 @@ import {
   CssBaseline,
   Box,
   withStyles,
-  IconButton,
   Button,
   CircularProgress
 } from '@material-ui/core';
@@ -89,7 +88,7 @@ class PersonalInfos extends React.Component {
       const pdf_name = response.data.pdf_url.split(".com/")[1]
 
       if (this.props.profileData) {
-        console.log(this.props.profileData.is_professor);
+        // console.log(this.props.profileData.is_professor);
         this.setState({
           user: this.props.profileData.is_professor,
           pdf_name: pdf_name,
@@ -386,14 +385,12 @@ class PersonalInfos extends React.Component {
           <Grid item xs={12} sm={6}>
             <div style={{marginTop: "2%", marginBottom: "1%", marginLeft: "8%", marginRight:"8%"}}>
               <b style={{color:"#267cc1"}}>Histórico Escolar Atual</b>
-              <Typography style={{ display:"flex" }}>
-                <b>{this.state.pdf_name}</b>
-                <IconButton>
-                  <GetAppIcon
-                    style={{color: "#5e1dad", marginLeft:"3%"}}
-                    onClick={ this.handleClickDownloadActualFileUpload }
-                  />
-                </IconButton>
+              <Typography style={{ display:"flex", marginTop: "1%" }}>
+                <b>historico_escolar.pdf</b>
+                <GetAppIcon
+                  onClick={ this.handleClickDownloadActualFileUpload }
+                  style={{color: "#5e1dad", marginLeft:"3%"}}
+                />
               </Typography>
             </div>
             <FileSubmit
