@@ -28,13 +28,14 @@ class SearchDisciplines extends React.Component {
       searchDisciplines: '',
 
       textButtonClass: '',
-      dialogOpen: true,
-      dialogTitle: 'Cadastro',
-      dialogText: 'Prioridade para a disciplina:',
+      dialogOpen: false,
+      dialogTitle: '',
+      dialogText: '',
       dialogType: '',
       dialogPriority: true,
       dialogRangePriority: 10,
-      dialogConfirmPath: '',
+      disciplineSelected: undefined,
+      classroomSelected: undefined,
       mainError: ''
     }
 
@@ -44,6 +45,7 @@ class SearchDisciplines extends React.Component {
     this.handleInputSearch = this.handleInputSearch.bind(this);
     this.searchDisciplines = this.searchDisciplines.bind(this);
     this.verifyErrors = this.verifyErrors.bind(this);
+    this.handleConfirmDialog = this.handleConfirmDialog.bind(this);
   }
 
   async componentDidMount() {
@@ -95,8 +97,8 @@ class SearchDisciplines extends React.Component {
   componentDidUpdate() {
   }
 
-  nextPathDialog() {
-    this.props.history.push(this.state.dialogConfirmPath);
+  nextPathDialog(path) {
+    this.props.history.push(path);
   }
 
   textSuccessSubscribe(discipline, classroom) {
@@ -104,23 +106,37 @@ class SearchDisciplines extends React.Component {
     ${discipline} tuma ${classroom}`;
   }
 
-  async handleActionInClassroom(discipline, classroom) {
+  handleActionInClassroom(discipline, classroom) {
+    const dialogText = "Escolha a Prioridade para a Disciplina";
+    const dialogType = "success";
+    const dialogTitle = "Confirmação";
+    this.state.classroomSelected = classroom;
+    this.state.disciplineSelected = discipline;
+    this.state.dialogTitle = dialogTitle;
+    this.state.dialogText = dialogText;
+    this.state.dialogType = dialogType;
+    if (dialogType === "success")
+      this.setState({ dialogConfirmPath: '/results' })
+    this.setState({ dialogOpen: true });
+  }
+
+  async handleConfirmDialog(priority) {
     const {
       token
     } = this.props;
 
-    let response = await registerInDiscipline(token, discipline.code, classroom);
+    console.log("disciplina: ", this.state.disciplineSelected);
+    console.log("classroom: ", this.state.classroomSelected);
 
+    let response = await registerInDiscipline(
+      token,
+      this.state.disciplineSelected.code,
+      this.state.classroomSelected,
+      priority
+    );
+    console.log("Response: ", response);
     if (response.status === 200) {
-      const dialogText = this.textSuccessSubscribe(discipline.title, classroom);
-      const dialogType = "success";
-      const dialogTitle = "Sucesso";
-      this.setState({ dialogTitle: dialogTitle })
-      this.setState({ dialogText: dialogText })
-      this.setState({ dialogType: dialogType })
-      if (dialogType === "success")
-        this.setState({ dialogConfirmPath: '/results' })
-      this.setState({ dialogOpen: true });
+      this.nextPathDialog('/results')
     }
 
   }
@@ -199,7 +215,7 @@ class SearchDisciplines extends React.Component {
                 title={this.state.dialogTitle}
                 description={this.state.dialogText}
                 type={this.state.dialogType}
-                handlePressButton={this.nextPathDialog}
+                handlePressButton={this.handleConfirmDialog}
                 hasSelect={this.state.dialogPriority}
                 rangeSelect={this.state.dialogRangePriority}
               />

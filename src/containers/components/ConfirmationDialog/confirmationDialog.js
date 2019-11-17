@@ -65,33 +65,39 @@ function ConfirmationDialog({
   type, handlePressButton, hasSelect, rangeSelect
 }) {
 
-  const [age, setAge] = React.useState('');
+  const [priority, setPriority] = React.useState('');
 
   const handleChangeSelect = event => {
-    setAge(event.target.value);
+    setPriority(event.target.value);
   };
 
   const renderSelect = () => {
-    let options = [];
-    for (let i = 1; i <= rangeSelect; i++) {
-      options.push(i);
-    }
+    if (hasSelect) {
+      let options = [];
+      for (let i = 1; i <= rangeSelect; i++) {
+        options.push(i);
+      }
 
-    return (
-      <FormControl className={classes.formControl}>
-        <Select
-          id="demo-simple-select"
-          value={age}
-          onChange={handleChangeSelect}
-        >
-          {
-            options.map((option, index) => (
-              <MenuItem key={index} value={option}>{option}</MenuItem>
-            ))
-          }
-        </Select>
-      </FormControl>
-    );
+      return (
+        <FormControl className={classes.formControl}>
+          <Select
+            id="demo-simple-select"
+            value={priority}
+            onChange={handleChangeSelect}
+          >
+            {
+              options.map((option, index) => (
+                <MenuItem key={index} value={option}>{option}</MenuItem>
+              ))
+            }
+          </Select>
+        </FormControl>
+      );
+    } else {
+      return (
+        <div></div>
+      );
+    }
   }
 
   const renderStatusIcon = () => {
@@ -103,6 +109,10 @@ function ConfirmationDialog({
       return <div></div>
   }
 
+  const prepareHandlePressButton = () => {
+    handlePressButton(priority);
+  }
+
 
   const renderConfirmButton = () => {
     if (type === "success")
@@ -110,7 +120,7 @@ function ConfirmationDialog({
         <CardButton
           titleButton="Acessar Ranking"
           buttonColor="secondary"
-          onClickSubmitButton={handlePressButton}
+          onClickSubmitButton={prepareHandlePressButton}
         />
       );
     else
