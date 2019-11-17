@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-
+import MainError from './components/MainError/mainError';
 import { 
     MuiThemeProvider,
     FormControl,
@@ -25,7 +25,6 @@ import {
     restartGetProfile
 } from '../store/actions';
 
-import MainError from '../components/MainError/mainError';
 
 
 const host_api = process.env.REACT_APP_URL_API;
@@ -47,7 +46,7 @@ class Results extends React.Component {
             dataChoice:[],
         }
         
-        this.ranking = this.ranking.bind(this);
+        //this.ranking = this.ranking.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -61,7 +60,7 @@ class Results extends React.Component {
             const matricula = response.data.matricula;
 
             axios.post(
-                'http://localhost:8000/home',
+                'http://localhost:2000/home',
                 // host_api, '/get_rankings',
                 {
                     token: this.props.token
@@ -145,24 +144,24 @@ class Results extends React.Component {
     tableContent(count,nome,matr,pontu) {
         if(matr !== this.state.matricula){
             return (
-                <TableRow key={nome}>
+                <TableRow key={matr}>
                     <TableCell align="center" scope="row">
                         {count++}
                     </TableCell>
-                    <TableCell align="center">{nome}</TableCell>
                     <TableCell align="center">{matr}</TableCell>
+                    <TableCell align="center">{nome}</TableCell>
                     <TableCell align="center">{pontu}</TableCell>
                 </TableRow>
             );
         }
         else {
             return (
-                <TableRow key={nome}>
+                <TableRow key={matr}>
                     <TableCell align="center" scope="row">
                         <b>{count++}</b>
                     </TableCell>
-                    <TableCell align="center" ><b>{nome}</b></TableCell>
                     <TableCell align="center"><b>{matr}</b></TableCell>
+                    <TableCell align="center" ><b>{nome}</b></TableCell>
                     <TableCell align="center"><b>{pontu}</b></TableCell>
                 </TableRow>
             );
@@ -203,8 +202,8 @@ class Results extends React.Component {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell align="center">Posição</TableCell>
-                                        <TableCell align="center">Nome</TableCell>
                                         <TableCell align="center">Matrícula</TableCell>
+                                        <TableCell align="center">Nome</TableCell>
                                         <TableCell align="center">Pontuação</TableCell>
                                     </TableRow>
                                 </TableHead>
