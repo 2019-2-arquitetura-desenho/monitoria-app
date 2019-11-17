@@ -17,7 +17,7 @@ export async function getDisciplines(token, idStudent) {
     if (!error.response) {
       responseError = 'Error: Network Error'
     } else {
-      responseError = error.response;
+      responseError = error.response ? error.response.data : error;
     }
   });
 

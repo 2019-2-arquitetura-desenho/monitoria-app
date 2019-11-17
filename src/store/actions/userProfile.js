@@ -66,7 +66,7 @@ export function getProfile(token) {
   let dataToSend = {
     token
   };
-  
+
   return async function (dispatch) {
     axios.post(
       url,

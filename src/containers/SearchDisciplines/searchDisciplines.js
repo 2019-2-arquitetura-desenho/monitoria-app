@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getProfile, getStudent } from '../../store/actions';
+import { getProfile, getStudent, logout } from '../../store/actions';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -40,31 +40,49 @@ class SearchDisciplines extends React.Component {
     this.nextPathDialog = this.nextPathDialog.bind(this);
     this.handleInputSearch = this.handleInputSearch.bind(this);
     this.searchDisciplines = this.searchDisciplines.bind(this);
+    this.verifyErrors = this.verifyErrors.bind(this);
   }
 
   async componentDidMount() {
     const {
-      profileData
+      profileData, logout, token
     } = this.props;
 
     if (!profileData.is_professor) {
-      let response = await getDisciplines(this.props.token);
+      const tokenExpiredTest = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3RlNyIsImV4cCI6MTU3NDAwMDE1MSwiZW1haWwiOiJ0ZXN0ZTdAZ21haWwuY29tIn0.pXyu-VRACjgNQ267EsCdrPfoKnTvJEqKnNvf2db489s`
+      let response = await getDisciplines(token);
       let disciplines = response.responseData;
       let error = response.responseError;
 
       this.setState({ disciplines: disciplines });
 
-      if (error === 'Error: Network Error') {
-        this.setState({
-          mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
-          loading: false
-        });
-      } else if (error != undefined) {
-        this.setState({
-          mainError: "Erro Interno ou conexão expirada. Refaça o Login.",
-          loading: false
-        });
-      }
+      this.verifyErrors(error)
+    }
+  }
+
+  verifyErrors(error) {
+    const {
+      logout
+    } = this.props;
+
+    if (error === 'Error: Network Error') {
+      this.setState({
+        mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
+        loading: false
+      });
+      console.log("ERROR: ", error.non_field_errors[0])
+    } else if (error && error.non_field_errors[0] === "Signature has expired.") {
+      this.setState({
+        mainError: error.non_field_errors,
+        loading: false
+      });
+      logout();
+    }
+    else if (error) {
+      this.setState({
+        mainError: "Erro na Busca das Disciplinas.",
+        loading: false
+      });
     }
   }
 
@@ -274,7 +292,7 @@ function mapStateToProps(state) {
 
 export const SearchDisciplinesContainer = connect(
   mapStateToProps,
-  { getProfile, getStudent, getDisciplines },
+  { getProfile, getStudent, logout },
 )(withStyles(styles, { withTheme: true })(SearchDisciplines))
 
 export default SearchDisciplinesContainer;
