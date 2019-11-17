@@ -250,7 +250,7 @@ PersonalInfos.propTypes = {
 const styles = theme => ({
   root: {
     backgroundColor: '#42a0ed',
-    height: '100vh',
+    minHeight: '100vh',
     paddingTop: theme.spacing(3),
   },
   container: {

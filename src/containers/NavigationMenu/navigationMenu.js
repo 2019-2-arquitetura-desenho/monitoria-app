@@ -22,7 +22,7 @@ const styles = theme => ({
   root: {
     ...theme.mixins.toolbar,
     flexGrow: 1,
-    backgroundColor: '#42a0ed'
+    backgroundColor: '#267cc1'
   },
   appBar: {
     background: 'transparent',
@@ -35,7 +35,7 @@ const styles = theme => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingTop: theme.spacing(1),
-    backgroundColor: '#42a0ed'
+    backgroundColor: '#267cc1'
   },
   title: {
     display: 'flex',
@@ -45,7 +45,7 @@ const styles = theme => ({
   },
   tabs: {
     minHeight: 0,
-    backgroundColor: '#42a0ed'
+    backgroundColor: '#267cc1'
   },
   tab: {
     minWidth: 100,
@@ -69,6 +69,7 @@ class NavigationMenu extends React.Component {
     this.handleIndicator = this.handleIndicator.bind(this);
     this.renderTab = this.renderTab.bind(this);
     this.renderButton = this.renderButton.bind(this);
+    this.blackList = this.blackList.bind(this);
   }
 
   handleChange(event, indicatorValue) {
@@ -84,6 +85,7 @@ class NavigationMenu extends React.Component {
   }
 
   componentDidUpdate() {
+    // Nao apague, gera um warning em getSnapshotBeforeUpdate
   }
 
   getSnapshotBeforeUpdate() {
@@ -94,7 +96,7 @@ class NavigationMenu extends React.Component {
   rebuildMenu() {
     let menuList = this.menuList();
     let indicatorValue = this.handleIndicator(menuList);
-    if (indicatorValue != this.state.indicatorValue)
+    if (indicatorValue !== this.state.indicatorValue)
       this.setState({
         indicatorValue: indicatorValue
       })
@@ -125,13 +127,13 @@ class NavigationMenu extends React.Component {
       location
     } = this.props;
     let indicatorValue = null;
-    if (location.pathname == '/' || menuList.length == 0)
+    if (location.pathname === '/' || menuList.length === 0)
       indicatorValue = 0;
     else
       indicatorValue = menuList.map(pathMenu =>
         (pathMenu.path)
       ).indexOf(location.pathname);
-    if (indicatorValue == -1) indicatorValue = 0;
+    if (indicatorValue === -1) indicatorValue = 0;
     return indicatorValue;
   }
 
@@ -158,9 +160,16 @@ class NavigationMenu extends React.Component {
     }
   }
 
+  blackList() {
+    const {
+      location
+    } = this.props;
+    return location.pathname === '/entrar';
+  }
+
   renderButton() {
     const {
-      isAuthenticated, classes, logout
+      isAuthenticated, logout
     } = this.props;
     if (isAuthenticated) {
       return (
@@ -178,32 +187,35 @@ class NavigationMenu extends React.Component {
   }
 
   render() {
-    const { classes, logout } = this.props
-
-    return (
-      <div className={classes.root}>
-        <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar className={classes.toolbar}>
-            <Box className={classes.title}>
-              <Hidden mdUp implementation="css">
-                <ResponsiveDrawer
-                  changeIndicator={this.handleChangeDrawer}
-                />
+    const { classes } = this.props
+    if (this.blackList()) {
+      return <div></div>
+    } else {
+      return (
+        <div className={classes.root}>
+          <AppBar position="fixed" className={classes.appBar}>
+            <Toolbar className={classes.toolbar}>
+              <Box className={classes.title}>
+                <Hidden mdUp implementation="css">
+                  <ResponsiveDrawer
+                    changeIndicator={this.handleChangeDrawer}
+                  />
+                </Hidden>
+                <Button component={Link} to="/">
+                  <img alt="logo" id="logo" src={logo} style={{ width: '30px', height: '30px' }} />
+                  <Typography style={{ marginLeft: '10px' }} variant="h6" id="titlePart1">Monitoria</Typography>
+                  <Typography variant="h6" id="titlePart2">FGA</Typography>
+                </Button>
+              </Box>
+              <Hidden smDown implementation="css">
+                {this.renderTab()}
               </Hidden>
-              <Button component={Link} to="/">
-                <img alt="logo" id="logo" src={logo} style={{ width: '30px', height: '30px' }} />
-                <Typography style={{ marginLeft: '10px' }} variant="h6" id="titlePart1">Monitoria</Typography>
-                <Typography variant="h6" id="titlePart2">FGA</Typography>
-              </Button>
-            </Box>
-            <Hidden smDown implementation="css">
-              {this.renderTab()}
-            </Hidden>
-            {this.renderButton()}
-          </Toolbar>
-        </AppBar>
-      </div>
-    );
+              {this.renderButton()}
+            </Toolbar>
+          </AppBar>
+        </div>
+      );
+    }
   }
 }
 

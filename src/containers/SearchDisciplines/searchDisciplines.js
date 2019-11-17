@@ -4,13 +4,13 @@ import { getProfile, getStudent } from '../../store/actions';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import {
-  Grid,
   Typography,
   Container,
   Divider,
   MuiThemeProvider,
   createMuiTheme,
   Box,
+  Grid,
   CircularProgress
 } from '@material-ui/core';
 import MainError from '../components/MainError/mainError';
@@ -80,7 +80,7 @@ class SearchDisciplines extends React.Component {
   renderDisciplines() {
     let filteredDisciplines;
     if (this.state.disciplines) {
-      filteredDisciplines = this.state.disciplines.filter(discipline => (
+      filteredDisciplines = this.state.disciplines.disciplines.filter(discipline => (
         discipline.name.normalize('NFD').
           replace(/[\u0300-\u036f]/g, "").
           toLowerCase().includes(this.state.searchDisciplines)
