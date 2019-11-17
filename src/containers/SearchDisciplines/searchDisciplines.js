@@ -44,8 +44,14 @@ class SearchDisciplines extends React.Component {
   }
 
   async componentDidMount() {
-    let disciplines = await getDisciplines(this.props.token);
-    this.setState({ disciplines: disciplines });
+    const {
+      profileData
+    } = this.props;
+
+    if (!profileData.is_professor) {
+      let disciplines = await getDisciplines(this.props.token);
+      this.setState({ disciplines: disciplines });
+    }
   }
 
   componentDidUpdate() {
@@ -78,27 +84,34 @@ class SearchDisciplines extends React.Component {
   }
 
   renderDisciplines() {
-    let filteredDisciplines;
-    if (this.state.disciplines) {
-      filteredDisciplines = this.state.disciplines.disciplines.filter(discipline => (
-        discipline.name.normalize('NFD').
-          replace(/[\u0300-\u036f]/g, "").
-          toLowerCase().includes(this.state.searchDisciplines)
-      ));
-    }
+    const {
+      profileData
+    } = this.props;
 
-    if (filteredDisciplines) {
-      return (
-        <DisciplinesList
-          disciplines={filteredDisciplines}
-          onPress={this.handleDialogOpen}
-        />
-      );
-    }
-    else {
-      return (
-        <CircularProgress color="secondary" align='center' />
-      );
+    console.log("is_professor RENDER: ", profileData.is_professor)
+    if (!profileData.is_professor) {
+      let filteredDisciplines;
+      if (this.state.disciplines) {
+        filteredDisciplines = this.state.disciplines.disciplines.filter(discipline => (
+          discipline.name.normalize('NFD').
+            replace(/[\u0300-\u036f]/g, "").
+            toLowerCase().includes(this.state.searchDisciplines)
+        ));
+      }
+
+      if (filteredDisciplines) {
+        return (
+          <DisciplinesList
+            disciplines={filteredDisciplines}
+            onPress={this.handleDialogOpen}
+          />
+        );
+      }
+      else {
+        return (
+          <CircularProgress color="secondary" align='center' />
+        );
+      }
     }
   }
 

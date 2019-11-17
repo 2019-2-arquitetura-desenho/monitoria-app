@@ -109,6 +109,8 @@ class NavigationMenu extends React.Component {
 
     let is_professor = profileData ? profileData.is_professor : false;
 
+    console.log("is_professor: ", is_professor)
+
     let list = [
       { label: 'Página Inicial', path: '/home', value: 0 },
       { label: 'Informações Pessoais', path: '/personal-infos', value: 1 },
