@@ -68,8 +68,9 @@ const styles = {
 
 const ClassContent = ({
   classes, classroom, period, meetings, professors,
-  onPress, discipline
+  onPress, discipline, labelButtonAction
 }) => {
+
 
   const textSuccessSubscribe = () => {
     return `Você foi inscrito na seleção para a monitoria de
@@ -161,7 +162,7 @@ const ClassContent = ({
         <Box className={classes.cardFooterRow}>
           <Box className={classes.buttonBox}>
             <CardButton
-              titleButton="Inscrever-se para a Monitoria"
+              titleButton={labelButtonAction}
               buttonColor="secondary"
               onClickSubmitButton={handleEventModal}
             />

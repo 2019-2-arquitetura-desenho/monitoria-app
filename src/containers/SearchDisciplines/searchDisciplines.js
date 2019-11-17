@@ -27,6 +27,7 @@ class SearchDisciplines extends React.Component {
       disciplines: undefined,
       searchDisciplines: '',
 
+      textButtonClass: '',
       dialogOpen: false,
       dialogTitle: '',
       dialogText: '',
@@ -36,6 +37,7 @@ class SearchDisciplines extends React.Component {
     }
 
     this.handleDialogClose = this.handleDialogClose.bind(this);
+    this.handleActionInClassroom = this.handleActionInClassroom.bind(this);
     this.handleDialogOpen = this.handleDialogOpen.bind(this);
     this.nextPathDialog = this.nextPathDialog.bind(this);
     this.handleInputSearch = this.handleInputSearch.bind(this);
@@ -45,8 +47,14 @@ class SearchDisciplines extends React.Component {
 
   async componentDidMount() {
     const {
-      profileData, logout, token
+      profileData, token
     } = this.props;
+
+    if (profileData.is_professor) {
+      this.setState({ textButtonClass: "Verificar Ranking" });
+    } else {
+      this.setState({ textButtonClass: "Inscrever-se para a Monitoria" });
+    }
 
     const tokenExpiredTest = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3RlNyIsImV4cCI6MTU3NDAwMDE1MSwiZW1haWwiOiJ0ZXN0ZTdAZ21haWwuY29tIn0.pXyu-VRACjgNQ267EsCdrPfoKnTvJEqKnNvf2db489s`
     let response = await getDisciplines(token);
@@ -88,6 +96,10 @@ class SearchDisciplines extends React.Component {
 
   nextPathDialog() {
     this.props.history.push(this.state.dialogConfirmPath);
+  }
+
+  handleActionInClassroom() {
+    const { profileData } = this.props;
   }
 
   handleDialogClose() {
@@ -138,6 +150,7 @@ class SearchDisciplines extends React.Component {
           <DisciplinesList
             disciplines={filteredDisciplines}
             onPress={this.handleDialogOpen}
+            labelButtonAction={this.state.textButtonClass}
           />
         );
       }
