@@ -11,7 +11,7 @@ import {
   Typography,
   FormControl,
   Select,
-  InputLabel,
+  CircularProgress,
   MenuItem,
   Box
 } from '@material-ui/core';
@@ -50,6 +50,13 @@ const styles = {
   formControl: {
     minWidth: 120,
   },
+  isLoading: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    height: "100vh",
+    alignItems: 'center'
+  }
 }
 
 
@@ -66,6 +73,7 @@ function ConfirmationDialog({
 }) {
 
   const [priority, setPriority] = React.useState('');
+  const [isLoading, setLoading] = React.useState(false);
 
   const handleChangeSelect = event => {
     setPriority(event.target.value);
@@ -110,6 +118,7 @@ function ConfirmationDialog({
   }
 
   const prepareHandlePressButton = () => {
+    setLoading(true);
     handlePressButton(priority);
   }
 
@@ -127,6 +136,32 @@ function ConfirmationDialog({
       return (
         <div></div>
       );
+  }
+
+  const renderContent = () => {
+    if (isLoading) {
+      return (
+        <div style={styles.isLoading}>
+          <CircularProgress color="secondary" align="center" />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <DialogContent align="center">
+            <DialogContentText id="alert-dialog-slide-description" align="center" color="primary">
+              {description}
+            </DialogContentText>
+            {renderSelect()}
+          </DialogContent>
+          <DialogActions className={classes.dialogActions}>
+            <Box width="50" alignSelf="center">
+              {renderConfirmButton()}
+            </Box>
+          </DialogActions>
+        </div>
+      );
+    }
   }
 
   return (
@@ -151,17 +186,7 @@ function ConfirmationDialog({
             </Button>
           </Typography>
         </DialogTitle>
-        <DialogContent align="center">
-          <DialogContentText id="alert-dialog-slide-description" align="center" color="primary">
-            {description}
-          </DialogContentText>
-          {renderSelect()}
-        </DialogContent>
-        <DialogActions className={classes.dialogActions}>
-          <Box width="50" alignSelf="center">
-            {renderConfirmButton()}
-          </Box>
-        </DialogActions>
+        {renderContent()}
       </Dialog>
     </div >
   );

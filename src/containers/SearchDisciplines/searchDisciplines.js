@@ -115,9 +115,6 @@ class SearchDisciplines extends React.Component {
       token
     } = this.props;
 
-    console.log("disciplina: ", this.state.disciplineSelected);
-    console.log("classroom: ", this.state.classroomSelected);
-
     let response = await registerInDiscipline(
       token,
       this.state.disciplineSelected.code,
@@ -126,7 +123,7 @@ class SearchDisciplines extends React.Component {
     );
     console.log("Response: ", response);
     if (response.status === 200) {
-      this.nextPathDialog('/results')
+      this.nextPathDialog('/results');
     } else {
       this.verifyErrors(response.responseError, "Não Foi possível se inscrever!");
       this.setState({ dialogOpen: false });
