@@ -66,10 +66,10 @@ class SearchDisciplines extends React.Component {
 
     this.setState({ disciplines: disciplines });
 
-    this.verifyErrors(error)
+    this.verifyErrors(error, "Erro na Busca das Disciplinas")
   }
 
-  verifyErrors(error) {
+  verifyErrors(error, unknowError = "Erro Desconhecido") {
     const {
       logout
     } = this.props;
@@ -88,7 +88,7 @@ class SearchDisciplines extends React.Component {
     }
     else if (error) {
       this.setState({
-        mainError: "Erro na Busca das Disciplinas.",
+        mainError: unknowError,
         loading: false
       });
     }
@@ -137,6 +137,10 @@ class SearchDisciplines extends React.Component {
     console.log("Response: ", response);
     if (response.status === 200) {
       this.nextPathDialog('/results')
+    } else {
+      this.verifyErrors(response.responseError, "Não Foi possível se inscrever!");
+      this.setState({ dialogOpen: false });
+      window.scrollTo(0, 0);
     }
 
   }
