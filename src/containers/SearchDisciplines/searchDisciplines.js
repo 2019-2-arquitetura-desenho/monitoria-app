@@ -32,8 +32,6 @@ class SearchDisciplines extends React.Component {
       dialogTitle: '',
       dialogText: '',
       dialogType: '',
-      dialogPriority: true,
-      dialogRangePriority: 10,
       disciplineSelected: undefined,
       classroomSelected: undefined,
       mainError: ''
@@ -107,16 +105,8 @@ class SearchDisciplines extends React.Component {
   }
 
   handleActionInClassroom(discipline, classroom) {
-    const dialogText = "Escolha a Prioridade para a Disciplina";
-    const dialogType = "success";
-    const dialogTitle = "Confirmação";
     this.state.classroomSelected = classroom;
     this.state.disciplineSelected = discipline;
-    this.state.dialogTitle = dialogTitle;
-    this.state.dialogText = dialogText;
-    this.state.dialogType = dialogType;
-    if (dialogType === "success")
-      this.setState({ dialogConfirmPath: '/results' })
     this.setState({ dialogOpen: true });
   }
 
@@ -202,6 +192,27 @@ class SearchDisciplines extends React.Component {
     }
   }
 
+  renderDialogConfirm() {
+    const dialogText = "Escolha a Prioridade para a Disciplina";
+    const dialogType = "success";
+    const dialogTitle = "Confirmação";
+    const dialogPriority = true;
+    const dialogRangePriority = 10;
+
+    return (
+      <ConfirmationDialog
+        isOpen={this.state.dialogOpen}
+        handleClose={this.handleDialogClose}
+        title={dialogTitle}
+        description={dialogText}
+        type={dialogType}
+        handlePressButton={this.handleConfirmDialog}
+        hasSelect={dialogPriority}
+        rangeSelect={dialogRangePriority}
+      />
+    );
+  }
+
   render() {
     const { classes } = this.props;
     const {
@@ -213,16 +224,7 @@ class SearchDisciplines extends React.Component {
         <MuiThemeProvider theme={theme}>
           <Container component="div" maxWidth="md" className={classes.container} >
             <Grid container>
-              <ConfirmationDialog
-                isOpen={this.state.dialogOpen}
-                handleClose={this.handleDialogClose}
-                title={this.state.dialogTitle}
-                description={this.state.dialogText}
-                type={this.state.dialogType}
-                handlePressButton={this.handleConfirmDialog}
-                hasSelect={this.state.dialogPriority}
-                rangeSelect={this.state.dialogRangePriority}
-              />
+              {this.renderDialogConfirm()}
               <Grid container justify="center">
                 <Typography
                   variant="h5"
