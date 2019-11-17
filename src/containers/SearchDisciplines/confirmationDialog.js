@@ -18,7 +18,6 @@ import {
 
 import { ReactComponent as CheckedIcon } from '../assets/checked.svg';
 import { ReactComponent as CancelIcon } from '../assets/cancel.svg';
-import { ReactComponent as WarningIcon } from '../assets/warning.svg';
 import CardButton from '../components/CardButton/cardButton';
 
 const styles = {
@@ -54,7 +53,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    height: "100vh",
+    height: "100%",
     alignItems: 'center'
   }
 }
@@ -69,7 +68,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function ConfirmationDialog({
   classes, isOpen, handleClose, title, description,
-  type, handlePressButton, hasSelect, rangeSelect
+  handlePressButton, hasSelect, rangeSelect, context,
+  messageOnSuccess, actionButtonSuccess
 }) {
 
   const [priority, setPriority] = React.useState('');
@@ -89,7 +89,6 @@ function ConfirmationDialog({
       return (
         <FormControl className={classes.formControl}>
           <Select
-            id="demo-simple-select"
             value={priority}
             onChange={handleChangeSelect}
           >
@@ -109,12 +108,7 @@ function ConfirmationDialog({
   }
 
   const renderStatusIcon = () => {
-    if (type === "success")
-      return <CheckedIcon width={50} height={50} />;
-    else if (type === "warning")
-      return <WarningIcon width={50} height={50} />;
-    else
-      return <div></div>
+    return <CheckedIcon width={50} height={50} />;
   }
 
   const prepareHandlePressButton = () => {
@@ -124,22 +118,52 @@ function ConfirmationDialog({
 
 
   const renderConfirmButton = () => {
-    if (type === "success")
-      return (
-        <CardButton
-          titleButton="Acessar Ranking"
-          buttonColor="secondary"
-          onClickSubmitButton={prepareHandlePressButton}
-        />
-      );
-    else
-      return (
-        <div></div>
-      );
+    return (
+      <CardButton
+        titleButton="Inscrever-se"
+        buttonColor="secondary"
+        onClickSubmitButton={prepareHandlePressButton}
+      />
+    );
+  }
+
+  const prepareActionButtonSuccess = () => {
+    setLoading(false);
+    actionButtonSuccess();
+  }
+
+  const renderSuccessButtom = () => {
+    return (
+      <CardButton
+        titleButton="Acessar Ranking"
+        buttonColor="secondary"
+        onClickSubmitButton={prepareActionButtonSuccess}
+      />
+    );
+  }
+
+  const prepareClose = () => {
+    setLoading(false);
+    handleClose();
   }
 
   const renderContent = () => {
-    if (isLoading) {
+    if (context == "success") {
+      return (
+        <div>
+          <DialogContent align="center">
+            <DialogContentText align="center" color="primary">
+              {messageOnSuccess}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions className={classes.dialogActions}>
+            <Box width="50" alignSelf="center">
+              {renderSuccessButtom()}
+            </Box>
+          </DialogActions>
+        </div>
+      );
+    } else if (isLoading) {
       return (
         <div style={styles.isLoading}>
           <CircularProgress color="secondary" align="center" />
@@ -149,7 +173,7 @@ function ConfirmationDialog({
       return (
         <div>
           <DialogContent align="center">
-            <DialogContentText id="alert-dialog-slide-description" align="center" color="primary">
+            <DialogContentText align="center" color="primary">
               {description}
             </DialogContentText>
             {renderSelect()}
@@ -164,29 +188,53 @@ function ConfirmationDialog({
     }
   }
 
+  const renderInContext = () => {
+    if (context == "success") {
+      return (
+        <div>
+          <DialogTitle align="center"
+            classes={{ root: classes.title }}>
+            <Typography component='div' className={classes.flexRowBetween}>
+              {renderStatusIcon()}
+              <Button onClick={prepareClose}>
+                <CancelIcon width={30} height={30} />
+              </Button>
+            </Typography>
+          </DialogTitle>
+          {renderContent()}
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <DialogTitle align="center"
+            classes={{ root: classes.title }}>
+            <Typography component='div' className={classes.flexRowBetween}>
+              <Typography variant="h6" className={classes.flexColumnCenter}>
+                {title}
+              </Typography>
+              <Button onClick={prepareClose}>
+                <CancelIcon width={30} height={30} />
+              </Button>
+            </Typography>
+          </DialogTitle>
+          {renderContent()}
+        </div>
+      );
+    }
+  }
+
   return (
     <div >
       <Dialog classes={{ paper: classes.dialogPaper }}
         open={isOpen}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleClose}
+        onClose={prepareClose}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title" align="center"
-          classes={{ root: classes.title }}>
-          <Typography component='div' className={classes.flexRowBetween}>
-            {renderStatusIcon()}
-            <Typography variant="h6" className={classes.flexColumnCenter}>
-              {title}
-            </Typography>
-            <Button onClick={handleClose}>
-              <CancelIcon width={30} height={30} />
-            </Button>
-          </Typography>
-        </DialogTitle>
-        {renderContent()}
+        {renderInContext()}
       </Dialog>
     </div >
   );

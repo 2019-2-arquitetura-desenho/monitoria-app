@@ -29,11 +29,9 @@ class SearchDisciplines extends React.Component {
 
       textButtonClass: '',
       dialogOpen: false,
-      dialogTitle: '',
-      dialogText: '',
-      dialogType: '',
       disciplineSelected: undefined,
       classroomSelected: undefined,
+      successSubscribe: false,
       mainError: ''
     }
 
@@ -95,15 +93,6 @@ class SearchDisciplines extends React.Component {
   componentDidUpdate() {
   }
 
-  nextPathDialog(path) {
-    this.props.history.push(path);
-  }
-
-  textSuccessSubscribe(discipline, classroom) {
-    return `Você foi inscrito na seleção para a monitoria de
-    ${discipline} tuma ${classroom}`;
-  }
-
   handleActionInClassroom(discipline, classroom) {
     this.state.classroomSelected = classroom;
     this.state.disciplineSelected = discipline;
@@ -123,7 +112,7 @@ class SearchDisciplines extends React.Component {
     );
     console.log("Response: ", response);
     if (response.status === 200) {
-      this.nextPathDialog('/results');
+      this.setState({ successSubscribe: true });
     } else {
       this.verifyErrors(response.responseError, "Não Foi possível se inscrever!");
       this.setState({ dialogOpen: false });
@@ -133,7 +122,12 @@ class SearchDisciplines extends React.Component {
   }
 
   handleDialogClose() {
-    this.setState({ dialogOpen: false })
+    this.setState({
+      dialogOpen: false,
+      successSubscribe: false,
+      disciplineSelected: undefined,
+      classroomSelected: false
+    })
   }
 
   handleInputSearch(textValue) {
@@ -189,12 +183,24 @@ class SearchDisciplines extends React.Component {
     }
   }
 
+  nextPathDialog(path = '/results') {
+    this.props.history.push(path);
+  }
+
+
   renderDialogConfirm() {
+    const {
+      disciplineSelected, classroomSelected, successSubscribe
+    } = this.state;
+
     const dialogText = "Escolha a Prioridade para a Disciplina";
-    const dialogType = "success";
+    const dialogContext = successSubscribe ? "success" : "confirm";
     const dialogTitle = "Confirmação";
     const dialogPriority = true;
     const dialogRangePriority = 10;
+    const successMessage = `Você foi inscrito na seleção para a monitoria de
+      ${disciplineSelected ? disciplineSelected.title :
+        '<DISCIPLINA>'} tuma ${classroomSelected ? classroomSelected : '<TURMA>'}`;
 
     return (
       <ConfirmationDialog
@@ -202,10 +208,12 @@ class SearchDisciplines extends React.Component {
         handleClose={this.handleDialogClose}
         title={dialogTitle}
         description={dialogText}
-        type={dialogType}
         handlePressButton={this.handleConfirmDialog}
         hasSelect={dialogPriority}
         rangeSelect={dialogRangePriority}
+        context={dialogContext}
+        messageOnSuccess={successMessage}
+        actionButtonSuccess={this.nextPathDialog}
       />
     );
   }
