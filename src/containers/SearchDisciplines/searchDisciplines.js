@@ -97,6 +97,9 @@ class SearchDisciplines extends React.Component {
         ));
       }
 
+
+      console.log("text search: ", this.state.searchDisciplines)
+      console.log("filtered: ", filteredDisciplines)
       if (filteredDisciplines) {
         return (
           <DisciplinesList

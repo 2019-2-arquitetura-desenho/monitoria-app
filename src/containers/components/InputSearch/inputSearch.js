@@ -56,9 +56,9 @@ class InputSearch extends React.Component {
     const { onChange } = this.props;
 
     this.setState({
-      ['value']: event.target.value,
+      value: event.target.value,
     });
-    onChange(this.state.value);
+    onChange(event.target.value);
   };
 
   keyPress(event) {
