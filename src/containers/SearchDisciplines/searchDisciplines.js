@@ -76,7 +76,6 @@ class SearchDisciplines extends React.Component {
 
   handleInputSearch(textValue) {
     this.state.searchDisciplines = textValue;
-    this.renderDisciplines();
   }
 
   searchDisciplines() {
@@ -108,7 +107,9 @@ class SearchDisciplines extends React.Component {
       }
       else {
         return (
-          <CircularProgress color="secondary" align='center' />
+          <div>
+            <CircularProgress color="secondary" align='center' />
+          </div>
         );
       }
     }
@@ -123,32 +124,33 @@ class SearchDisciplines extends React.Component {
     return (
       <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
-          <Container component="div" maxWidth="md" className={classes.container}>
-            <ConfirmationDialog
-              isOpen={this.state.dialogOpen}
-              handleClose={this.handleDialogClose}
-              title={this.state.dialogTitle}
-              description={this.state.dialogText}
-              type={this.state.dialogType}
-              handleConfirmNextPath={this.nextPathDialog}
-            />
-            <Grid container justify="center">
-              <Typography
-                variant="h5"
-                className={classes.title}>
-                <InputSearch
-                  onChange={this.handleInputSearch}
-                  onPress={this.searchDisciplines}
-                />
-              </Typography>
-            </Grid>
-            <Divider className={classes.divider} />
-            <Box className={classes.boxHelpLabel}>
-              <Box className={classes.mainErrorBox}>
-                <MainError error={mainError} />
+          <Container component="div" maxWidth="md" className={classes.container} >
+            <Grid container>
+              <ConfirmationDialog
+                isOpen={this.state.dialogOpen}
+                handleClose={this.handleDialogClose}
+                title={this.state.dialogTitle}
+                description={this.state.dialogText}
+                type={this.state.dialogType}
+                handleConfirmNextPath={this.nextPathDialog}
+              />
+              <Grid container justify="center">
+                <Typography
+                  variant="h5"
+                  className={classes.title}>
+                  <InputSearch
+                    onChange={this.handleInputSearch}
+                    onPress={this.searchDisciplines}
+                  />
+                </Typography>
+              </Grid>
+              <Box className={classes.boxHelpLabel}>
+                <Box className={classes.mainErrorBox}>
+                  <MainError error={mainError} />
+                </Box>
               </Box>
-            </Box>
-            <Grid container className={classes.disciplinesContainer} alignItems='center'>
+            </Grid>
+            <Grid container align="center" className={classes.disciplines}>
               {this.renderDisciplines()}
             </Grid>
           </Container>
@@ -213,12 +215,11 @@ const styles = {
     size: 30,
     color: "black"
   },
-  disciplinesContainer: {
+  disciplines: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    height: '80%',
-    width: '100%'
+    minHeight: '60vh',
   }
 };
 
