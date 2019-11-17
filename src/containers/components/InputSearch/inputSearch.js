@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { ReactComponent as SearchIcon } from '../../assets/search.svg';
 
@@ -19,7 +17,7 @@ const styles = theme => ({
   },
 
   cssOutlinedInput: {
-    '&$cssFocused $notchedOutline': {
+    '&$notchedOutline': {
       borderColor: `${theme.palette.primary.main} !important`,
     }
   },
@@ -87,7 +85,6 @@ class InputSearch extends React.Component {
           InputProps={{
             classes: {
               root: classes.cssOutlinedInput,
-              focused: classes.cssFocused,
               notchedOutline: classes.notchedOutline,
               input: classes.inputText,
             },

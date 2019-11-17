@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
   Button,
@@ -71,7 +71,6 @@ function ConfirmationDialog({
   handlePressButton, hasSelect, rangeSelect, context,
   messageOnSuccess, actionButtonSuccess
 }) {
-
   const [priority, setPriority] = React.useState('');
   const [isLoading, setLoading] = React.useState(false);
 
@@ -129,6 +128,7 @@ function ConfirmationDialog({
 
   const prepareActionButtonSuccess = () => {
     setLoading(false);
+    setPriority('');
     actionButtonSuccess();
   }
 
@@ -144,6 +144,7 @@ function ConfirmationDialog({
 
   const prepareClose = () => {
     setLoading(false);
+    setPriority('');
     handleClose();
   }
 
