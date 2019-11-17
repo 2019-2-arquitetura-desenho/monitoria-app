@@ -88,7 +88,6 @@ class SearchDisciplines extends React.Component {
       profileData
     } = this.props;
 
-    console.log("is_professor RENDER: ", profileData.is_professor)
     if (!profileData.is_professor) {
       let filteredDisciplines;
       if (this.state.disciplines) {
