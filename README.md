@@ -10,7 +10,7 @@ Inicializar serviço do docker:
 
 Caso não dê certo, use:
 
-    sudo dockerd
+    make start-docker2
 
 Inicializar Aplicação:
 
@@ -18,10 +18,10 @@ Inicializar Aplicação:
 
 bash:
 
-    sudo docker exec -it monitoria-api sh
+    make bash
 
-## Configurações de Ambiente
+## Configuração da Variável de Ambiente
 
-Para utilizar a API, crie um arquivo .env na raiz do projeto, e dentro:
+Para se conectar a api, crie um arquivo .env na raiz do projeto com o seguinte conteudo:
 
-    REACT_APP_URL_API = <URL>
+    REACT_APP_URL_API=<URL API>
