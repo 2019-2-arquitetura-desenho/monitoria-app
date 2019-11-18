@@ -36,8 +36,6 @@ class Register extends React.Component {
             isFileSubmit: false,
             fileName: '',
             isViewDialogOpen: false,
-
-            fileDeleteToken: '',
             isConfirmFileSubmit: false,
 
             mainError: '',
@@ -57,7 +55,6 @@ class Register extends React.Component {
         this.handleConfirmUploadDialog = this.handleConfirmUploadDialog.bind(this);
         this.handleClickViewFileUpload = this.handleClickViewFileUpload.bind(this);
         this.handleCloseViewFileUpload = this.handleCloseViewFileUpload.bind(this);
-
         this.onPressSubmit = this.onPressSubmit.bind(this);
     }
 
