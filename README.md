@@ -6,17 +6,14 @@ Repositório destinado ao FRONT da aplicação "A Monitoria".
 
 Inicializar serviço do docker:
 
-    make start-docker
-
-Caso não dê certo, use:
-
+    make start-docker; ou 
     make start-docker2
 
 Inicializar Aplicação:
 
     make server
 
-bash:
+Acessar o Bash:
 
     make bash
 
