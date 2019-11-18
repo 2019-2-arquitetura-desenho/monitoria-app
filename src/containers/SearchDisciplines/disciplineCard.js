@@ -14,8 +14,8 @@ import PageShell from '../components/PageShell/pageShell';
 const styles = {
   root: {
     backgroundColor: "#267CC1",
-    marginTop: 10,
-    marginBottom: 20
+    marginTop: 30,
+    marginBottom: 30
   },
   card: {
     display: "flex",

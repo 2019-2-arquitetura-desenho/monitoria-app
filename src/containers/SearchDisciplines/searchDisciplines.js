@@ -234,7 +234,7 @@ class SearchDisciplines extends React.Component {
     return (
       <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
-          <Container component="div" maxWidth="md" className={classes.container} >
+          <Container component="div" className={classes.container} >
             <Grid container>
               {this.renderDialogConfirm()}
               <Grid container justify="center">
@@ -280,20 +280,19 @@ const theme = createMuiTheme({
 
 const styles = {
   root: {
-    paddingTop: 30,
     paddingBottom: 30,
-    backgroundColor: '#42a0ed',
-    minHeight: '100vh'
+    backgroundColor: '#fff',
+    minHeight: '100vh',
+    width: '100%'
   },
   container: {
-    paddingTop: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#f8f8f8',
     minHeight: '80vh',
     paddingBottom: 20,
+    width: '92%'
   },
   title: {
     color: "#267cc1",
-    paddingBottom: 15,
     width: "60%"
   },
   boxHelpLabel: {
@@ -306,18 +305,6 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     width: '100%'
-  },
-  helpLabel: {
-    color: "#267cc1",
-    paddingBottom: 15,
-    display: 'flex',
-    alignItems: 'center',
-    alignSelf: 'center',
-    flexDirection: 'row',
-  },
-  divider: {
-    size: 30,
-    color: "black"
   },
   disciplines: {
     display: 'flex',
