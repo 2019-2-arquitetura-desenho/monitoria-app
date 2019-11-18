@@ -172,7 +172,7 @@ class SearchDisciplines extends React.Component {
           <DisciplinesList
             disciplines={filteredDisciplines}
             labelButtonAction={this.state.textButtonClass}
-            action={profileData.is_professor ? this.handleActionInClassroom : this.nextPathDialog()}
+            action={profileData.is_professor ? this.handleActionInClassroom : this.nextPathDialog}
           />
         );
       }
