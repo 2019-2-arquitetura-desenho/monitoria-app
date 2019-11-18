@@ -75,7 +75,7 @@ class SearchDisciplines extends React.Component {
         mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
         loading: false
       });
-    } else if (error && error.non_field_errors[0] === "Signature has expired.") {
+    } else if (error && error.non_field_errors && error.non_field_errors[0] === "Signature has expired.") {
       this.setState({
         mainError: error.non_field_errors,
         loading: false
