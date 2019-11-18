@@ -12,7 +12,7 @@ class SubmitButton extends React.Component {
         return (
             <Button
                 variant="contained"
-                color={ buttonColor }
+                color={buttonColor}
                 size="large"
                 style={styles.submitButton}
                 onClick={onClickSubmitButton}

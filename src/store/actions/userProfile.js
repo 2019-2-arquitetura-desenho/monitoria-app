@@ -47,7 +47,8 @@ export function updateProfile(props) {
       } else {
         dispatch({
           type: 'UPDATE_PROFILE_ERROR',
-          payload: error.response
+          payload: error.response,
+          updatingProfile: { name: false, email: false, password: false, document: false }
         });
       }
     });
@@ -65,7 +66,7 @@ export function getProfile(token) {
   let dataToSend = {
     token
   };
-  
+
   return async function (dispatch) {
     axios.post(
       url,
@@ -91,3 +92,40 @@ export function getProfile(token) {
   }
 }
 
+export function getStudent(token) {
+  let url = host_api + '/get_student/';
+  let dataToSend = {
+    token
+  };
+  return function (dispatch) {
+    dispatch({
+      type: 'GET_STUDENT_REQUEST',
+      fetchingStudent: true
+    });
+
+    axios.post(
+      url,
+      dataToSend
+    ).then(response => {
+      dispatch({
+        type: 'GET_STUDENT_SUCCESS',
+        fetchingStudent: false,
+        payload: response.data
+      });
+    }).catch(error => {
+      if (!error.response) {
+        dispatch({
+          type: 'GET_STUDENT_ERROR',
+          fetchingStudent: false,
+          requestError: 'Error: Network Error'
+        });
+      } else {
+        dispatch({
+          type: 'GET_STUDENT_ERROR',
+          fetchingStudent: false,
+          requestError: error.response
+        });
+      }
+    });
+  }
+}

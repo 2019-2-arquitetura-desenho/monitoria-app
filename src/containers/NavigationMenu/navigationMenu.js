@@ -76,10 +76,6 @@ class NavigationMenu extends React.Component {
     this.setState({ indicatorValue });
   };
 
-  handleChangeDrawer(indicatorValue) {
-    this.setState({ indicatorValue });
-  };
-
   componentDidMount() {
     this.rebuildMenu()
   }
@@ -108,6 +104,7 @@ class NavigationMenu extends React.Component {
     } = this.props;
 
     let is_professor = profileData ? profileData.is_professor : false;
+
 
     let list = [
       { label: 'Página Inicial', path: '/home', value: 0 },
@@ -198,7 +195,6 @@ class NavigationMenu extends React.Component {
               <Box className={classes.title}>
                 <Hidden mdUp implementation="css">
                   <ResponsiveDrawer
-                    changeIndicator={this.handleChangeDrawer}
                   />
                 </Hidden>
                 <Button component={Link} to="/">
