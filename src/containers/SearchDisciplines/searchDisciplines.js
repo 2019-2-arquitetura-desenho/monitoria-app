@@ -70,7 +70,6 @@ class SearchDisciplines extends React.Component {
       logout
     } = this.props;
 
-    console.log(error)
     if (error === 'Error: Network Error') {
       this.setState({
         mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
@@ -117,7 +116,6 @@ class SearchDisciplines extends React.Component {
       this.state.classroomSelected,
       priority
     );
-    console.log("Response: ", response);
     if (response.status === 200) {
       this.setState({ successSubscribe: true });
     } else {
@@ -172,7 +170,8 @@ class SearchDisciplines extends React.Component {
           <DisciplinesList
             disciplines={filteredDisciplines}
             labelButtonAction={this.state.textButtonClass}
-            action={profileData.is_professor ? this.handleActionInClassroom : this.nextPathDialog}
+            action={profileData.is_professor ? this.nextPathDialog : this.handleActionInClassroom}
+            needActionArgs={!profileData.is_professor}
           />
         );
       }

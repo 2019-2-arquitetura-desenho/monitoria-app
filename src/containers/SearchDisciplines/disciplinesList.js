@@ -2,7 +2,7 @@ import React from 'react';
 
 import DisciplineCard from './disciplineCard';
 
-function DisciplinesList({ disciplines, labelButtonAction, action }) {
+function DisciplinesList({ disciplines, labelButtonAction, action, needActionArgs }) {
   let disciplinesList = disciplines.map((discipline, index) => {
 
     return (
@@ -13,6 +13,7 @@ function DisciplinesList({ disciplines, labelButtonAction, action }) {
         classrooms={discipline.discipline_class}
         labelButtonAction={labelButtonAction}
         action={action}
+        needActionArgs={needActionArgs}
       />
     );
   });

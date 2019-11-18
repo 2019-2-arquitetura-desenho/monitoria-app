@@ -69,11 +69,16 @@ const styles = {
 
 const ClassContent = ({
   classes, classroom, period, meetings, professors,
-  discipline, labelButtonAction, action
+  discipline, labelButtonAction, action, needActionArgs
 }) => {
 
   function dispatchAction() {
-    action(discipline, classroom);
+
+    if (needActionArgs)
+      action(discipline, classroom);
+    else
+      action();
+
   }
 
   return (
