@@ -70,20 +70,27 @@ class SearchDisciplines extends React.Component {
       logout
     } = this.props;
 
+    console.log(error)
     if (error === 'Error: Network Error') {
       this.setState({
         mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde.",
         loading: false
       });
-    } else if (error && error.non_field_errors && error.non_field_errors[0] === "Signature has expired.") {
-      this.setState({
-        mainError: error.non_field_errors,
-        loading: false
-      });
-      logout();
-    }
-    else if (error) {
-      this.setState({
+    } else if (error && error.non_field_errors) {
+      if (error.non_field_errors[0] === "Signature has expired.") {
+        this.setState({
+          mainError: error.non_field_errors,
+          loading: false
+        });
+        logout();
+      }
+    } else if (error) {
+      if (error.error) {
+        this.setState({
+          mainError: error.error,
+          loading: false
+        });
+      } else this.setState({
         mainError: unknowError,
         loading: false
       });
