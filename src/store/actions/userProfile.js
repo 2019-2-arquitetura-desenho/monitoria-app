@@ -98,7 +98,6 @@ export function restartGetProfile() {
   }
 }
 
-
 export function getStudent(token) {
   let url = host_api + '/get_student/';
   let dataToSend = {
