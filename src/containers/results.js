@@ -25,6 +25,7 @@ import {
     TableRow,
     TableCell,    
     TableBody,
+    LinearProgress,
     Button,
 } from '@material-ui/core';
 
@@ -32,6 +33,7 @@ import {
     getProfile,
     restartGetProfile
 } from '../store/actions';
+
 
 
 
@@ -46,6 +48,9 @@ class Results extends React.Component {
             isStudent: undefined,
 
             isRanked: undefined,
+            haveMaterials: undefined,
+            haveInscrits: undefined,
+            acabouPeriodo: false,
             matricula: '',
             materialList: [],
             dataTables: [],
@@ -53,6 +58,7 @@ class Results extends React.Component {
             material:'',
             inscrito:'',
             dataChoice:[],
+            studentChoice:[],
             nota:'',
             listaNotas:[0,1,2,3,4,5],
 
@@ -65,6 +71,7 @@ class Results extends React.Component {
         this.handleChangeNota = this.handleChangeNota.bind(this);
         this.onSubmitConfirm = this.onSubmitConfirm.bind(this);
         this.onCloseDialogConfirm = this.onCloseDialogConfirm.bind(this);
+        this.onClickConfirm = this.onClickConfirm.bind(this);
     }
 
     componentDidMount() {
@@ -77,32 +84,43 @@ class Results extends React.Component {
             const matricula = response.data.matricula;
 
             axios.post(
-                'http://localhost:2000/home',
-                // host_api, '/get_rankings',
+                host_api + '/get_rankings/',
                 {
                     token: this.props.token
                 }
             ).then(response => {
-                const data = response.data.data;
+                const data = response.data;
                 
                 var materialList = [];
-                
                 if(data.length === 0){
                     this.setState({
-                        isRanked: false
+                        isRanked: false,
+                        isStudent: true
                     });
                 } else {
                     data.forEach(element => {
-                        materialList.push(element.materia + ' - ' + element.turma);
+                        materialList.push(element.discipline + ' - ' + element.class);
                     });
                     
-                    this.setState({
-                        matricula: matricula,
-                        materialList: materialList,
-                        dataTables: data,
-                        isStudent: true,
-                        isRanked: true
-                    });
+                    if (data[0].ranking[0].status !== "Indefinido"){
+                        this.setState({
+                            matricula: matricula,
+                            materialList: materialList,
+                            dataTables: data,
+                            isStudent: true,
+                            isRanked: true,
+                            acabouPeriodo: true,
+                        });
+                    } else {
+                        this.setState({
+                            matricula: matricula,
+                            materialList: materialList,
+                            dataTables: data,
+                            isStudent: true,
+                            isRanked: true,
+                            acabouPeriodo: false,
+                        });
+                    }
                 }
             }).catch(error => {
                 console.log(error)
@@ -120,26 +138,43 @@ class Results extends React.Component {
                 if (this.props.profileData.is_professor){
                     // Requisição
                     axios.post(
-                        'http://localhost:9000/home',
-                        // host_api, '/get_rankings',
+                        host_api + '/get_rankings/', 
                         {
                             token: this.props.token
                         }
                     ).then(response => {
-                        const data = response.data.data;
+                        const data = response.data;
 
                         var materialList = [];
 
-                         
-                        data.forEach(element => {
-                            materialList.push(element.materia + ' - ' + element.turma);
-                        });
+                        if (data.length === 0){
+                            this.setState({
+                                haveMaterial: false,
+                                isStudent: false,
+                            });
+                        } else {
+                            data.forEach(element => {
+                                materialList.push(element.discipline + ' - ' + element.class);
+                            });
 
-                        this.setState({
-                            materialList: materialList,
-                            dataTables: data,
-                            isStudent: false,
-                        });
+                            if (data[0].ranking[0].status !== "Indefinido"){
+                                this.setState({
+                                    materialList: materialList,
+                                    dataTables: data,
+                                    isStudent: false,
+                                    haveMaterials: true,
+                                    acabouPeriodo: true,
+                                });
+                            } else {
+                                this.setState({
+                                    materialList: materialList,
+                                    dataTables: data,
+                                    isStudent: false,
+                                    haveMaterials: true,
+                                    acabouPeriodo: false,
+                                });
+                            }
+                        }
                         
                     }).catch(error => {
                         console.log(error)
@@ -170,20 +205,32 @@ class Results extends React.Component {
 
     handleChange(event) {
         let dataChoice = []
-        this.state.dataTables.forEach(element =>{
-            if((element.materia + ' - ' + element.turma) === event.target.value){
+        this.state.dataTables.forEach(element => {
+            if((element.discipline + ' - ' + element.class) === event.target.value){
                 if(this.state.isStudent === true){
                     dataChoice = element.ranking;
                 }
-                else{
-                    dataChoice = element.inscritos;
+                else {
+                    dataChoice = element.ranking;
                 }
             }
-        })
+        });
+
+        let studentChoice = []
+        if(this.state.isStudent === false){
+            if(dataChoice){
+               dataChoice.forEach(element => {
+                if (!element.indication){
+                    studentChoice.push(element);
+                }
+               }); 
+            }
+        }
 
         this.setState({
             material: event.target.value,
-            dataChoice: dataChoice    
+            dataChoice: dataChoice,
+            studentChoice: studentChoice    
         })
     }
 
@@ -200,33 +247,63 @@ class Results extends React.Component {
         })
     }
 
-    tableContent(count,nome,matr,pontu) {
-        if(matr !== this.state.matricula){
-            return (
-                <TableRow key={count}>
-                    <TableCell align="center" scope="row">
-                        {count++}
-                    </TableCell>
-                    <TableCell align="center">{matr}</TableCell>
-                    <TableCell align="center">{nome}</TableCell>
-                    <TableCell align="center">{pontu}</TableCell>
-                </TableRow>
-            );
-        }
-        else {
-            return (
-                <TableRow key={count}>
-                    <TableCell align="center" scope="row">
-                        <b>{count++}</b>
-                    </TableCell>
-                    <TableCell align="center"><b>{matr}</b></TableCell>
-                    <TableCell align="center" ><b>{nome}</b></TableCell>
-                    <TableCell align="center"><b>{pontu}</b></TableCell>
-                </TableRow>
-            );
+    tableContent(status,count,matr,nome,pontu) {
+        if (this.state.acabouPeriodo === true){
+            if(matr !== this.state.matricula){
+                return (
+                    <TableRow key={count}>
+                        <TableCell align="center" scope="row">
+                            {count++}
+                        </TableCell>
+                        <TableCell align="center">{matr}</TableCell>
+                        <TableCell align="center">{nome}</TableCell>
+                        <TableCell align="center">{pontu}</TableCell>
+                        <TableCell align="center"><b>{status}</b></TableCell>
+                    </TableRow>
+                );
+            }
+            else {
+                return (
+                    <TableRow key={count}>
+                        <TableCell align="center" scope="row">
+                            <b>{count++}</b>
+                        </TableCell>
+                        <TableCell align="center"><b>{matr}</b></TableCell>
+                        <TableCell align="center" ><b>{nome}</b></TableCell>
+                        <TableCell align="center"><b>{pontu}</b></TableCell>
+                        <TableCell align="center"><b>{status}</b></TableCell>
+                    </TableRow>
+                );
+            }
+        } else {
+            if(matr !== this.state.matricula){
+                return (
+                    <TableRow key={count}>
+                        <TableCell align="center" scope="row">
+                            {count++}
+                        </TableCell>
+                        <TableCell align="center">{matr}</TableCell>
+                        <TableCell align="center">{nome}</TableCell>
+                        <TableCell align="center">{pontu}</TableCell>
+                        <TableCell align="center">{status}</TableCell>
+                    </TableRow>
+                );
+            }
+            else {
+                return (
+                    <TableRow key={count}>
+                        <TableCell align="center" scope="row">
+                            <b>{count++}</b>
+                        </TableCell>
+                        <TableCell align="center"><b>{matr}</b></TableCell>
+                        <TableCell align="center" ><b>{nome}</b></TableCell>
+                        <TableCell align="center"><b>{pontu}</b></TableCell>
+                        <TableCell align="center">{status}</TableCell>
+                    </TableRow>
+                );
+            }
         }
     }
-
 
     onCloseDialogConfirm(){
 
@@ -258,10 +335,42 @@ class Results extends React.Component {
             return <div></div>
         }
     }
+
+    onClickConfirm() {
+
+        axios.post(
+            host_api + '/indicate_student/', 
+            {
+                token: this.props.token,
+                register_id: this.state.inscrito.id,
+                points: this.state.nota
+            }
+        ).then(response => {
+            console.log(response);
+
+            this.setState({
+                successMessage: "Aluno indicado com sucesso!",
+                isDialogConfirmOpen: false,
+                nota: '',
+                inscrito: '',
+                material: ''
+            });
+            this.componentDidMount()
+
+        }).catch(error => {
+            console.log(error)
+
+            this.setState({
+                mainError: "Erro! Verifique sua conexão com a internet e tente novamente mais tarde."
+            })
+        });
+
+    }
+
     selectGrade(){
         if(this.state.inscrito !==''){
             return(
-                <FormControl style={{ marginTop: '2%', width: "84%", marginLeft: "8%", marginRight: "8%" }}>
+                <FormControl style={{ marginTop: '2%', width: "86%", marginLeft: "8%", marginRight: "8%" }}>
                     <InputLabel id="demo-simple-select-label">Escolha a nota</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
@@ -286,26 +395,106 @@ class Results extends React.Component {
 
     selectStudent(){
         if(this.state.material!==''){
-            return (
-                <FormControl style={{ marginTop: '2%', width: "84%", marginLeft: "8%", marginRight: "8%" }}>
-                    <InputLabel id="demo-simple-select-label">Escolha o aluno</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={this.state.inscrito}
-                        onChange={this.handleChangeInscrito}
-                    >
-                        {this.state.dataChoice.map((element) => {
-                            return <MenuItem value= {element[0] + ' - ' + element[1]}>
-                                {element[0]} - {element[1]}
-                            </MenuItem>
-                        })
-                        }
-                    </Select>
-                </FormControl>
-                )
+            if(this.state.studentChoice.length === 0){
+                return (
+                    <h2 style={{color:"#141414", textAlign: "center", marginTop: "4%"}}>
+                        Ops... Não há alunos inscritos para a monitoria dessa disciplina.
+                    </h2>
+                );
+            } else {
+                return (
+                    <FormControl style={{ marginTop: '2%', width: "86%", marginLeft: "8%", marginRight: "8%" }}>
+                        <InputLabel id="demo-simple-select-label">Escolha o aluno</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={this.state.inscrito}
+                            onChange={this.handleChangeInscrito}
+                        >
+                            {this.state.studentChoice.map((element) => {
+                                return <MenuItem value= {element}>
+                                    {element.student.matricula} - {element.student.profile.name}
+                                </MenuItem>
+                            })
+                            }
+                        </Select>
+                    </FormControl>
+                );
+            }
         }
         else{
+            return <div></div>
+        }
+    }
+
+    dialogContent(){
+        if (!this.isDialogLoading){
+            return (
+                <React.Fragment>
+                    <DialogContentText
+                        id="max-width-dialog-description"
+                    >   
+                        <b>Atenção! Essa indicação é irreversível.</b><br></br>
+                        Disciplina: {this.state.material}<br></br>
+                        Aluno: {this.state.inscrito.student.matricula} - {this.state.inscrito.student.profile.name}<br></br>
+                        Nota: {this.state.nota}<br></br>
+                    </DialogContentText>
+                    <DialogActions>
+                        <Button
+                            onClick={this.onCloseDialogConfirm}
+                            color="primary"
+                        >
+                            Cancelar
+                        </Button>
+                        <Button
+                            onClick={this.onClickConfirm}
+                            color="secondary"
+                        >
+                            Confirmar
+                        </Button>
+                    </DialogActions>
+                </React.Fragment>
+            );
+        } else {
+            return (
+                <LinearProgress />
+            );
+        }
+    }
+
+    dialogConfirm(){
+        if (this.state.inscrito){
+            return (
+                <Dialog
+                    fullWidth={true}
+                    maxWidth="sm"
+                    open={this.state.isDialogConfirmOpen}
+                    onClose={this.onCloseDialogConfirm}
+                    aria-labelledby="max-width-dialog-title"
+                    aria-describedby="max-width-dialog-description"
+                >
+                    <DialogTitle id="max-width-dialog-title">
+                        Confirmar Indicação
+                    </DialogTitle>
+                    <DialogContent>
+                        {this.dialogContent()}
+                    </DialogContent>
+                </Dialog>
+            );
+        } else {
+            return <div></div>
+        }
+    }
+
+    messagemFimPeriodo(){
+        if (this.state.acabouPeriodo === true){
+            return (
+                <h3 style={{color:"#141414", textAlign: "center"}}>
+                    Resultados Finais<br></br>
+                    Se você foi aprovado, entre em contato com o professor da disciplina.
+                </h3>   
+            );
+        } else {
             return <div></div>
         }
     }
@@ -322,7 +511,8 @@ class Results extends React.Component {
                 var count=0;
                 return (
                     <React.Fragment>
-                        <FormControl style = {{marginTop:'2%', width: "84%", marginLeft: "8%", marginRight: "8%"}}>
+                        {this.messagemFimPeriodo()}
+                        <FormControl style = {{marginTop:'2%', width: "86%", marginLeft: "8%", marginRight: "8%"}}>
                             <InputLabel id="demo-simple-select-label">Escolha a matéria</InputLabel>
                             <Select 
                                 labelId="demo-simple-select-label"
@@ -339,7 +529,7 @@ class Results extends React.Component {
                                 }
                             </Select>
                         </FormControl>
-                        <Paper style = {{marginTop:'1%', marginBottom:'2%', width: "84%", marginLeft: "8%", marginRight: "8%"}}>
+                        <Paper style = {{marginTop:'1%', marginBottom:'2%', width: "86%", marginLeft: "8%", marginRight: "8%"}}>
                             <Table>
                                 <TableHead>
                                     <TableRow>
@@ -352,7 +542,7 @@ class Results extends React.Component {
                                 <TableBody>
                                     {this.state.dataChoice.map(element => (
                                         count++,
-                                        this.tableContent(count, element[0],element[1],element[2])
+                                        this.tableContent(element.status, count, element.student.matricula, element.student.profile.name, element.points)
                                     ))}
                                 </TableBody>
                             </Table>
@@ -363,74 +553,50 @@ class Results extends React.Component {
             
         } else if (this.state.isStudent === false){
             //tela professor
-            
-            return (
-                <React.Fragment>
-                    <FormControl style={{ marginTop: '2%', width: "84%", marginLeft: "8%", marginRight: "8%" }}>
-                        <InputLabel id="demo-simple-select-label">Escolha a matéria</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={this.state.material}
-                            onChange={this.handleChange}
-                        >
-                            {this.state.materialList.map((element) => {
-                                return <MenuItem value={element}>
-                                    {element}
-                                </MenuItem>
-                            })
-                            }
-                        </Select>
-                        
-                    </FormControl>
-                    {this.selectStudent()}
-                    {this.selectGrade()}
-                    {this.confirmButton()}
-                    <Dialog
-                        fullWidth={true}
-                        maxWidth="sm"
-                        open={this.state.isDialogConfirmOpen}
-                        onClose={this.onCloseDialogConfirm}
-                        aria-labelledby="max-width-dialog-title"
-                        aria-describedby="max-width-dialog-description"
-                    >
-                        <DialogTitle id="max-width-dialog-title">
-                            Confirmar Indicação
-                                    </DialogTitle>
-                        <DialogContent>
-                            <DialogContentText
-                                id="max-width-dialog-description"
-                            >   
-                                <b>Atenção! Essa indicação é irreversível.</b><br></br>
-                                Disciplina: {this.state.material}<br></br>
-                                Aluno: {this.state.inscrito}<br></br>
-                                Nota: {this.state.nota}<br></br>
-                            </DialogContentText>
 
-                            <DialogActions>
-                                <Button
-                                    onClick={this.onCloseDialogConfirm}
-                                    color="primary"
-                                >
-                                    Cancelar
-                                            </Button>
-
-                                <Button
-                                    onClick={this.onClickConfirm}
-                                    color="secondary"
-                                >
-                                    Confirmar
-                                            </Button>
-                            </DialogActions>
-                        </DialogContent>
-                    </Dialog>
-                </React.Fragment>
-            );
+            if (!this.state.haveMaterials){
+                return (
+                    <h2 style={{color:"#141414", textAlign: "center", marginTop: "4%"}}>
+                        Ops... Você não está vinculado à nenhuma disciplina.
+                    </h2>
+                );
+            } if (this.state.acabouPeriodo){
+                return (
+                    <h2 style={{color:"#141414", textAlign: "center", marginTop: "4%"}}>
+                        O período de inscrição em monitoria acabou. 
+                    </h2>
+                );
+            } else {
+                return (
+                    <React.Fragment>
+                        <FormControl style={{ marginTop: '2%', width: "86%", marginLeft: "8%", marginRight: "8%" }}>
+                            <InputLabel id="demo-simple-select-label">Escolha a matéria</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={this.state.material}
+                                onChange={this.handleChange}
+                            >
+                                {this.state.materialList.map((element) => {
+                                    return <MenuItem value={element}>
+                                        {element}
+                                    </MenuItem>
+                                })
+                                }
+                            </Select>
+                            
+                        </FormControl>
+                        {this.selectStudent()}
+                        {this.selectGrade()}
+                        {this.confirmButton()}
+                        {this.dialogConfirm()}
+                    </React.Fragment>
+                );
+            }
         } else {
             return <div></div>
         }
     }
-
 
     render() {
         return (
@@ -441,6 +607,12 @@ class Results extends React.Component {
                         <Grid container spacing = {1}>
                             <Grid item xs = {12}>
                                 <div styles={{display: "flex", justifyContent: "center", width: "100%"}}>
+                                    <Typography
+                                        variant="subtitle2"
+                                        style={{ marginLeft: "8%", marginRight: "8%", color: "#77dd77", fontWeigth: "bold" }}
+                                    >
+                                        <b>{ this.state.successMessage }</b>
+                                    </Typography>
                                     <MainError error={this.state.mainError} />
                                 </div>
                                 {this.showData()}
