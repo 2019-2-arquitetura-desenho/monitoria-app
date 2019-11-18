@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import {
   Button,
   Dialog,
@@ -149,7 +149,7 @@ function ConfirmationDialog({
   }
 
   const renderContent = () => {
-    if (context == "success") {
+    if (context === "success") {
       return (
         <div>
           <DialogContent align="center">
@@ -190,7 +190,7 @@ function ConfirmationDialog({
   }
 
   const renderInContext = () => {
-    if (context == "success") {
+    if (context === "success") {
       return (
         <div>
           <DialogTitle align="center"

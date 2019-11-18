@@ -55,7 +55,6 @@ class SearchDisciplines extends React.Component {
       this.setState({ textButtonClass: "Inscrever-se para a Monitoria" });
     }
 
-    const tokenExpiredTest = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InRlc3RlNyIsImV4cCI6MTU3NDAwMDE1MSwiZW1haWwiOiJ0ZXN0ZTdAZ21haWwuY29tIn0.pXyu-VRACjgNQ267EsCdrPfoKnTvJEqKnNvf2db489s`
     let response = await getDisciplines(token);
     let disciplines = response.responseData;
     let error = response.responseError;
@@ -100,9 +99,11 @@ class SearchDisciplines extends React.Component {
   }
 
   handleActionInClassroom(discipline, classroom) {
-    this.state.classroomSelected = classroom;
-    this.state.disciplineSelected = discipline;
-    this.setState({ dialogOpen: true });
+    this.setState({
+      classroomSelected: classroom,
+      disciplineSelected: discipline,
+      dialogOpen: true
+    });
   }
 
   async handleConfirmDialog(priority) {
@@ -136,7 +137,9 @@ class SearchDisciplines extends React.Component {
   }
 
   handleInputSearch(textValue) {
-    this.state.searchDisciplines = textValue;
+    this.setState({
+      searchDisciplines: textValue
+    });
   }
 
   searchDisciplines() {
@@ -150,11 +153,10 @@ class SearchDisciplines extends React.Component {
 
     let filteredDisciplines;
     if (this.state.disciplines) {
-      filteredDisciplines = this.state.disciplines.filter(discipline => (
-        discipline.name.normalize('NFD').
-          replace(/[\u0300-\u036f]/g, "").
-          toLowerCase().includes(this.state.searchDisciplines)
-      ));
+      filteredDisciplines = this.state.disciplines.filter(
+        discipline => (
+          discipline.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(this.state.searchDisciplines)
+        ));
       if (!this.state.disciplines.length) {
         const textStudent = `O Estudante não possui nenhuma disciplina em que pode se matricular`;
         const textProfessor = `O Professor não possui nenhuma disciplina ministrada no semestre`;
